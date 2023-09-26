@@ -1,0 +1,29 @@
+project:
+  type: book
+
+book:
+  title: "intro_R"
+  author:
+    - "Agustin Alesso"
+    - "Patricia Acetta"
+#  date: "9/26/2023"
+  chapters:
+    - index.qmd
+    - 01_introduccion.qmd
+    - 02_basics.qmd
+    - 03_import.qmd
+    - 04_wrangling.qmd
+    - 05_viz.qmd
+    - 06_reports.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+

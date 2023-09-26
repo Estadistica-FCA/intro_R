@@ -1,0 +1,288 @@
+---
+title: "Manipulando datos con `dplyr` y `tidyr`"
+---
+
+Luego de importar los datos **R** es necesario explorarlos y, dependiendo de su organización o el análisis que querramos realizar, hay que realizar algun tipo transformación, resumen, o consultas. 
+
+`dplyr` y `tidyr` son dos paquetes de **R** muy potentes para la exploración, transformación y resumen de datos en formato de tabla con filas (observaciones) y columnas (variables). Ambos son componentes de un meta-package `tidyverse` desarrollados por [Hadley Wickham](http://hadley.nz/)  
+
+Ambos paquetes tienen un conjunto de funciones (o _verbos_) que realizan operaciones comunes para el manejo de datos tales como: filtrar filas, seleccionar columnas, re-ordenar filas, agregar o transformar columnas, resumir datos. También permite agrupar los datos facilitando la estrategia _split-apply-combine_, es decir, dividir (_split_) los datos según una variable de grupo, aplicar (_apply_) alguna transformación o resumen y combinar (_combine_) las partes para presentar los resultados.
+
+Si bien **R** base tiene funciones que realizan las mismas tareas (`split()`, `subset()`, `apply()`, `sapply()`, `lapply()`, `tapply()` and `aggregate()`), estos paquetes brindan una interface más consistente que permite trabajar de manera más fácil con `data.frame` (tabla de datos) más que con vectores.
+
+Veamos con un ejemplo como realizar algunas operaciones con estos paquetes. Para esto vamos a usar el set de datos `r xfun::embed_file("datasets/pesada_novillos.xlsx", text = "pesada_novillos.xlsx")`. Suponiendo que ya está descargado en la carpeta de trabajo o proyecto.
+
+
+```{r, eval = T, echo = T, out.lines = 10}
+pacman::p_load(rio)
+novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
+novillos
+```
+
+## ¿Cómo instalar `dplyr` y `tidyr`?
+
+Para acceder a estos paquetes instalarlos/cargarlos individualmente:
+
+```{r, eval = F}
+pacman::p_load(dplyr, tidyr)
+```
+
+O bien con otros paquete de la familia `tidyverse`
+
+```{r, eval = T}
+pacman::p_load(tidyverse)
+```
+
+**R** va a avisarnos en la consola que esta enmascarando (reemplazando) algunas funciones que ya estaban en el entorno, o bien el paquete nos devuelve algun mensaje. A menos que diga `Error ...`, eso está bien.
+
+## Verbos importantes de `dplyr` para recordar
+
+Toda la estrategia de trabajo con datos de `dplyr` se basa en 6 _verbos_:
+
+verbo            descripción
+---------------- ---------------------------------------------
+`select()`	     selecciona columnas (variables)
+`filter()`	     filtra o selecciona las filas (observaciones)
+`arrange()`	     re-ordena las filas
+`mutate()`       crea nuevas columnas o modifica las preexistentes
+`summarise()`    resumen los valores de una variable
+`group_by()`     permite aplicar los verbos anteriores en subgrupos (_split-apply-combine_)
+---------------- ---------------------------------------------
+
+En la mayoría de los casos la sintaxis es:
+
+`function(que_datos, que_hacer_con_los_datos)`
+
+donde `que_datos` es el nombre del set de datos (un `data.frame`) y `que_hacer_con_los_datos` indicar que operación, condicion, transformacion, etc. aplicar a las filas y columnas.
+
+Veamos unos ejemplos
+
+## Seleccionando variables
+
+Para seleccionar columnas (variables) de interes usamos `select()`. La selección se puede hacer por nombre de la columna (con o sin comillas) o indicando su posición.
+
+Las columnas del set de datos de ejemplo se denominan:
+
+```{r}
+names(novillos)
+```
+
+Si quisieramos seleccionar las columnas `Procedencia`, `Peso_inicial`, `Peso_anterior` y  `Peso`, podríamos ejectuar:
+
+```{r}
+select(novillos, Procedencia, Peso_inicial, Peso_anterior, Peso)
+```
+
+El resultado es un nuevo `data.frame` o `tibble` que sólo contiene las 4 columnas seleccionadas. Si quisieramos guardar este resultado aparte.
+
+```{r, out.lines = 15}
+pesos <- select(novillos, Procedencia, Peso_inicial, Peso_anterior, Peso)
+pesos
+```
+
+Cuando se imprime en la consola, es lo mismo que usar `print()` la cual por defecto muestra las 10 primeras observaciones y la cantidad de columnas que entran en la pantalla. Aquellas columnas que no entran son indicadas al pie.
+
+Si uno desea ver más registros se puede usar el argumento `n = ` de `print()`
+
+```{r}
+print(pesos, n = 15)
+```
+
+Con `n = "all"` se imprimen todas (no se muestra por razones obvias)
+
+El orden en que aparecen las variables en el resultado es el orden que se utilizó al seleccionarlas.
+
+```{r}
+select(novillos, Procedencia, Peso, Peso_inicial, Peso_anterior)
+```
+
+También se puede usar los comandos `starts_with()`, `ends_with()`, `contains()`, etc (ver `?select_helpers)` para más opciones). Para elegir varias columnas que tienen un patrón sin tener que tipear todos los nombres.
+
+```{r}
+select(novillos, starts_with("P"))
+```
+
+Para omitir algunas columnas en la seleccion se puede usar el `-` antes del nombre. Por ejemplo, omitir la columna `IDV` y todas las que empiezan con `P`.
+
+
+```{r}
+select(novillos, -IDV, -starts_with("P"))
+```
+
+## Seleccionando observaciones
+
+Otra tarea muy frecuente es seleccionar casos o observaciones que cumplan con alguna condición. Esto se lleva a cabo con `filter()`. Se pueden usar los operadores _booleanos_ `==`, `>`, `<`, `>=`, `<=`, `!=`, `%in%`) para crear pruebas o condiciones lógicas.
+
+Por ejemplo, para seleccionar los novillos de `Los Corralitos`:
+
+```{r}
+filter(novillos, Procedencia == 'Los Corralitos')
+```
+
+Para crear un subconjunto podemos asignarlo y crear un nuevo set de datos.
+
+```{r}
+corralitos <- filter(novillos, Procedencia == 'Los Corralitos')
+```
+
+La selección se puede hacer por más de una condición. Por ejemplo, seleccionar los de `Los Corralitos` que pesen más de 300 kg:
+
+```{r}
+filter(novillos, Procedencia == 'Los Corralitos', Peso > 300)
+```
+ 
+`filter()` asume que cada condicion se debe cumplir en simultaneo para que la observación sea seleccionada. Esto equivale a utilizar el operador `&` (_Y_). En caso de querer seleccionar aquellos registros que cumple una u otra condicion se usa el operador `|` (_O_). Poniendo `!` delante de la condicion se invierte la selección.
+
+Por ejemplo, para obtener novillos que son de `Los Corralitos` **O** pesan más de 300 kg.
+
+```{r}
+filter(novillos, Procedencia == 'Los Corralitos' | Peso > 300)
+```
+
+## Encadenando operaciones (operador `%>%`)
+
+El operador `%>%` permite encadenar operaciones sucesivas para evitar tener que crear tablas intermedias o anidar funciones. El operador y se le de izquierda a derecha y se puede traducir como _luego_. 
+
+Por ejemplo, reportar los `IDV` y `Peso` de los novillos con más de 250 kg. Esto implicaría seleccionar las columnas de interés creando tablas intermedias y _luego_ filtrar la tabla o vice versa.
+
+Creando tablas intermedias
+
+```{r}
+novillos2 <- select(novillos, IDV, Peso)
+novillos2
+novillos2 <- filter(novillos2, Peso > 250)
+novillos2
+```
+
+Anidando las funciones:
+
+```{r}
+filter(select(novillos, IDV, Peso), Peso > 250)
+```
+
+Una opción más clara para leer y eficiente es usando `%>%`
+
+```{r}
+novillos %>%
+  select(IDV, Peso) %>%
+  filter(Peso >  250)
+```
+
+Con `%>%` se puede omitir el nombre de la tabla sobre la que se está trabajando (bonus: menos tipeo). 
+
+La última opción se lee: _tomar la tabla `novillos`, **luego** seleccionar las columnas `IDV` y `Peso`, **luego** filtrar los novillos con pesos mayores a 250 kg. 
+
+
+## Ordenar las filas
+
+Para ordenar según algún criterio aplicado a las columnas se usa  `arrange()`. Por ejemplo, continuar con lo anterior pero mostrar ordenadospor peso.
+
+```{r}
+novillos %>%
+  select(IDV, Peso) %>%
+  filter(Peso >  250) %>%
+  arrange(Peso)
+```
+
+Con `decs(variable)` se ordena de mayor a menor
+
+```{r}
+novillos %>%
+  select(IDV, Peso) %>%
+  filter(Peso >  250) %>%
+  arrange(desc(Peso))
+```
+
+## Crear o transformar columnas
+
+Para crear nuevas columnas aplicando funciones a otras, o bien para transformar columnas se usa `mutate()`. Se pueden modificar más de una columna a la vez. Por ejemplo, suponiendo que interesa obtener la diferencia de peso desde el inicio del ciclo:
+
+`dif_peso = Peso - Peso_inicial`
+
+```{r}
+novillos %>% 
+  mutate(dif_peso = Peso - Peso_inicial) %>%
+  select(Peso, Peso_inicial, dif_peso)  # para que se vea mejor el resultado 
+```
+
+Esto no cambia el set de datos `novillos` ya que no se lo asignó a ningun objeto. Para sobreescribir o actualiza el set de datos `novillos` hay que asignarlo al mismo objeto.
+
+```{r}
+novillos <- novillos %>% 
+  mutate(dif_peso = Peso - Peso_inicial)
+```
+
+**Aclaración**: Si se hubiese usado `select()` el set de datos novillos solamente contendría las columnas seleccionadas.
+
+### Resumir datos
+
+Mediante `summarise()` se pueden aplicar funciones para resumir en un solo valor los valores de las columnas. Las funciones a aplicar deben devolver un único valor, por ejemplo `mean()`. Si usamos `summary()` esto devolverá 6 valores y dará error.
+
+```{r}
+novillos %>%
+  summarise(
+    media = mean(Peso), 
+    sd = sd(Peso), 
+    n = n(), 
+    suma = sum(Peso), 
+    procedencias = n_distinct(Procedencia)
+  )
+```
+
+Nuevamente estos resultados pueden asignarse a otro objeto o bien encadenarse con otras operaciones.
+
+### Agrupar (último pero no menos importante)
+
+El verbo `group_by()` es muy útil para aplicar operaciones en subgrupos y presentar todo junto (_split-apply-combine_). Lo que hace es indicar que en el `data.frame` hay una o más variables que conforman los grupos. Luego cada operación se aplica a esos subgrupos.
+
+Ejemplo: calcular media, desvio, n y suma para cada procedencia, descartando los que tienen `NA` en `Procedencia`
+
+```{r}
+novillos %>%
+  filter(!is.na(Procedencia)) %>% 
+  group_by(Procedencia) %>%
+  summarise(
+    media = mean(Peso),
+    sd = sd(Peso),
+    n = n(),
+    suma = sum(Peso)
+  )
+```
+
+## Tablas pivot
+
+Al igual que `dplyr`, las funciones de `tidyr` son compatibles con el operador `%>%`.
+
+Las funciones más importantes de este paquete son `pivot_longer()` y `pivot_wider()`, las cuales permiten de manera facil convertir tablas apaisadas en tablas longitudinales los nombres de algunas variables pasan a ser los valores de una nueva variable y los valores se combinan en una nueva variable.
+
+**Formato _wide_**
+
+```
+x    y
+1    a
+2    b
+3    c
+```
+
+**Formato _long_**
+
+```
+Variable Valor
+x        1
+x        2
+x        3
+y        a
+y        b
+y        c
+```
+
+Veamos un ejemplo: las variables `Peso`, `Peso_inicial` y `Peso_anterior` pueden verse como la variable `Peso` medida en 3 momentos. Podríamos generar una tabla longitudinal combinando estas 3 variables en una sola y creando otra que indique el momento de medición.
+
+```{r}
+pesos_long <- novillos %>% 
+  pivot_longer(cols = contains("Peso"), names_to = "momento", values_to = "peso") %>% 
+  select(IDV, Procedencia, momento, peso)
+pesos_long
+```
+
+Como vemos, ahora tenemos una tabla que para cada novillo `IDV`, tiene los pesos en los distintos momentos no como columnas sino como valores de la variable `peso` y la columna `momento` identifica el asocia el momento en que se pesó el animal.

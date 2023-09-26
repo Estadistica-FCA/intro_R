@@ -1,0 +1,223 @@
+---
+title: "Visualización de datos con `ggplot2`"
+---
+
+
+**R** tiene por defecto el paquete `graphics`, también conocido como _base plot system_, que provee la función genérica `plot()` para hacer gráficos simples, y otras funciones para gráficos específicos (`hist()`, `barplot()`, `boxplot()`, etc). 
+
+Usa un enfoque de _papel y lapiz_ por capas donde el gráfico final es una sumatoria de capas que se agregan una a la vez sin posibilidad de modificarse luego. Generalmente es OK para gráficos simples o exploratorios. Para gráficos más complejos (con subgrupos o multipanel) requiere programar más. Una desventaja es la sintaxis poco consistente. 
+
+El paquete `ggplot2`, desarrollado por [Hadley Wickham](http://hadley.nz/), está basado en la filosofía _Gramática de gráficos_ ( _grammar of graphics_ , por eso `gg`). Combina los dos enfoques: _por capas_ y _función_. 
+
+Uno provee los datos, indica que variables asignar a las estéticas (ejes, escalas, colores, símbolos) y las geometrías o formas que se quieren graficar y `ggplot2` se encarga del resto. Se puede ir agregando capas. Es muy potente para la exploración y visualización de datos en formato de tabla con filas (observaciones) y columnas (variables).
+
+
+## ¿Cómo conseguir `ggplot2`?
+
+Para acceder a estos paquetes instalarlos/cargarlos individualmente:
+
+```{r, eval = F}
+pacman::p_load(ggplot2)
+```
+
+O bien con otros paquete de la familia `tidyverse`
+
+```{r, eval = T}
+pacman::p_load(tidyverse)
+```
+
+**R** va a avisarnos en la consola que esta enmascarando (reemplazando) algunas funciones que ya estaban en el entorno, o bien el paquete nos devuelve algun mensaje. A menos que diga `Error ...`, eso está bien.
+
+
+## Componentes del gráfico en `ggplot2`
+
+`ggplot2` implementa una variante _por capas_ de este paradigma gramática de gráficos de [Leland Wilkinson](https://www.springer.com/in/book/9780387245447) (`gg` es por _grammar of graphics_). Como resultado, se crean una serie de capas que permiten describir y construir visualizaciones de manera estructurada en cuanto a representación de los elementos pero a su vez flexible para generar combinaciones nuevas. 
+
+Un gráfico se define por la combinación de capas (`layers`), escalas (`scales`), coordenadas (`coords`) y facetas (`facets`). Adicionalmente a estos componentes se pueden aplicar temas (`themes`) que permiten controlar los detalles del diseño de la visualización.
+
+### Layers
+
+Los `layer` se construyen con las funciones `geom_*` y `stat_*` que veremos más adelante. Constan de 5 elementos: 
+
+- `data`, set de datos (`data.frame` o similar) que contiene la información que se desea visualizar.
+
+- `mapping`, elementos de mapeo definidos mediante `aes()` para indicar la forma en que la las variables y observaciones van a ser representadas en la visualización mediante atributos estéticos (ejes, lineas, colores, rellenos, etc). 
+
+- `stat`, funciones estadísticas que resumen los datos aplicando funciones estadísticas, e.g. promedio, agrupamiento y conteo de observaciones, o ajuste de un modelo lineal o suavizado, etc.
+
+- `geom`, geometrías o formas que representan lo que realmente se ve en un gráfico: puntos, líneas, polígonos, etc.
+
+- `position`, ajuste de posición de los elementos `geoms` dentro de un layer para evitar su superposición.
+
+Generalmente, sobre todo para gráficos simples, `data` y `mapping` se definen una vez para todo el gráfico dentro de la función `ggplot()`. En otras situaciones se hace a nivel de cada `layer`.
+
+### Scales
+
+Asignan los valores del espacio de datos a valores en el espacio de los elementos estéticos (`aesthetics` o `aes`). Por ejemplo, el uso de un color, forma o tamaño de en un `geom` puede ser controlado por un atributo de los datos. Las escalas también definen las leyenda y los ejes.
+
+### Coordenadas
+
+Sistema de coordendas (`coord`) que define que variables definiran el espacio del gráfico y como se representarán, e.g. coordanedas cartesianas, polares, etc.
+
+### Paneles (`facets`)
+
+Es un elemento que permite especificar una o más variables para dividir el gráfico en paneles y así mostrar subgrupos de datos. Esto permite ver visualizar relaciones condicionales entre variables, e.g. `y ~ x | z`, es decir, que pasa con la variable `x` e `y` cuando cambia `z`.
+
+### Temas
+
+Adicionalmente a estos componentes se pueden aplicar temas (`themes`) que permiten controlar los detalles del desieño de la visualización, tipografía, posición de algunos objetos, paleta de colores, etc. Los valores predeterminados de `ggplot2` son un buen punto de partida pero exiten opciones predefinidas que pueden modificarse para generar un tema particular. Otra fuente para consultar es el trabajo de [Tufte](https://www.edwardtufte.com/tufte/)
+
+## Primer gráfico paso a paso
+
+```{r, eval = T, echo = T, out.lines = 10}
+pacman::p_load(rio)
+novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
+novillos
+```
+
+Veamos con un ejemplo como se combinan los componentes anteriormente vistos para realizar un gráfico simple. Para esto vamos a usar el set de datos  `r xfun::embed_file("datasets/pesada_novillos.xlsx", text = "pesada_novillos.xlsx")`
+
+Nuestro primer gráfico tendrá como objetivo mostrar la relación que existe entre `Peso_anterior` y `Peso` (actual), y potencialmente ver si ésta es similar entre procedencias. Veamos paso por paso como se construye el gráfico.
+
+Primero definimos el set de datos que usaremos:
+
+```{r}
+ggplot(data = novillos)
+```
+
+Como vemos esto no produjo nada ya que no indicamos cuales son las variables que queremos graficar y cómo graficarlas. Nuestro `layer` solo tiene la información de `data`. Agreguemos ahora la información de `mappping` usando `aes()`. Usando el operador `+` podemos concatenarlo al comando anterior.
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_inicial, y = Peso)
+```
+
+Aquí vemos que, si bien no hemos graficado nada, la información suministrada permite a `ggplot` identificar los ejes, definir el espacio de coordanadas (cartesianas por defecto) y proponer unos límites en función del rango de valores. Agreguemos ahora la geometría: en este caso tiene sentido usar `geom_point()` ya que queremos mostrar un punto por observación
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point()
+```
+
+Como vemos ahora el gráfico va tomando forma. Este tipo de gráficos se llama _gráfico de dispersión_ y muestra la relación entre ambas variables. Por defecto no se aplica ninguna transformación estadística lo que equivale a (`stat = "identity"`).
+
+A este gráfico vamos a agregarle alguna función que permita resumir la relación entre ambas variables, por ejemplo un modelo de regresión. La mejor forma de representarlo sería una línea. Para eso vamos a agregar otro `layer` con `geom_line()` donde indicaremos una transformación de los datos `stat = smooth`.
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm')
+```
+
+Hay una relación positiva para todo el set de datos pero puede enmascarar algun patrón por `Procedencia`. Esta información la podemos agregar con otros atributos estéticos como por ejemplo `color`:
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, color = Procedencia) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm')
+```
+
+De este gráfico surge que la relación en todos los casos es positiva pero varia un poco según procedencia.
+
+Dependiendo el tipo de `geom` tenemos distintos atributos estéticos para explorar: `color` y `alpha` (transparencia) para todos, `shape` y `size` para puntos, `linewidth` y `linetype` para lineas, y `fill` para barras, etc. Que tipo de atributo estético depende también de la naturaleza de la variable: continua o discreta. Veamos como queda mapear los valores de `Procedencia` al atributo `shape` (forma):
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, shape = Procedencia) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm')
+```
+
+Las estéticas se pueden combinar para mostrar mas relaciones entre variables. Por ejemplo, además de `shape = Procedencia` podríamos agregar la información de los pesos iniciales como color:
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, shape = Procedencia, 
+      color = Peso_inicial) +
+  geom_point() +
+  geom_line(aes(group = Procedencia), stat = "smooth", method = "lm")
+```
+
+Claramente esto es una exageración pero muestra la potencialiadad de `ggplot2`. Siempre tener en cuenta balance entre simplicidad del gráfico y la cantidad de información que queremos comunicar.
+
+Finalmente vamos a ver como mejorar los nombres de los ejes, leyendas y agregar un título. Esto lo hacemos con `labs()`. Tambien agregamos algun tema predefinido ocomo `theme_bw()`.
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, color = Procedencia) +
+  geom_point() +
+  geom_line(stat = "smooth", method = "lm") +
+  labs(x = "Peso anterior (kg)", y = "Peso actual (kg)",
+       color = "Procedencia", title = "Relación peso anterior y actual") +
+  theme_bw()
+```
+
+## Gráficos condicionales o por paneles: `facets`
+
+A veces es util mostrar los subgrupos en gráficos individuales o paneles. Esto se hace facilmente usando una o más variables condicionales con `facets`. Este tipo de gráficos también se denomian graficos condicionales ya que muestran la relacion de al menos dos variables de interés a través de los niveles de una tercera variable: `y ~ x | z`.
+
+Por ejemplo, en el primer gráfico vimos como mostrar la relación entre los pesos y las procedencias como color. Eventualmente, ese gráfico podria dividirse en 4 paneles (uno por procedencia) y mostrar en cada uno el subconjunto de puntos.
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm') +
+  facet_wrap(~ Procedencia)
+```  
+
+Hay dos tipos de facetado:  `facet_wrap()` y `facet_grid()`. El primero permite agregar una o mas variables condicionales pero cada subpanel se muestra secuencialmente. Funciona bien cuando tenemos una sola variable para dividir los subplots o pocos niveles en la combinación. La forma de indicar la variable es  `~ variable`. 
+
+En cambio, `facet_grid()` permite organizar los subplots en filas y columnas. Las varialbes se indican en este orden `fila ~ columna`. Para este ejemplo vamos a usar la variable `Tropa`:
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm') +
+  facet_grid(Tropa ~ Procedencia)
+```  
+
+Por defecto los subplots o `facets` tienen escalas iguales en ambos ejes para comparar. A veces conviene dejar una o las dos escalas variar libremente, esto se hace con el argumento `scales` y las palabras clave `'free_y'`, `'free_x'` o `'free'` (ambas a la vez).
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm') +
+  facet_grid(Tropa ~ Procedencia, scales = "free")
+```
+
+Otra aspecto importante en la visualización usando facets es el texto que identifica cada panales. Esto depende de como estan configurados los datos y se controla con el argument `labeller`. Por defecto se toma el valor del factor que se usa para definir los grupos. En algunos casos conviene incluir el nombres de la variable. 
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm') +
+  facet_grid(Tropa ~ Procedencia, scales = "free", labeller = label_both)
+```
+
+
+## Temas
+
+Los temas en `ggplot` hacen referencia al control fino de la posición, el aspecto, y las formas de los distintos componentes del gráfico. El listado de componentes que se pueden modificar en un tema se incluyen en `?theme()`. Como vemos la lista es larga ya que cada aspecto del gráfico puede controlarse permitiendo crear nuestros propios temas. 
+
+`ggplot2` algunos temas predefinidos. Por defecto los gráficos utilizan un tema llamado `theme_gray()` que tiene una seleccion de parámetros elegante y que sirve para la mayoría de los casos. Existen otros temas específicos que puden ser un punto de partida para hacer modificaciones extra.
+
+Por ejemplo, el tema `them_bw()` remueve el fondo gris pero si queremos quitar la grilla podemos hacer:
+
+```{r}
+# Modificar el tema
+mi_tema <- theme_bw() + theme(panel.grid = element_blank())
+
+# Aplicar nuestro nuevo tema.
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, color = Procedencia) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm') +
+  mi_tema
+```

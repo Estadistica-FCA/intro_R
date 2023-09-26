@@ -1,0 +1,92 @@
+---
+title: "Importar datos en **R**"
+---
+
+```{r, echo = F, include = F}
+library(knitr)
+```
+
+Un aspecto importante para cualquier análisis de datos es acceder a los datos! 
+
+Los datos pueden estar almacenados en diversos formatos: archivos de texto (`*.txt`, `*.dat`, etc), texto separado por comas (`*.csv`), planillas de cálculos (`*.xls` o `*.xlsx`), etc. Existen diversas funciones que vienen por defecto en **R** o bien en paquetes específicos que permiten leer virtualmente cualquier formato de archivos. 
+
+En este curso vamos a trabajar con archivos que ya se encuentran en planillas de cálculo tipo Excel. A continuación vamos a detallar dos formas de abrir archivo `xls|xlsx` usando el paquete `rio`.
+
+
+A continuación veremos como cargar el archivo `r xfun::embed_file("datasets/urbana_weather.xlsx", text = "urbana_weather.xlsx")` que contiene datos meteorológicos de la ciudad de Urbana (IL). 
+
+## Desde la consola (recomendado)
+
+Una vez que descargamos el archivo datos en la carpeta `data` dentro de nuestro directorio de trabajo o proyecto podemos leerlo en **R** usando la función `import()` del paquete `rio`. Esta función se encargará de llamar la función necesaria para leer el archivo que le suministremos.
+
+```{r, eval = T, echo = T, out.lines = 10}
+# Cargar rio (si no estaba cargado antes)
+pacman::p_load(rio)
+
+# importar los datos
+urbana <- import("datasets/urbana_weather.xlsx", setclass = "tibble")
+urbana
+```
+
+El argumento `setClass` permite especificar en que tipo de objeto importarlo. Por defecto es un `data.frame`. En este caso mostramos como indicar que queremos crear un objeto tipo `tibble`, que es un `data.frame` con anabólicos. 
+
+Si sólo estuvieramos ineresados en el rango `A1:C5` (primeros 4 registros de las 3 primeras columnas), podríamos usar:
+
+```{r, eval = T, echo = T, out.lines = 10}
+urbana2 <- import(file = "datasets/urbana_weather.xlsx", range = "A1:C5")
+urbana2
+```
+
+
+
+
+## Desde el importador de datos de **RStudio**
+
+**RStudio** cuenta con un asistente de importación de datos (`File > Import Dataset`) que brinda interfase a varias funciones especializadas en la importación de datos de paquetes específicos como `readr`, `readxl`, etc. 
+
+En el menú `File > Import Dataset` o bien el ícono del panel `Environment` despliega una lista con disitintas opciones de importación: nos interesa `From Excel (readxl)...` 
+
+```{r, echo = F, out.width = "75%", fig.align = 'center', fig.pos= 'h', out.extra='', fig.cap="Importador de datos"}
+include_graphics("assets/import_dataset.png", auto_pdf = T)
+```
+
+```{r, echo = F, out.width = "75%", fig.align = 'center', fig.pos= 'h', out.extra='', fig.cap="Importador de datos"}
+include_graphics("assets/import_dataset_menu.png", auto_pdf = T)
+```
+
+Este menú tiene cuatro paneles:
+
+1. Una barra de direccion para indicar la ruta al archivo o URL.
+
+2. Una vista previa del contenido del archivo
+
+3. Opciones de importación: aquí se puede especificar el nombre del objeto que se creará dentro de **R** (`Name`), la cantidad de lineas a leer, el número de la hoja, el rango de celdas, líneas a saltear (`skip`) y el identificador de datos `NA`.
+
+4. Vista previa del código. En esta parte se puede visualizar como se construye el comando que se ejecturará al clickear en `Import`.
+
+**Aclaración**: es muy importante que el código generado por este asistente sea incluido en el script para futuras sesiones.
+
+## Verificación de los datos
+
+Una vez importados los datos es conveniente verificar como han sido leidos en el **R**. 
+
+Como vimos antes, una alternativa es _imprimirlo_ escribiendo el nombre del objeto directamente en la consola. 
+
+```{r, eval = T, out.lines = 10}
+urbana
+```
+
+Otra alternativa es utilizar la función `View()` que muestra la tabla de datos en un formato de planilla interactiva de solo lectura.
+
+```{r, eval = F}
+View(urbana)
+```
+
+Si bien podemos inferir que tipo de datos se leyeron, una alternativa mejor es mirar la estructura con la función `str()`.
+
+```{r}
+str(urbana)
+```
+
+Esto nos está diciendo que el objeto es un `tibble` donde cada columna es una variable y cada fila una observacion. En nuestro set de datos hay 4 variables (`YEAR`, `month`, `precip` and `temp`) y 240 observaciones. Junto con el nombre de cada variable hay una breve descripción del tipo de datos (`int` para `integer`, `chr` para `character` y `num` para `numeric`) y una vista previa de los primeros valores.
+

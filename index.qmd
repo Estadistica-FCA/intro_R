@@ -1,0 +1,31 @@
+# Bienvenidos! {.unnumbered}
+
+¡Bienvenidos al curos de _Introducción al Análisis de Datos con R_!
+
+## Objetivos del curso
+
+- Reconocer al lenguaje R, y su entorno de desarrollo RStudio, como herramienta para el procesamiento y análisis de datos.
+
+- Identificar y explicar los tipos y estructuras de datos representados en R.
+
+- Identificar y emplear funciones y librerías útiles para el procesamiento, visualización y análisis de datos en R.
+
+- Aplicar técnicas estadísticas básicas para analizar datos en R.
+
+- Crear visualizaciones efectivas para comunicar resultados.
+
+- Aplicar los principios de reproducibilidad para procesar y analizar datos y comunicar resultados
+
+## Contenidos
+
+- **Unidad 1**: ¿Qué es R y RStudio? Instalación de R y RStudio. Características RStudio: menús, paneles, etc. Sintaxis de R, convenciones y símbolos de R. Sistema de librerías: instalación y carga. Sistema de ayuda. Tipos de datos: numérico, caracter, lógico. Funciones. Estructuras de datos: vectores, listas, hoja de datos (data frame). El flujo de trabajo en un proyecto de análisis de datos: proyectos, scripts y notebooks. Análisis reproducible.
+
+- **Unidad 2**: Manipulación de datos con R. Importación y exportación de datos. Librería tidyverse. Gramática de manipulación de datos. Limpieza, normalización, combinación y resumen de datos numéricos y categóricos. 
+
+- **Unidad 3**: Visualizaciones, gráficos. Nociones generales sobre tipos de gráficos y sus usos. Introducción a ggplot2. La gramática de gráficos: estéticas, geometrías, escalas, temas, etc. Gráficos condicionales y multi-paneles.
+
+- **Unidad 4**:  Programación literaria. Generación de informes o reportes con Quarto/RMarkdown.
+
+
+Sin más preámbulos... comencemos!
+
