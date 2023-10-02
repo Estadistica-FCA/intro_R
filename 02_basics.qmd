@@ -1,10 +1,18 @@
 ---
-title: "Aspectos básicos del lenguaje **R**"
+title: "Aspectos básicos de **R**"
 ---
+
+En esta sección vamos a aprender nociones básicas de la sintaxis de R, tipos de datos y estructuras
 
 ## Operadores matemáticos y lógicos
 
-Las operaciones matemáticas básicas se realizan usando los símbolos convencionales: suma (`+`), resta (`-`), división (`/`), producto (`*`) y potencia (`^`) 
+Como vimos antes, las operaciones matemáticas básicas se realizan usando los símbolos convencionales: 
+
+- suma (`+`) 
+- resta (`-`) 
+- división (`/`)
+- producto (`*`) 
+- potencia (`^`)
 
 Por ejemplo, $1 + \left( 3 \times 4 + \dfrac{5 -2}{3} \right)^2$ en **R** es:
 
@@ -12,12 +20,18 @@ Por ejemplo, $1 + \left( 3 \times 4 + \dfrac{5 -2}{3} \right)^2$ en **R** es:
 1 + (3 * 4 + (5 - 2)/3)^2
 ```
 
+También se pueden evaluar expresiones lógicas:
 
-También se pueden evaluar expresiones lógicas: igual (`==`), distinto (`!=`), mayor que (`>`), menor que (`<`), mayor o igual que (`>=`), menor o igual que (`<=`). El resultado es `TRUE` (verdadero) o `FALSE` (falso). 
+- _igual que_ (`==`)
+- _distinto que_ (`!=`)
+- _mayor que_  (`>`) 
+- _menor que_  (`<`)
+- _mayor o igual que_  (`>=`)
+- _menor o igual que_(`<=`)
 
-Por ejemplo, podemos evaluar si 3 es igual 4
+El resultado es `TRUE` (verdadero) o `FALSE` (falso). Por ejemplo, podemos evaluar si 3 es igual 4
 
-```{r, }
+```{r}
 3 == 4
 ```
 
@@ -41,7 +55,7 @@ Devuelve `FALSE` porque `3 == 4` no es verdadero. Si reemplazamos `&` por `|` va
 3 == 4 | 5 >= 3
 ```
 
-Tambien se pueden combinar con operaciones matemáticas...
+También se pueden combinar con operaciones matemáticas...
 
 ```{r}
 4 * 2 == 8
@@ -49,11 +63,24 @@ Tambien se pueden combinar con operaciones matemáticas...
 
 En este caso primero evalúa `4 * 2` y luego compara el resultado con `8`
 
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Hallar el resultado de la siguiente expresión $(2+4)^2$ y $2^2 + 4^2$.
+
+2. Comparar ambos resultados en una linea de comando.
+
+:::
+  
+
 ## Variables y objetos
 
 Un objeto es un espacio de la memoria que almacena un pedazo de información (una cifra, un conjunto de números, el resultado de un análisis, etc). También se denomina _variables_ ya que su contenido puede cambiar. En **R** prácticamente todo puede representarse como un _objeto_. 
 
-Los objetos o variables se crean _asignandoles_ informacicon (números, letras, resultados de operaciones, etc), con el símbolo `<-` (`ALT + - `) o `=`. Esta informacion se puede recuperar, modificar o utilizar para otros cálculos.
+Los objetos o variables se crean _asignándoles_ información (números, letras, resultados de operaciones, etc), con el símbolo `<-` (`ALT + - `) o `=`[^1]. Esta informacion se puede recuperar, modificar o utilizar para otros cálculos.
+
+[^1]: Si bien `<-` funciona igual que `=` en la mayoría de los casos, por convención se usa `<-` para asignar y `=` para argumentos dentro de las funciones.
 
 Supongamos que queremos asignar el valor 2 a la variable `x`.
 
@@ -67,7 +94,7 @@ En la consola vuelve a aparecer el simbolo `>` y nada más. En el ambiente se ve
 x
 ```
 
-Tambien podemos reusarlo en otro calculo, por ejemplo obtener 2 veces `x`.
+También podemos reusarlo en otro calculo, por ejemplo obtener 2 veces `x`.
 
 ```{r}
 2 * x
@@ -80,7 +107,9 @@ y <- 2 * x +1
 y
 ```
 
-**Aclaración** `r fontawesome::fa("exclamation-circle")`: los nombres de las variables no deben empezar con números ni contener espacios. No pueden usarse operadores (`*+-/&%`) en los nombres pero puede usarse `.` o `_`. 
+::: {.callout-caution icon=true title="Nombres" collapse=true}
+
+Los nombres de las variables no deben empezar con números ni contener espacios. No pueden usarse operadores (`*+-/&%`) en los nombres pero puede usarse `.` o `_`. 
 
 ```{r, eval = F}
 # Mal
@@ -93,6 +122,10 @@ x.2 <- 3
 x2 <- 3
 ```
 
+:::
+
+::: {.callout-caution icon=true title="Mayúsculas" collapse=true}
+
 También **R** es sensibles a mayúsculas
 
 ```{r}
@@ -104,16 +137,18 @@ a <- 5
 A == a
 ```
 
+:::
+
 ### Vectores
 
-Son los objetos más simples a partir de los cuales se construyen otros tipos de objetos. Se crean utilizando la función `c()` (_combine_) para "combinar" **datos del mismo tipo** 
+Son los objetos más simples a partir de los cuales se construyen otros tipos de objetos. Se crean utilizando la función `c()` ( _combine_ ) para "combinar" **datos del mismo tipo** 
 
 ```{r}
 x <- c(13, 45, 67, 45)
 x
 ```
 
-En el caso de mezclar de datos, **R** los va a _convertir_  al tipo de datos más simple. 
+En el caso de mezclar de datos, **R** los va a _convertir_ al tipo de datos más simple. 
 
 Por ejemplo: si queremos crear un vector con 3 valores: lógico, numérico y texto, **R** va a asumir que todos los elementos son de tipo _texto_
 
@@ -134,7 +169,7 @@ Veremos más adelante los distintos tipos.
 
 ### Funciones y argumentos
 
-Para crear los vectores utilizamos una funcion `c()`. Las funciones dentro de **R** tienen la siguiente forma
+Para crear los vectores sin pensarlo utilizamos una funcion `c()`. Las funciones dentro de **R** tienen la siguiente forma
 
 `nombre_funcion(arg1, arg2, ...)`
 
@@ -145,7 +180,7 @@ Por ejemplo, la función `round`()` tiene los argumentos:
 - `x`, para pasar el número o vector numérico que queremos redondear
 - `digits = 0` para indicar el numero de dígitos a usar, por defecto 0.
 
-Supongamos que queremos redondear el numero `3.141593` a 3 dígitos.
+Supongamos que queremos redondear el numero `3.141593` a 3 dígitos. Para eso usamos la función `round()` (buscar en la ayuda `?round`)
 
 ```{r}
 # Indicando los argumentos
@@ -223,6 +258,48 @@ x <- c(23, 43, 21, 34, 56, 3, 23, 3)
 x > 30
 ```
 
+
+
+<!-- 
+
+Agregar alguna actividad cortita sobre tipo de datos
+
+--> 
+
+### Factores (`factor` y `ordered`)
+
+Si los elementos de vector de tipo texto (`character`) y representan niveles nominales (categorías), el objeto puede convertirse a `factor` de modo tal que los valores son reemplazados por un número que se asocia a los niveles del factor (ordenados alfabeticamente, a menos que se indique otra cosa).
+
+Un ejemplo de un vector tipo `character`.
+
+```{r}
+x <- c('bajo', 'medio', 'alto', 'alto', 'bajo', 'bajo')
+x
+```
+
+Sólo se muestran los valores (`bajo`, `medio` y `alto`). No hay información de niveles. Ahora si aplicamos `factor(x)`:
+
+```{r}
+y <- factor(x)
+y
+```
+
+Los valores pasaron al atributo `levels` y los datos fueron reemplazados por los identificadores `2`, `3`, y `1` según el orden alfabético de los niveles.
+
+```{r}
+as.numeric(y)
+```
+
+Cuando los niveles tienen una jerarquía u orden, se puede especificar este tipo de relación mediante `as.ordered()` que convierte el `factor` en uno especial `ordered` agregando la relación entre los niveles
+
+```{r}
+z <- factor(x, levels = c('bajo', 'medio', 'alto'))
+z <- as.ordered(z)
+z
+```
+
+Los factores como cualquier vector también se indexan con `[ ]`.
+
 ### Otros tipos de datos
 
 Los valores faltantes se simbolizan en **R** con `NA` (_not available_). Indican que debería haber un valor pero que está faltando.
@@ -252,6 +329,8 @@ O bien valores infinitos (`Inf`):
 ```
 
 ## Estructura de datos
+
+A partir de los tipos de datos que vimos antes, se pueden construir objetos más complejos.
 
 ### Matriz (`matrix`)
 
@@ -355,37 +434,8 @@ trigo[, "rendimiento"]
 trigo[, 3]
 ```
 
-### Factores (`factor` y `ordered`)
+::: {.callout-note icon=true title="Otras estructuras"}
 
-Si los elementos de vector de tipo texto (`character`) y representan niveles nominales (categorías), el objeto puede convertirse a `factor` de modo tal que los valores son reemplazados por un número que se asocia a los niveles del factor (ordenados alfabeticamente, a menos que se indique otra cosa).
+Las estructura listadas arriba son nativas de **R**. Los paquetes o complementos pueden agregar nuevas estructuras o redifinar las existentes·
 
-Un ejemplo de un vector tipo `character`.
-
-```{r}
-x <- c('bajo', 'medio', 'alto', 'alto', 'bajo', 'bajo')
-x
-```
-
-Sólo se muestran los valores (`bajo`, `medio` y `alto`). No hay información de niveles. Ahora si aplicamos `factor(x)`:
-
-```{r}
-y <- factor(x)
-y
-```
-
-Los valores pasaron al atributo `levels` y los datos fueron reemplazados por los identificadores `2`, `3`, y `1` según el orden alfabético de los niveles.
-
-```{r}
-as.numeric(y)
-```
-
-Cuando los niveles tienen una jerarquía u orden, se puede especificar este tipo de relación mediante `as.ordered()` que convierte el `factor` en uno especial `ordered` agregando la relación entre los niveles
-
-```{r}
-z <- factor(x, levels = c('bajo', 'medio', 'alto'))
-z <- as.ordered(z)
-z
-```
-
-Los factores como cualquier vector tambien se indexan con `[ ]`.
-
+:::

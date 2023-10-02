@@ -11,10 +11,11 @@ book:
     - index.qmd
     - 01_introduccion.qmd
     - 02_basics.qmd
-    - 03_import.qmd
-    - 04_wrangling.qmd
-    - 05_viz.qmd
-    - 06_reports.qmd
+    - 03_paquetes.qmd
+    - 04_import.qmd
+    - 05_wrangling.qmd
+    - 06_viz.qmd
+    - 07_reports.qmd
     - references.qmd
 
 bibliography: references.bib

@@ -1,0 +1,57 @@
+---
+title: "Paquetes de **R**"
+---
+
+```{r, echo = F, include = F}
+library(knitr)
+```
+
+En esta sección vamos a aprender como extender las funcionalidades de **R** mediante la instalación y utilización de paquetes o _packages_ 
+
+## ¿Qué son los paquetes?
+
+**R** viene con un conjunto de librerías mínimo denominado `core` que permite realizar una amplia varidedad de análisis y operaciones con los datos. La comunidad que desarrolla **R** prove un repositorio de librerías o paquetes complementarios (`packages`) que expanden notablemente las funcionalidades de **R**.
+
+Los paquetes se deben instalar primero usando la función `install.packages()` por única vez y en cada sesión se deben _cargar_ con `library()`. La siguiente figura resume el proceso:
+  
+```{r, echo = F, out.width="100%"}
+include_graphics("assets/library_install_meme.jpeg")
+```
+
+Suponiendo que queremos instalar el paquete `foo`, se debe ejecutar por única vez: 
+  
+```{r, eval = F}
+install.packages("foo")
+```
+
+Luego, para usar las funciones en cada sesión de trabajo ejecutar:
+  
+```{r, eval = F}
+library("foo")
+```
+
+El manejo de paquetes se puede simplificar enormemente con el paquete `pacman`. Entre otras funciones ofrece la función `p_load()` que carga los paquetes y si no están instalados los instala previamente.
+
+Para instalar `pacman` por primera vez correr el siguiente comando:
+  
+```{r, eval = F}
+# Instalar por unica vez
+install.packages("pacman")
+```
+
+Luego, cuando necesitemos podemos ejecutar `pacman::p_load()`. Por ejemplo, si queremos cargar el paquete `moments`
+
+```{r, eval = F}
+pacman::p_load(moments)
+```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Instalar el paquete `pacman` usando `install.packages()`
+
+2. Cargar/Instalar el paquete `tidyverse` usando `pacman::p_load()`
+
+:::
+  

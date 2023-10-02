@@ -2,16 +2,13 @@
 title: "Comenzando con R"
 ---
 
-
 ```{r, echo = F, include = F}
 library(knitr)
 ```
 
-
-En esta unidad vamos a ver que es, como instalar y usa R y RStudio. Aprenderemos nociones básicas de la sintaxis de R, tipos de datos y estructuras, manejo de librerías o paquetes, y comenzaremos con nuestro poryecto de análisis de datos reproducible.
+En esta sección vamos a ver que es cómo instalar y cómo empezar a usar R y RStudio creando nuestro nuestro proyecto de análisis reproducible de datos.
 
 ## ¿Qué es **R** y **RStudio**?
-
 
 **R** es un lenguaje y entorno para el procesamiento, visualización y análisis estadístico de datos. Fue creado en 1993 por R. Gentleman y R. Ihaka, ambos científicos del Departamento de Estadística de la Universidad de Auckland (Nueva Zelanda). Actualmente su desarrollo y mantenimiento está a cargo del @Rcore. El sitio oficial del proyecto es [www.r-project.org](www.r-project.org).
 
@@ -101,10 +98,18 @@ knitr::include_graphics("assets/rstudio_download_OS.png", auto_pdf = T)
    
 Ahora sí, ya tenemos listo **R** y **RStudio** para empezar a trabajar!!
 
+::: {.callout-note icon=false}
+
+### ACTIVIDAD
+
+1. Instalar **R** y **RStudio**
+
+:::
+
 ## Primera sesión
 
-El entorno de trabajo de **RStudio** se divide en cuatro paneles. La disposición y contenido de los 4 paneles se puede personalizar yendo a `View > Panes > Panes Layout...`.
-A continuación la descripción de los paneles por defecto. 
+El entorno de trabajo de **RStudio** se divide en cuatro paneles. La disposición y contenido de los paneles se puede personalizar yendo a `View > Panes > Panes Layout...`.
+A continuación la descripción de los paneles principales: 
 
 ```{r, echo = F, out.width = "90%", fig.cap = 'Interfase principal de **RStudio**',  out.extra=''}
 include_graphics("assets/RStudio_paneles.png", auto_pdf = T)
@@ -132,6 +137,19 @@ Obetenemos inmediatemente el resultado. Otro ejemplo: el promedio de los número
 ```{r}
 (1 + 3 + 4) / 3
 ```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Escribir una operacion matemática, por ejemplo: `3*4`
+
+2. Escribir algo en la consola. ¿Que sucede?
+
+3. Escribir lo anterior entre comillas `" "`.
+
+:::
+
 
 ### El script
 
@@ -161,7 +179,7 @@ Una vez abierto el script en blanco, se pueden empezar a escribir los comandos d
 (1 + 3 + 4) / 3
 ```
 
-Estos comandos no se van a ejecutar automáticamente ya que solo los hemos escritor en el script. Para ejecutar estos comandos en la consola hay que posicionar le cursor en la linea deseada o bien seleccionar si queremos ejecutar varias a la vez y luego enviarlo a la consoloa con una de las siguientes opciones:
+Estos comandos no se van a ejecutar automáticamente ya que sólo los hemos escrito en el _script_. Para ejecutar los comandos en la consola hay que posicionar el cursor en la línea deseada o bien seleccionar si queremos ejecutar varias a la vez y luego enviarlo a la consola con una de las siguientes opciones:
 
 - Ir al menu `Code > Run Selected Line(s)`
 - Usar el atajo de teclado `CTRL + ENTER` o `CTRL + R`
@@ -179,6 +197,20 @@ Para guardar el script:
 
 2. Elegir la carpeta destino y el nombre de archivo. Automáticamente se agregará la extensión `.R` que corresponde a los scripts.
 
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Abrir un script nuevo 
+
+2. Escribir un comentario
+
+3. Escribir un texto o un comando numérico
+
+4. Guardar el script con el nombre `mi_primer_script.R`.
+
+:::
 
 ### Directorio de trabajo y proyectos
 
@@ -214,7 +246,7 @@ include_graphics("assets/new_project.png", auto_pdf = T)
 include_graphics(c("assets/new_project1.png", "assets/new_project2.png"), auto_pdf = T)
 ```
 
-3. Una vez en el cuadro de diálogo `Create new project` ingresar el nombre del proyecto (e.g. `DOE`) en `Directory name` que será a su vez el nombre de la carpeta que **RStudio** va a crear por nosotros. 
+3. Una vez en el cuadro de diálogo `Create new project` ingresar el nombre del proyecto (e.g. `mi_proyecto`) en `Directory name` que será a su vez el nombre de la carpeta que **RStudio** va a crear por nosotros. 
 
    Luego en `Create project as a subdirectory of` indicar _donde_ queremos que **RStudio** cree la carpeta.  
 
@@ -224,47 +256,27 @@ include_graphics("assets/new_project3.png", auto_pdf = T)
 
 4. Si todo sale bien, se crea la carpeta con el nombre que indicamos y dentro de ésta un archivo con extensión `.Rproj`. Este archivo solamente se usa para abrir el directorio. No se debe sobreescribir con el script.
 
-### Paquetes
+::: {.callout-note icon=false}
 
-**R** viene con un conjunto de librerías mínimo denominado `core` que permite realizar una amplia varidedad de análisis y operaciones con los datos. La comunidad que desarrolla **R** prove un repositorio de librerías o paquetes complementarios (`packages`) que expanden notablemente las funcionalidades de **R**.
+#### ACTIVIDAD
 
-Los paquetes se deben instalar primero usando la función `install.packages()` por única vez y en cada sesión se deben _cargar_ con `library()`. La siguiente figura resume el proceso:
+1. Crear un proyecto nuevo con el nombre "Intro_R" en el escritorio o lugar de preferencia. 
 
-```{r, echo = F}
-include_graphics("assets/library_install_meme.jpeg")
-```
+2. Cerrar **Rstudio**.
 
-Suponiendo que queremos instalar el paquete `foo`, se debe ejecutar por única vez: 
+3. Abrir **Rstudio** desde el proyecto.
 
-```{r, eval = F}
-install.packages("foo")
-```
+4. Copiar el script creado en la actividad anterior dentro del nuevo proyecto.
 
-Luego, para usar las funciones en cada sesión de trabajo ejecutar:
+5. Abrir el script.
 
-```{r, eval = F}
-library("foo")
-```
-
-El manejo de paquetes se puede simplificar enormemente con el paquete `pacman`. Entre otras funciones ofrece la función `p_load()` que carga los paquetes y si no están instalados los instala previamente.
-
-Para instalar `pacman` por primera vez correr el siguiente comando:
-
-```{r, eval = F}
-# Instalar por unica vez
-install.packages("pacman")
-```
-
-Luego, cuando necesitemos podemos ejecutar `pacman::p_load()`. Por ejemplo, si queremos cargar el paquete `moments`
-
-```{r, eval = F}
-pacman::p_load(moments)
-```
-
+:::
 
 ### Ayuda!!!
 
-Por último, y no menos importante, **R** y **RStudio** cuentan con un completo sistema de ayuda. Desde la consola se puede acceder usando la función `?` seguida del nombre de la función o bien `help("nombre")`
+Por último, y no menos importante, **R** y **RStudio** cuentan con un completo sistema de ayuda. 
+
+Desde la consola se puede acceder usando la función `?` seguida del nombre de la función o bien `help("nombre")`
 
 ```{r}
 # Pedir ayuda de la función mean
