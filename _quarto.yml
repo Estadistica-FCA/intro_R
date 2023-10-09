@@ -2,14 +2,15 @@ project:
   type: book
 
 book:
-  title: "intro_R"
+  title: "Introducción al Análisis de Datos con R"
   author:
     - "Agustin Alesso"
     - "Patricia Acetta"
 #  date: "9/26/2023"
   chapters:
     - index.qmd
-    - 01_introduccion.qmd
+    - 00_introduction.qmd
+    - 01_install.qmd
     - 02_basics.qmd
     - 03_paquetes.qmd
     - 04_import.qmd

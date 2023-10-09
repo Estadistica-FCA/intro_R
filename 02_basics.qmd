@@ -2,7 +2,7 @@
 title: "Aspectos básicos de **R**"
 ---
 
-En esta sección vamos a aprender nociones básicas de la sintaxis de R, tipos de datos y estructuras
+En esta sección vamos a aprender nociones básicas de la sintaxis de R, tipos de datos y estructuras.
 
 ## Operadores matemáticos y lógicos
 
@@ -436,6 +436,6 @@ trigo[, 3]
 
 ::: {.callout-note icon=true title="Otras estructuras"}
 
-Las estructura listadas arriba son nativas de **R**. Los paquetes o complementos pueden agregar nuevas estructuras o redifinar las existentes·
+Las estructura listadas arriba son nativas de **R**. Los paquetes o complementos pueden agregar nuevas estructuras o redifinar las existentes.
 
 :::

@@ -1,0 +1,51 @@
+---
+title: "Introducción"
+---
+
+```{r, echo = F, include = F}
+library(knitr)
+```
+
+
+## La necesidad de analizar datos
+
+Hoy en día los datos abundan y están en todos lados. Esto desafía nuestra capacidad para analizarlos y extraer significado de los mismos para tomar decisiones.
+
+La ciencia de datos (data science) es una nueva disciplina que emerge de la combinación de disciplinas existentes y permite convertir datos sin procesar en entendimiento, comprensión y conocimiento. 
+
+```{r, echo = F, fig.cap = 'Diagrama de Venn de la Ciencia de Datos según Conway', out.width = '75%'} 
+include_graphics('assets/Data_Science_VD.png', auto_pdf = T)
+```
+
+Para poder analizar los datos de manera efectiva, es necesario tener conocimientos de computación, matemática/estadística y entendimiento del problema en estudio. La combinación de estas cuatro áreas nos lleva al concepto de Ciencia de Datos.
+
+## ¿Cómo analizamos los datos?
+
+Si bien el análisis de datos es un proceso no lineal que debe adapta a cada situación, existe consenso en cuanto a las principales actividades que se deben desarrollar.
+
+```{r, echo = F, fig.cap = 'Diagrama de Venn de la Ciencia de Datos según Conway', out.width = '75%'} 
+include_graphics('assets/data-science.svg', auto_pdf = T)
+```
+
+Todo análisis compienza con la incorporación de datos a la herramienta que estemos utilizando, **R** en este caso. Los datos pueden estar almacenados de diferentes formas, como archivos, dentro de una base de datos o una API (API). En el curso veremos distintas formas de _incorporar_importar datos dentro de **R** en un formato compatible para su análisis.
+
+Salvo excepciones, una vez importados los datos, es necesarios _ordenarlos_ de alguna forma que permita realizar el análisis que queremos. En la mayoría de los casos necesitaremos que los datos estén almacenados de manera **rectangular** tal que cada columna represente una variable o atributo de los datos y cada fila una o más observaciones o sujetos (formato _apaisado_).
+
+```{r, echo = F}
+include_graphics('assets/tidy-1.svg', auto_pdf = T)
+```
+
+A veces cuando algunas columnas representan valores de una misma variable hay que modificar este formato y _pivotar_ a un formato _longitudinal_. 
+
+Con los datos ordenados podemos concentrarnos en _comprender_ su estructura y empezar a jugar con ellos. Esta etapa no es para nada lineal y generalmente implica un proceso iterativo donde los datos se _visualizan_, se _transforman_ y se _modelan_.
+
+La _transformación_  de los datos implica crear subconjuntos o combinar con otros datos, alterar las variables existentes (e.g. cambiar unidades) o generar nuevos atributos combinando información de otros, resumir los datos agrupando observaciones, etc. El _ordenamiento_ + _transformación_ es el _manejo de datos_.
+
+La _visualización_ es el arte de convertir los datos de forma tabular en gráficos donde los disintos atributos de los datos se relacionan a características gráficas: ejes, colores, formas, etc. Una buena visualización permitirá revelar patrones inesperados, confirmar alguanas peguntas o sugerir nuevas. Es muy util para comunicar.
+
+El _modelado_ es una forma de cuantificar lo podemos ver en una visualización. Al igual que las visualizaciones, los modelos son abstracciones de los datos y nos permiten resumir la variacion quedandonos con la generalidad. Los modelos son ultiles para contestar preguntas sobre los datos. Lo clave es hacer la pregunta correcta! Por otro lado los modelos son tan buenos como los datos de entrada y los supuestos utilizados.
+
+El último paso de un proyecto de ciencia de datos es la _comunicación_. Esta etapa resume todo nuestro trabajo y determina como podemos transmitir nuestras conclusiones y descubrimientos a otros que no participaron del análisis.
+
+Finalmente, todas y cada una de las etapas de este proceso se desarrollan con la ayuda de la _programación_. No es necesario ser un hacker, hay que saber pensar como un programador y saber programar ayuda a automatizar tareas.
+

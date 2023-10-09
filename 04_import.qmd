@@ -6,29 +6,146 @@ title: "Importar datos en **R**"
 library(knitr)
 ```
 
-Un aspecto importante para cualquier análisis de datos es acceder a los datos! 
+Un aspecto importante para cualquier análisis de datos es acceder a los **datos**! 
 
-Los datos pueden estar almacenados en diversos formatos: archivos de texto (`*.txt`, `*.dat`, etc), texto separado por comas (`*.csv`), planillas de cálculos (`*.xls` o `*.xlsx`), etc. Existen diversas funciones que vienen por defecto en **R** o bien en paquetes específicos que permiten leer virtualmente cualquier formato de archivos. 
+Los datos pueden estar almacenados en diversos formatos: archivos de texto (`*.txt`, `*.dat`, etc), texto separado por comas (`*.csv`), planillas de cálculos (`*.xls` o `*.xlsx`), etc. 
 
-En este curso vamos a trabajar con archivos que ya se encuentran en planillas de cálculo tipo Excel. A continuación vamos a detallar dos formas de abrir archivo `xls|xlsx` usando el paquete `rio`.
+En este curso vamos a trabajar con archivos que ya se encuentran en planillas de cálculo tipo Excel o archivos de texto plano. 
 
+## Función nativa para importar datos
 
-A continuación veremos como cargar el archivo `r xfun::embed_file("datasets/urbana_weather.xlsx", text = "urbana_weather.xlsx")` que contiene datos meteorológicos de la ciudad de Urbana (IL). 
+**R** viene la función `read.table()` y derivados, que permiten leer datos desde formatos tipo `texto plano` (`plain text format`). El más popular entre estos es `*.csv`. Este formato asume que los datos están en formato de tabla o _rectangular_ (e.g. variables en columnas y observaciones en filas) y devuelve un `data.frame`. En ?read.table se detallan todos los argumentos, los más importantes son:
 
-## Desde la consola (recomendado)
+- `file` para indicar el nombre o ruta al archivo 
 
-Una vez que descargamos el archivo datos en la carpeta `data` dentro de nuestro directorio de trabajo o proyecto podemos leerlo en **R** usando la función `import()` del paquete `rio`. Esta función se encargará de llamar la función necesaria para leer el archivo que le suministremos.
+- `header` para indicar si las columnas tienene encabezados que deben ser usados como nombre de las variables.
+
+- `sep` para indicar el separador de columnas
+
+- `dec` para indicar el simbolo decimal
+
+Dependiendo de las combinaciones de estos 3 argumentos hay variantes (`read.csv()`, `read.csv2()`, `read.delim()`, `read.delim2()`) que son atajos de `read.table()`` (ver ayuda).
+
+Mediante algun editor de textos (puede ser dentro de **RStudio**) conviene abrir el archivo y examinarlo para determinar:
+
+- Tiene encabezados?
+
+- Cómo están separadas las columnas?
+
+- Cuál es el símbolo del decimal?
+
+Supongamos que tenemos el archivo de texto `prueba.csv`, las alternativas podrían ser: 
+
+```{r, eval = F}
+# Con encabezados, separado por tabulaciones y el decimal es el punto
+prueba <- read.table("prueba.csv", header = T, sep = "\t", dec = ".")
+
+# Con encabezados, separado por tabulaciones y coma como decimal
+prueba <- read.table("prueba.csv", header = T, sep = "\t", dec = ",")
+
+# Con encabezados, separado comas y punto como decimal
+prueba <- read.table("prueba.csv", header = T, sep = ",", dec = ".")
+
+# Con encabezados, separado punto y coma, y con coma como punto decimal
+prueba <- read.table("prueba.csv", header = T, sep = ";", dec = ",")
+```
+
+En el caso que el archivo `prueba.csv` esté en otro directorio o ubicación que no sea el proyecto o `getwd()` hay que indicar la ruta completa al archivo.
+
+Una vez importados los datos es conveniente verificar como han sido leidos en el **R**. Una alternativa es _imprimirlo_ escribiendo el nombre del objeto directamente en la consola. 
+
+```{r, eval = F}
+prueba
+```
+
+Otra alternativa es utilizar la función `View()` que muestra la tabla de datos en un formato de planilla interactiva de solo lectura.
+
+```{r, eval = F}
+View(prueba)
+```
+
+Si bien podemos inferir que tipo de datos se leyeron, una alternativa mejor es mirar la estructura con la función `str()`.
+
+```{r, eval = F}
+str(prueba)
+```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Abrir un documento de texto en **RStudio**
+
+2. Retomando el ejemplo del set de datos de trigo, crear un archivo separado por comas con los siguientes datos
+
+```
+Lote,Variedad,Rendimiento
+1,Escorpion,34
+2,Escorpion,36
+3,Yarara,40
+4,Baguette11,28
+5,Tijetera,31
+```
+
+3. Guardar el archivo como `prueba_trigo.csv`.
+
+4. Leer el set de datos dentro de **R** usando la función `read.table()` o alguna de sus variantes.
+
+5. Verificar la importacion de los datos.
+
+:::
+
+## Paquetes para importar datos
+
+Existen paquetes específicos que permiten leer virtualmente cualquier formato de archivos. 
+
+### `readr`
+
+Si bien la función `read.table()` y derivadas permiten leer datos _rectangulares_ en formato texto, el paquete `readr` [link](https://readr.tidyverse.org/) provee una implementación más moderna (y rápidas) de estas funciones. Las funciones se llaman igual que las nativas pero se reemplaza `.` por `_` en el nombre. Ejemplo: `read_table()`
+
+Este paquete ya está integrado a `tidyverse`. Para leer el set de datos que creamos en la actividad anterior:
+
+```{r}
+pacman::p_load(tidyverse)
+prueba_trigo <- read_csv("datasets/prueba_trigo.csv")
+prueba_trigo
+```
+
+A diferencia de la función nativa, las funciones de `readr` devuelven un objeto llamado `tibble` que es una especie de `data.frame` pero con algunas propiedades extra.
+
+### `rio`
+
+A diferencia de `readr` que es una reimplementación de funciones de **R**, hay un paquete llamado `rio` [link](https://www.rdocumentation.org/packages/rio/versions/1.0.1) que es una especie de _metapaquete_ y permite simplificar la _importación_, _exportación_, y _conversión_ de formatos en una sintaxis unificada.
+
+Este paquete trabaja con una mayor variedad de formatos y, basado en la extensión del archivo, busca la función y/o paquete apropiado para leer o guardar los datos. En el caso de ser necesario, se pueden pasar argumentos a las funciones.
+
+Retomando el ejemplo de trigo, podemos leer los datos con la función `import()`
+
+```{r}
+pacman::p_load(rio)
+prueba_trigo <- import("datasets/prueba_trigo.csv")
+prueba_trigo
+```
+
+A diferencia de `readr` siempre devuelve un `data.frame`. Si queremos que devuelva un `tibble` podemos usar el argumento `setclass`
+
+```{r}
+prueba_trigo <- import("datasets/prueba_trigo.csv", setclass = "tibble")
+prueba_trigo
+```
+
+## Formas de importar datos
+
+A continuación vamos a detallar dos formas de abrir el archivo `r xfun::embed_file("datasets/urbana_weather.xlsx", text = "urbana_weather.xlsx")` que contiene datos meteorológicos de la ciudad de Urbana (Illinois). 
+
+### Desde la consola (recomendado)
+
+Una vez que descargamos el archivo datos en la carpeta `datasets` dentro de nuestro directorio de trabajo o proyecto podemos leerlo en **R** usando la función `import()` del paquete `rio`. Esta función se encargará de llamar la función necesaria para leer el archivo que le suministremos.
 
 ```{r, eval = T, echo = T, out.lines = 10}
-# Cargar rio (si no estaba cargado antes)
-pacman::p_load(rio)
-
-# importar los datos
 urbana <- import("datasets/urbana_weather.xlsx", setclass = "tibble")
 urbana
 ```
-
-El argumento `setClass` permite especificar en que tipo de objeto importarlo. Por defecto es un `data.frame`. En este caso mostramos como indicar que queremos crear un objeto tipo `tibble`, que es un `data.frame` con anabólicos. 
 
 Si sólo estuvieramos ineresados en el rango `A1:C5` (primeros 4 registros de las 3 primeras columnas), podríamos usar:
 
@@ -37,10 +154,7 @@ urbana2 <- import(file = "datasets/urbana_weather.xlsx", range = "A1:C5")
 urbana2
 ```
 
-
-
-
-## Desde el importador de datos de **RStudio**
+### Desde el importador de datos de **RStudio**
 
 **RStudio** cuenta con un asistente de importación de datos (`File > Import Dataset`) que brinda interfase a varias funciones especializadas en la importación de datos de paquetes específicos como `readr`, `readxl`, etc. 
 
@@ -64,29 +178,28 @@ Este menú tiene cuatro paneles:
 
 4. Vista previa del código. En esta parte se puede visualizar como se construye el comando que se ejecturará al clickear en `Import`.
 
-**Aclaración**: es muy importante que el código generado por este asistente sea incluido en el script para futuras sesiones.
+::: {.callout-note icon=warning, title="Aclaración"}
 
-## Verificación de los datos
+Si bien esta alternativa es intuitiva y amigable, no es reproducible a menos que el código generado por este asistente sea incluido en el script para futuras sesiones.
 
-Una vez importados los datos es conveniente verificar como han sido leidos en el **R**. 
+:::
 
-Como vimos antes, una alternativa es _imprimirlo_ escribiendo el nombre del objeto directamente en la consola. 
+### Desde el portapapeles
 
-```{r, eval = T, out.lines = 10}
-urbana
-```
+Una alternativa conveniente para acceder rápidamente a los datos es usando el portapapeles. Suponiendo que los datos estan en una hoja de cálculos:
 
-Otra alternativa es utilizar la función `View()` que muestra la tabla de datos en un formato de planilla interactiva de solo lectura.
+1. Seleccionar el rango de celdas `A1:C5` que nos interesa incluyendo los encabezados
+
+2. Copiar en el porta papeles (CTRL + C)
+
+3. Luego en R
 
 ```{r, eval = F}
-View(urbana)
+urbana3 <- read.table("clipboard")
 ```
 
-Si bien podemos inferir que tipo de datos se leyeron, una alternativa mejor es mirar la estructura con la función `str()`.
+::: {.callout-note icon=warning, title="Aclaración"}
 
-```{r}
-str(urbana)
-```
+Si bien esta alternativa es rápida, al no ser reproducible (no hay forma de plasmarla en el script para futuras sesiones), **no es recomendable** salvo para una exploración rápida.
 
-Esto nos está diciendo que el objeto es un `tibble` donde cada columna es una variable y cada fila una observacion. En nuestro set de datos hay 4 variables (`YEAR`, `month`, `precip` and `temp`) y 240 observaciones. Junto con el nombre de cada variable hay una breve descripción del tipo de datos (`int` para `integer`, `chr` para `character` y `num` para `numeric`) y una vista previa de los primeros valores.
-
+:::
