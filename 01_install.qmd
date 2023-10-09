@@ -43,27 +43,42 @@ include_graphics('assets/Rstudio.png', auto_pdf = T) # renovar
 
 **R** puede funcionar sin **RStudio**, en cambio **RStudio** necesita que al menos una versión de **R** esté instalada en el sistema.
 
-La página de descarga de **Rstudio** [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/) ofrece un excelente punto de partida para instalar ambos programas.
+<br>
+
+La página de descarga de **posit** [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/) ofrece un excelente punto de partida para instalar ambos programas.
+
+```{r, echo = F, fig.cap = 'Página de descaga de **R**', out.width = '75%', out.extra=''} 
+#webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
+include_graphics('assets/posit.png', auto_pdf = T)
+```
+
+
+A continuación se describe el procedimiento para instalar **R** y **RStudio** bajo Windows.
+
+### Instalación de **R**
+
+1) Click en el botón `DOWNLOAD AND INSTALL R`:
+
+```{r, echo = F, fig.cap = 'Página de descaga de **R**', out.width = '75%', out.extra=''} 
+#webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
+include_graphics('assets/r-botton.png', auto_pdf = T)
+```
 
 ```{r, echo = F, fig.cap = 'Página de descaga de **R**', out.width = '75%', out.extra=''} 
 #webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
 include_graphics('assets/CRAN_choose_OS.png', auto_pdf = T)
 ```
 
-```{r, echo = F, fig.cap = 'Página de descarga de **RStudio**', out.width = '75%', out.extra=''} 
-# webshot::webshot(
-#    url = 'https://www.rstudio.com/products/rstudio/download/',
-#    file = "./assets/rstudio_download.png",
-#    selector = c("div.page-header.page-header-mini", "div.section")
-# )
-include_graphics('assets/rstudio_download.png', auto_pdf = T)
+```{r, echo = F, fig.cap = 'Dirigirse a Install R for firt time', out.width = '75%', out.extra=''} 
+#webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
+include_graphics('assets/install first time.png', auto_pdf = T)
+```
+```{r, echo = F, fig.cap = 'Dirigire a "Download R-X.X.X for Windows"', out.width = '75%', out.extra=''} 
+#webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
+include_graphics('assets/download R.png', auto_pdf = T)
 ```
 
-A continuación se describe el procedimiento para instalar **R** y **RStudio** bajo Windows.
-
-### Instalación de **R**
-
-1) Descargar el archivo instalador correspondiente a la última versión estable de **R** desde el CRAN[^1] (del inglés, _Comprenhensive R Archive Network_) visitando el siguiente [link](https://cloud.r-project.org/bin/windows/base/release.htm). 
+Descargar el archivo instalador correspondiente a la última versión estable de **R** desde el CRAN[^1] (del inglés, _Comprenhensive R Archive Network_) visitando el siguiente [link](https://cloud.r-project.org/bin/windows/base/release.htm). 
 
 [^1]: CRAN es un conjunto de servidores espejo distribuidos alrededor del mundo que tienen copias de **R** y sus paquetes. No es necesario escojer el espejo más cercano ya que el espejo nube (https://cloud.r-project.org) automáticamente determina de que servidor conviene realizar la descarga.
 
@@ -79,7 +94,14 @@ include_graphics('assets/rgui.png', auto_pdf = T)
 
 ### Instalación de **RStudio**
 
-1) Descargar el archivo de instalación correspondiente a nuestra plataforma o sistema operativo. Al momento de escribir estas instrucciones la última versión estable de **RStudio** era `RStudio-2023.09.0-463.exe` que se encuentra en este [link](https://download1.rstudio.org/electron/windows/RStudio-2023.09.0-463.exe)
+1) Click en el botón `DOWNLOAD RSTUDIO DESKTOP FOR ......`:
+
+```{r, echo = F, fig.cap = 'Página de descaga de **R**', out.width = '75%', out.extra=''} 
+#webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
+include_graphics('assets/rstudio-botton.png', auto_pdf = T)
+```
+
+Descargar el archivo de instalación correspondiente a nuestra plataforma o sistema operativo. Al momento de escribir estas instrucciones la última versión estable de **RStudio** era `RStudio-2023.09.0-463.exe` que se encuentra en este [link](https://download1.rstudio.org/electron/windows/RStudio-2023.09.0-463.exe)
 
    En el caso que haya una nueva versión, ir al sitio web de descarga de **RStudio** [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
@@ -95,7 +117,13 @@ knitr::include_graphics("assets/rstudio_download_OS.png", auto_pdf = T)
 2) Ejecutar el archivo `.exe` y seguir el asistente de instalación con todas las opciones por defecto.
 
 3) Si la instalación ha sido exitosa en el menú _Inicio_ dentro de la carpeta _RStudio_  se encontrará el acceso directo a **RStudio** el cual, mediante el menu contextual (botón derecho del ratón) puede enviarse al Escritorio como acceso directo o bien anclar al menu de Inicio o barra de acceso rápido.
-   
+
+
+```{r, echo = F, fig.cap = 'Icono de **RStudio**', out.width = '25%', out.extra=''} 
+#webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
+include_graphics('assets/rstudio_icon.png', auto_pdf = T)
+```
+
 Ahora sí, ya tenemos listo **R** y **RStudio** para empezar a trabajar!!
 
 ::: {.callout-note icon=false}
