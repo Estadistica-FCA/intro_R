@@ -6,4 +6,4 @@
 /.quarto/
 **/*_files
 **/*_cache
-_book/*
+/_book/

@@ -100,14 +100,12 @@ También podemos reusarlo en otro calculo, por ejemplo obtener 2 veces `x`.
 2 * x
 ```
 
-O bien obtener una nueva variable
+O bien obtener una nueva variable:
 
 ```{r}
 y <- 2 * x +1
 y
 ```
-
-::: {.callout-caution icon=true title="Nombres" collapse=true}
 
 Los nombres de las variables no deben empezar con números ni contener espacios. No pueden usarse operadores (`*+-/&%`) en los nombres pero puede usarse `.` o `_`. 
 
@@ -122,10 +120,6 @@ x.2 <- 3
 x2 <- 3
 ```
 
-:::
-
-::: {.callout-caution icon=true title="Mayúsculas" collapse=true}
-
 También **R** es sensibles a mayúsculas
 
 ```{r}
@@ -135,6 +129,18 @@ a <- 5
 
 # Verificar si 'A' y 'a' son lo mismo
 A == a
+```
+
+
+::: {.callout-note icon=false}
+
+### ACTIVIDAD
+
+¿Por qué este código no funciona?
+
+```{r, eval = F}
+my_variable <- 10
+my_varıable
 ```
 
 :::
@@ -253,19 +259,16 @@ area_rectangulo(bases, alturas)
 
 ### ACTIVIDAD
 
-1. Crear una función que calcule el area de un círculo. Tip: la constante $\pi$ en **R** está en el objeto `pi`.
+1. Crear una vector llamado `diametro` que contenga 10 valores numericos
 
-2. Avanzado: crear una función más avanzada llamada _area_ que calcule el área de un rectángulo o círculo indicando en el argumento `figura` y suminisitrando el dato de base y altura o altura, según corresponda.
+2. Calcular otro vector que se llame `radios` en funcion del anterior
 
-3. ¿Cómo podríamos expandirla para controlar el número de decimales de la respuesta?
+3. Crear una función que calcule el area de un círculo. Tip: la constante $\pi$ en **R** está en el objeto `pi`.
 
+4. Avanzado: crear una función más avanzada llamada _area_ que calcule el área de un rectángulo o círculo indicando en el argumento `figura` y suminisitrando el dato de base y altura o radio, según corresponda.
 
-4. ¿Por qué este código no funciona?
+5. ¿Cómo podríamos expandirla para controlar el número de decimales de la respuesta?
 
-```{r, eval = F}
-my_variable <- 10
-my_varıable
-```
 
 :::
   
