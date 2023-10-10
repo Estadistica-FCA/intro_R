@@ -14,9 +14,9 @@ book:
     - 02_basics.qmd
     - 03_paquetes.qmd
     - 04_import.qmd
-    - 05_wrangling.qmd
-    - 06_viz.qmd
-    - 07_reports.qmd
+    # - 05_wrangling.qmd
+    # - 06_viz.qmd
+    # - 07_reports.qmd
     - references.qmd
 
 bibliography: references.bib
