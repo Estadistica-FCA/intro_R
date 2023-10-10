@@ -251,13 +251,21 @@ area_rectangulo(bases, alturas)
 
 ::: {.callout-note icon=false}
 
-#### ACTIVIDAD
+### ACTIVIDAD
 
 1. Crear una función que calcule el area de un círculo. Tip: la constante $\pi$ en **R** está en el objeto `pi`.
 
 2. Avanzado: crear una función más avanzada llamada _area_ que calcule el área de un rectángulo o círculo indicando en el argumento `figura` y suminisitrando el dato de base y altura o altura, según corresponda.
 
 3. ¿Cómo podríamos expandirla para controlar el número de decimales de la respuesta?
+
+
+4. ¿Por qué este código no funciona?
+
+```{r, eval = F}
+my_variable <- 10
+my_varıable
+```
 
 :::
   
@@ -390,6 +398,16 @@ O bien valores infinitos (`Inf`):
 1/0
 ```
 
+::: {.callout-note icon=false}
+
+### ACTIVIDAD
+
+1. Ingrese lo siguiente en un vector con el nombre `color`: púrpura, rojo, amarillo, marrón
+2. Mostrar el segundo elemento en el vector (rojo) en la consola.
+3. Ingrese lo siguiente en un vector con el nombre `peso`: 23, 21, 18, 26
+
+:::
+
 ## Estructura de datos
 
 A partir de los tipos de datos que vimos antes, se pueden construir objetos más complejos.
@@ -502,14 +520,14 @@ Las estructura listadas arriba son nativas de **R**. Los paquetes o complementos
 
 :::
 
-## Ejercicios 
+::: {.callout-note icon=false}
 
-1. ¿Por qué este código no funciona?
+### ACTIVIDAD
 
-```{r}
-my_variable <- 10
-my_varıable
-```
+1. Unir los 2 vectores de la actividad anterior usando la función `data.frame` para crear un marco de datos llamado `info` con 2 columnas y 4 filas. Llame a la primera columna '`color` y a la segunda `peso`.
+2. Ver la estructura de datos en la consola.
+3. Mostrar solo la fila 3 en la consola
+4. Mostrar solo la columna 1 en la consola
+5. Mostrar el elemento de datos en la fila 4, columna 1
 
-
-
+:::
