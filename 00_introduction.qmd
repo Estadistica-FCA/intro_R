@@ -27,7 +27,7 @@ Si bien el análisis de datos es un proceso no lineal que varía en cada situaci
 include_graphics('assets/data-science.svg', auto_pdf = T)
 ```
 
-Todo análisis comienza con *_importar_* datos a la herramienta que estemos utilizando, **R** en este caso. Los datos pueden estar almacenados de diferentes formas, como archivos, dentro de una base de datos o una API (API). En el curso veremos distintas formas de importar datos dentro de **R** en un formato compatible para su análisis.
+Todo análisis comienza con *_importar_* datos a la herramienta que estemos utilizando, **R** en este caso. Los datos pueden estar almacenados de diferentes formas, como archivos, dentro de una base de datos o una API ( _application programming interface_ ). En el curso veremos distintas formas de importar datos dentro de **R** en un formato compatible para su análisis.
 
 Salvo excepciones, una vez importados los datos, hay que *_ordenarlos_* de alguna forma que permita realizar el análisis que queremos. En la mayoría de los casos necesitaremos que los datos estén almacenados de manera **rectangular** tal que cada columna represente una variable o atributo de los datos y cada fila una o más observaciones o sujetos (formato _apaisado_).
 
@@ -49,15 +49,13 @@ El último paso de un proyecto de ciencia de datos es la *_comunicación_*. Esta
 
 Finalmente, todas y cada una de las etapas de este proceso se desarrollan con la ayuda de la *_programación_*. No es necesario ser un hacker, hay que saber pensar como un programador y saber programar ayuda a automatizar tareas.
 
-## ¿Que es la reproducibilidad?
+## ¿Que es un análisis reproducible?
 
-En las Ciencias Experimentales, la **reproducibilidad** es un componente muy importante para darle validez a los descubrimientos y es una parte del método científico. Es por ello que en los trabajos científicos, una sección importante es la de _Materiales y Métodos_ donde se describen los pasos que se deben dar para poder reproducir los resultados.
+En las Ciencias Experimentales, poder replicar los experimentos es un componente muy importante del método científico ya que le da validez a los descubrimientos. Es por ello que en los trabajos científicos, una sección importante es la de _Materiales y Métodos_ donde se describen los pasos que se deben dar para poder _replicar_ de los resultados del estudio. Estos pasos incluyen las instrucciones para replicar el experimento físico y de como _reproducir_ el análisis de los datos que llevó a las conclusiones.
 
-La Ciencia de Datos en general, y en la aplicada a otras ciencias, la **reproducibilidad computacional** es clave ya que en el procesamiento de datos se toman una serie de decisiones que afectan el resultado. 
+Así la **replicabilidad** implica que, siguiendo los _materiales y métodos_ un experimento independiente puede llegar a los mismos resultados con datos distintos. En cambio la **reproducibilidad** significa que con la misma persona u otra persona con los mismos datos llegue a los mismos resultados, es decir, que pueda reproducir el análisis.
 
-¿Qué significa esto? Dada una serie de datos de entrada, el flujo de trabajo que se aplica para _importar_, _ordenar_, _transformar_, _visualizar_ y _modelar_ los datos, es decir, convertirlos en información, debe estar correctamente **documentado** para que cualquier persona pueda entender la lógica y eventualemente repetirlo para llegar a los mismos resultados.
+La Ciencia de Datos la **reproducibilidad computacional** es clave ya que en el procesamiento de datos se toman una serie de decisiones que afectan el resultado. ¿Qué significa esto? Dada una serie de datos de entrada, el flujo de trabajo que se aplica para _importar_, _ordenar_, _transformar_, _visualizar_ y _modelar_ los datos, es decir, convertirlos en información, debe estar correctamente **documentado** para que cualquier persona pueda entender la lógica y eventualemente reproducir los mismos resultados.
 
+**R**, como cualquier lenguaje de programación, es una herramienta ideal para aplicar el concepto de **reproducibilidad** ya que mediante en el código o _script_ quedan plasmados todos los pasos que se aplicaron en el análisis de datos. Más aun, el uso del paradigma de  **programación literaria** permite generar documentos donde se narran todos los pasos y los resultados ontenidos.
 
- Aiming for reproducibility is also a cornerstone of open science practices. Fully reproducible meta-analyses make it as transparent as possible to others how we ended up with our results.
-
-R Studio is an optimal tool to create a reproducible workflow and to facilitate cooperation. In this chapter, we introduce three tools to reproduce, report and disseminate our analyses: R Projects, R Markdown, and the Open Science Framework.
