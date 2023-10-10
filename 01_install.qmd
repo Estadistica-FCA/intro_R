@@ -306,7 +306,7 @@ Por último, y no menos importante, **R** y **RStudio** cuentan con un completo 
 
 Desde la consola se puede acceder usando la función `?` seguida del nombre de la función o bien `help("nombre")`
 
-```{r}
+```{r, eval = F}
 # Pedir ayuda de la función mean
 ?mean
 help(mean)
