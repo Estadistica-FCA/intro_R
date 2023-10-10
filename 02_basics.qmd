@@ -439,3 +439,15 @@ trigo[, 3]
 Las estructura listadas arriba son nativas de **R**. Los paquetes o complementos pueden agregar nuevas estructuras o redifinar las existentes.
 
 :::
+
+## Ejercicios 
+
+1. ¿Por qué este código no funciona?
+
+```{r}
+my_variable <- 10
+my_varıable
+```
+
+
+
