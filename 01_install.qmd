@@ -71,11 +71,11 @@ include_graphics('assets/CRAN_choose_OS.png', auto_pdf = T)
 
 ```{r, echo = F, fig.cap = 'Dirigirse a Install R for firt time', out.width = '75%', out.extra=''} 
 #webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
-include_graphics('assets/install first time.png', auto_pdf = T)
+include_graphics('assets/install_first_time.png', auto_pdf = T)
 ```
 ```{r, echo = F, fig.cap = 'Dirigire a "Download R-X.X.X for Windows"', out.width = '75%', out.extra=''} 
 #webshot::webshot('https://cloud.r-project.org/', file = 'assets/CRAN_choose_OS.png')
-include_graphics('assets/download R.png', auto_pdf = T)
+include_graphics('assets/download_R.png', auto_pdf = T)
 ```
 
 Descargar el archivo instalador correspondiente a la última versión estable de **R** desde el CRAN[^1] (del inglés, _Comprenhensive R Archive Network_) visitando el siguiente [link](https://cloud.r-project.org/bin/windows/base/release.htm). 

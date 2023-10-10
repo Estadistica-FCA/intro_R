@@ -27,5 +27,5 @@ format:
   pdf:
     documentclass: scrreprt
 
-
+lang: es
 

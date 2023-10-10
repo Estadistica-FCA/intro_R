@@ -169,7 +169,9 @@ Veremos más adelante los distintos tipos.
 
 ### Funciones y argumentos
 
-Para crear los vectores sin pensarlo utilizamos una funcion `c()`. Las funciones dentro de **R** tienen la siguiente forma
+Para crear los vectores sin pensarlo utilizamos una funcion `c()`. Las funciones son series de comandos que hacen alguna acción y producen un resultado.
+
+Generalmente tienen la siguiente la siguiente forma:
 
 `nombre_funcion(arg1, arg2, ...)`
 
@@ -199,6 +201,66 @@ round(3, 3.141593)
 
 Devuelve `3` por considera que queremos redondear el número `3`
 
+### Creando funciones
+
+Así como **R** tiene viene con funciones ya definidias, nosotros podemos crear nuestras propias funciones para poder simplificar nuestro analisis encapsulando tareas repetitivas.
+
+Por ejemplo, supongamos que queremos calcular el área de 3 rectángulos cuyas dimensiones son:
+
+- Rectangulo 1: base = 10, altura  = 20
+- Rectangulo 1: base = 15, altura  = 35
+- Rectangulo 1: base = 20, altura  = 5
+
+Sabemos que la fórumla del área es: $A = b \times a$, donde $A$ es el area, $b$ es la base y $a$ es la altura.
+
+Podríamos hacer:
+
+```{r}
+10 * 20
+15 * 35 
+20 * 5
+```
+
+Como vimos antes podemos usar vectores y operar con ellos:
+
+```{r}
+bases <- c(10, 15, 20)
+alturas <- c(20, 35, 5)
+bases * alturas
+```
+
+Yendo un poco mas lejos, en vez de repetir siempre la operación podríamos encapsularla en una _función_. Las funciones se crean con `function()` o `\()` y adentro se declaran los argumentos. Por defecto la función devuelve el ultimo comando o bien lo que se indique en `return()`
+
+```{r}
+area_rectangulo <- function(base, altura) {
+
+  # Calculo sueperficie
+  area <- base * altura
+
+  return(area)
+
+}
+```
+
+**R** no devuelve nada porque lo que hizo fue crear la función, a continuación podemos usarla:
+
+```{r}
+area_rectangulo(40,50)
+area_rectangulo(bases, alturas)
+```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Crear una función que calcule el area de un círculo. Tip: la constante $\pi$ en **R** está en el objeto `pi`.
+
+2. Avanzado: crear una función más avanzada llamada _area_ que calcule el área de un rectángulo o círculo indicando en el argumento `figura` y suminisitrando el dato de base y altura o altura, según corresponda.
+
+3. ¿Cómo podríamos expandirla para controlar el número de decimales de la respuesta?
+
+:::
+  
 
 ## Tipos de datos
 
