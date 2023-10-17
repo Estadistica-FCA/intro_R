@@ -1,19 +1,30 @@
 ---
-title: "Manipulando datos con `dplyr` y `tidyr`"
+title: "Manipulando datos"
 ---
 
-Luego de importar los datos **R** es necesario explorarlos y, dependiendo de su organización o el análisis que querramos realizar, hay que realizar algun tipo transformación, resumen, o consultas. 
+Luego de importar los datos **R** es necesario explorarlos y, dependiendo de su organización o el análisis que querramos realizar, hay que realizar algun tipo transformación, resumen, agrupamiento o consultas. 
+
+## split-apply-combine
+
+En la manipulación de datos frecuentemente se usa la estrategia _split-apply-combine_, es decir:
+
+- dividir ( _split_ ) los datos según una variable de grupo
+- aplicar ( _apply_ ) alguna transformación o resumen 
+- combinar ( _combine_ ) las partes para presentar los resultados
+
+**R** base tiene funciones que realizan estas tareas (`split()`, `subset()`, `apply()`, `sapply()`, `lapply()`, `tapply()` and `aggregate()`), pero orientadas a trabajar con vectores. 
+
 
 `dplyr` y `tidyr` son dos paquetes de **R** muy potentes para la exploración, transformación y resumen de datos en formato de tabla con filas (observaciones) y columnas (variables). Ambos son componentes de un meta-package `tidyverse` desarrollados por [Hadley Wickham](http://hadley.nz/)  
 
-Ambos paquetes tienen un conjunto de funciones (o _verbos_) que realizan operaciones comunes para el manejo de datos tales como: filtrar filas, seleccionar columnas, re-ordenar filas, agregar o transformar columnas, resumir datos. También permite agrupar los datos facilitando la estrategia _split-apply-combine_, es decir, dividir (_split_) los datos según una variable de grupo, aplicar (_apply_) alguna transformación o resumen y combinar (_combine_) las partes para presentar los resultados.
+Ambos paquetes tienen un conjunto de funciones (o _verbos_) que realizan operaciones comunes para el manejo de datos tales como: filtrar filas, seleccionar columnas, re-ordenar filas, agregar o transformar columnas, resumir datos. 
 
-Si bien **R** base tiene funciones que realizan las mismas tareas (`split()`, `subset()`, `apply()`, `sapply()`, `lapply()`, `tapply()` and `aggregate()`), estos paquetes brindan una interface más consistente que permite trabajar de manera más fácil con `data.frame` (tabla de datos) más que con vectores.
+Estos paquetes brindan una interface más consistente que permite trabajar de manera más fácil con `data.frame` (tabla de datos) aplicando esta estrategia de _dividir, aplicar y combinar_.
 
 Veamos con un ejemplo como realizar algunas operaciones con estos paquetes. Para esto vamos a usar el set de datos `r xfun::embed_file("datasets/pesada_novillos.xlsx", text = "pesada_novillos.xlsx")`. Suponiendo que ya está descargado en la carpeta de trabajo o proyecto.
 
 
-```{r, eval = T, echo = T, out.lines = 10}
+```{r, eval = T, echo = T}
 pacman::p_load(rio)
 novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
 novillos
@@ -21,13 +32,7 @@ novillos
 
 ## ¿Cómo instalar `dplyr` y `tidyr`?
 
-Para acceder a estos paquetes instalarlos/cargarlos individualmente:
-
-```{r, eval = F}
-pacman::p_load(dplyr, tidyr)
-```
-
-O bien con otros paquete de la familia `tidyverse`
+Para acceder a estos paquetes podemos hacerlo a través del meta-paquete `tidyverse`
 
 ```{r, eval = T}
 pacman::p_load(tidyverse)
@@ -35,9 +40,15 @@ pacman::p_load(tidyverse)
 
 **R** va a avisarnos en la consola que esta enmascarando (reemplazando) algunas funciones que ya estaban en el entorno, o bien el paquete nos devuelve algun mensaje. A menos que diga `Error ...`, eso está bien.
 
+Alternativamente podemos instalarlos/cargarlos individualmente:
+
+```{r, eval = F}
+pacman::p_load(dplyr, tidyr)
+```
+
 ## Verbos importantes de `dplyr` para recordar
 
-Toda la estrategia de trabajo con datos de `dplyr` se basa en 6 _verbos_:
+Toda la estrategia de trabajo con datos de `dplyr` se basa en 6 _verbos_ generales:
 
 verbo            descripción
 ---------------- ---------------------------------------------
@@ -46,20 +57,22 @@ verbo            descripción
 `arrange()`	     re-ordena las filas
 `mutate()`       crea nuevas columnas o modifica las preexistentes
 `summarise()`    resumen los valores de una variable
-`group_by()`     permite aplicar los verbos anteriores en subgrupos (_split-apply-combine_)
+`group_by()`     permite aplicar los verbos anteriores en subgrupos
 ---------------- ---------------------------------------------
+
+El último verbo `group_by()` es clave  para _split-apply-combine_.
+
+Además de estos verbos hay otros más específicos que vamos a ir viendo con ejemplos.
 
 En la mayoría de los casos la sintaxis es:
 
-`function(que_datos, que_hacer_con_los_datos)`
+`verbo(que_datos, que_hacer_con_los_datos)`
 
-donde `que_datos` es el nombre del set de datos (un `data.frame`) y `que_hacer_con_los_datos` indicar que operación, condicion, transformacion, etc. aplicar a las filas y columnas.
-
-Veamos unos ejemplos
+donde `verbo()` es uno de los verbos listados arriba, `que_datos` es el nombre del set de datos (un `data.frame`) y `que_hacer_con_los_datos` indicar que operación, condicion, transformacion, etc. aplicar a las filas y columnas.
 
 ## Seleccionando variables
 
-Para seleccionar columnas (variables) de interes usamos `select()`. La selección se puede hacer por nombre de la columna (con o sin comillas) o indicando su posición.
+Para seleccionar columnas (variables) de interés usamos `select()`. La selección se puede hacer por nombre de la columna (con o sin comillas) o indicando su posición o un rango.
 
 Las columnas del set de datos de ejemplo se denominan:
 
@@ -73,14 +86,14 @@ Si quisieramos seleccionar las columnas `Procedencia`, `Peso_inicial`, `Peso_ant
 select(novillos, Procedencia, Peso_inicial, Peso_anterior, Peso)
 ```
 
-El resultado es un nuevo `data.frame` o `tibble` que sólo contiene las 4 columnas seleccionadas. Si quisieramos guardar este resultado aparte.
+El resultado es un nuevo `data.frame` o `tibble` que sólo contiene las 4 columnas seleccionadas. Si quisieramos guardar este resultado aparte podemos asignarlo a un objeto.
 
-```{r, out.lines = 15}
+```{r}
 pesos <- select(novillos, Procedencia, Peso_inicial, Peso_anterior, Peso)
 pesos
 ```
 
-Cuando se imprime en la consola, es lo mismo que usar `print()` la cual por defecto muestra las 10 primeras observaciones y la cantidad de columnas que entran en la pantalla. Aquellas columnas que no entran son indicadas al pie.
+Cuando se _imprime_ en la consola, es lo mismo que usar `print()` la cual por defecto muestra las 10 primeras observaciones y la cantidad de columnas que entran en la pantalla. Aquellas columnas que no entran son indicadas al pie.
 
 Si uno desea ver más registros se puede usar el argumento `n = ` de `print()`
 
@@ -88,7 +101,7 @@ Si uno desea ver más registros se puede usar el argumento `n = ` de `print()`
 print(pesos, n = 15)
 ```
 
-Con `n = "all"` se imprimen todas (no se muestra por razones obvias)
+Con `n = "all"` o `n = Inf` se imprimen todas (no se muestra por razones obvias)
 
 El orden en que aparecen las variables en el resultado es el orden que se utilizó al seleccionarlas.
 
@@ -102,12 +115,48 @@ También se puede usar los comandos `starts_with()`, `ends_with()`, `contains()`
 select(novillos, starts_with("P"))
 ```
 
+O según el tipo de varabiles con `where()`. Por ejemplo, aquellas que son de tipo `numeric`.
+
+```{r}
+select(novillos, where(is.numeric))
+```
+
+Tambien podemos seleccionar por rangos de nombres o posicion. Por ejemplo las primeras 4 columnas:
+
+```{r}
+select(novillos, 1:4)
+```
+
+Lo mismo pero usando un rango de nombres:
+
+```{r}
+select(novillos, IDV:Fecha_Ingreso)
+```
+
+
 Para omitir algunas columnas en la seleccion se puede usar el `-` antes del nombre. Por ejemplo, omitir la columna `IDV` y todas las que empiezan con `P`.
 
 
 ```{r}
 select(novillos, -IDV, -starts_with("P"))
 ```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Seleccionar las colunas  que son `character` y aquellas cuyo nombre contiene la palabra "Peso" o termina con "anterior". Guardar el resultado en un objeto.
+
+2. Actualizar el objeto del punto anterior descartar las columnas "Fecha_Ingreso", "Fecha", "Hora".
+
+3. Usando `rio::export()` exportar el set de datos a un archivo excel.
+
+4. Leer el set de datos dentro de **R** usando la función `read.table()` o alguna de sus variantes.
+
+5. Verificar la importacion de los datos.
+
+:::
+
 
 ## Seleccionando observaciones
 
