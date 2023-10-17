@@ -1,5 +1,5 @@
 ---
-title: "Importar datos en **R**"
+title: "Importar/exportar datos en **R**"
 ---
 
 ```{r, echo = F, include = F}
@@ -12,7 +12,9 @@ Los datos pueden estar almacenados en diversos formatos: archivos de texto (`*.t
 
 En este curso vamos a trabajar con archivos que ya se encuentran en planillas de cálculo tipo Excel o archivos de texto plano. 
 
-## Función nativa para importar datos
+## Importar datos
+
+### Funciones nativas
 
 **R** viene la función `read.table()` y derivados, que permiten leer datos desde formatos tipo `texto plano` (`plain text format`). El más popular entre estos es `*.csv`. Este formato asume que los datos están en formato de tabla o _rectangular_ (e.g. variables en columnas y observaciones en filas) y devuelve un `data.frame`. En ?read.table se detallan todos los argumentos, los más importantes son:
 
@@ -95,11 +97,11 @@ Lote,Variedad,Rendimiento
 
 :::
 
-## Paquetes para importar datos
+### Paquetes para importar/exportar datos
 
 Existen paquetes específicos que permiten leer virtualmente cualquier formato de archivos. 
 
-### `readr`
+#### `readr`
 
 Si bien la función `read.table()` y derivadas permiten leer datos _rectangulares_ en formato texto, el paquete `readr` [link](https://readr.tidyverse.org/) provee una implementación más moderna (y rápidas) de estas funciones. Las funciones se llaman igual que las nativas pero se reemplaza `.` por `_` en el nombre. Ejemplo: `read_table()`
 
@@ -113,7 +115,7 @@ prueba_trigo
 
 A diferencia de la función nativa, las funciones de `readr` devuelven un objeto llamado `tibble` que es una especie de `data.frame` pero con algunas propiedades extra.
 
-### `rio`
+#### `rio`
 
 A diferencia de `readr` que es una reimplementación de funciones de **R**, hay un paquete llamado `rio` [link](https://www.rdocumentation.org/packages/rio/versions/1.0.1) que es una especie de _metapaquete_ y permite simplificar la _importación_, _exportación_, y _conversión_ de formatos en una sintaxis unificada.
 
@@ -134,11 +136,11 @@ prueba_trigo <- import("datasets/prueba_trigo.csv", setclass = "tibble")
 prueba_trigo
 ```
 
-## Formas de importar datos
+### Formas de importar datos
 
 A continuación vamos a detallar dos formas de abrir el archivo `r xfun::embed_file("datasets/urbana_weather.xlsx", text = "urbana_weather.xlsx")` que contiene datos meteorológicos de la ciudad de Urbana (Illinois). 
 
-### Desde la consola (recomendado)
+#### Desde la consola (recomendado)
 
 Una vez que descargamos el archivo datos en la carpeta `datasets` dentro de nuestro directorio de trabajo o proyecto podemos leerlo en **R** usando la función `import()` del paquete `rio`. Esta función se encargará de llamar la función necesaria para leer el archivo que le suministremos.
 
@@ -154,7 +156,7 @@ urbana2 <- import(file = "datasets/urbana_weather.xlsx", range = "A1:C5")
 urbana2
 ```
 
-### Desde el importador de datos de **RStudio**
+#### Desde el importador de datos de **RStudio**
 
 **RStudio** cuenta con un asistente de importación de datos (`File > Import Dataset`) que brinda interfase a varias funciones especializadas en la importación de datos de paquetes específicos como `readr`, `readxl`, etc. 
 
@@ -184,7 +186,7 @@ Si bien esta alternativa es intuitiva y amigable, no es reproducible a menos que
 
 :::
 
-### Desde el portapapeles
+#### Desde el portapapeles
 
 Una alternativa conveniente para acceder rápidamente a los datos es usando el portapapeles. Suponiendo que los datos estan en una hoja de cálculos:
 
@@ -201,5 +203,73 @@ urbana3 <- read.table("clipboard")
 ::: {.callout-note icon=warning, title="Aclaración"}
 
 Si bien esta alternativa es rápida, al no ser reproducible (no hay forma de plasmarla en el script para futuras sesiones), **no es recomendable** salvo para una exploración rápida.
+
+:::
+
+## Exportar datos
+
+Así como **R** viene con la función `read.table()` y derivados, que permiten leer datos desde formatos tipo `texto plano` (`plain text format`). Existen funciones que hacen lo contrario: exportar `data.frames` a archivos de texto plano. Estas funciones se comienzan con el nombre `write*` (`write.table()`, `write.csv()`, ...). 
+
+Al igual que `read.table()` tiene argumentos claves para espeficiar:
+
+- `file` para indicar el nombre o ruta al archivo 
+
+- `header` para indicar si las columnas tienene encabezados que deben ser usados como nombre de las variables.
+
+- `sep` para indicar el separador de columnas
+
+- `dec` para indicar el simbolo decimal
+
+Además se le agrega el argumento `x` para especificar que objeto (`data.frame`) queremos exportar.
+
+Supongamos que tenemos el set de datos `prueba` en **R** y queremos exportarlo a CSV con titulos separados por `;` y punto decimal.
+
+```{r, eval = F}
+write.table(prueba, file = "prueba.csv", header = T, sep = ";", dec = ",")
+```
+
+En el archivo `prueba.csv` se escribira en el directorio de trabajo (`getwd()`)
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Exportar el objeto creado en la actividad anterior con datos de rendimiento de trigo a un archivo CSV llamado `prueba_trigo2.csv`.
+
+2. Verificar como se exportó.
+
+:::
+
+### `readr`
+
+De la misma manera que las funciones nativas, el paquete `readr` provee funciones contrarias a `read_table()` y derivadas. 
+
+```{r}
+pacman::p_load(tidyverse)
+write_csv(x = prueba, file = "prueba.csv")
+```
+
+A diferencia de la función nativa, tienen algunas opciones extra.
+
+### `rio`
+
+Este _metapaquete_ y permite simplificar la _exportación_ de formatos en una sintaxis unificada con la función `export()`.
+
+Retomando el ejemplo de trigo, podemos exportar los datos con la función `export()`. Suponiendo que el `data.frame` se llama `trigo`.
+
+```{r}
+pacman::p_load(rio)
+export(x = trigo, file = "prueba_trigo.csv")
+```
+
+El formato de salida podemos indicarlo con la extensión apropiada.
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Exportar el objeto de la actividad anterior a un formato Excel.
+
+2. Verificar como se exportó.
 
 :::
