@@ -818,7 +818,10 @@ Dependiendo del caso, las columnas character podemos usarlas como `factor`. En e
 Suponiendo que tenemos este factor con estos niveles:
 
 ```{r}
-procedencia <- factor(procedencia, levels = c("Alam", "Alameda", "La Alameda", "Las Alamedas", "Alamedas"))
+procedencia <- factor(
+  x = c("Alameda", "La Alameda", "Alamedas"), 
+  levels = c("Alam", "Alameda", "La Alameda", "Las Alamedas", "Alamedas")
+)
 procedencia
 ```
 
