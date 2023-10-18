@@ -4,7 +4,15 @@ title: "Manipulando datos"
 
 Luego de importar los datos **R** es necesario explorarlos y, dependiendo de su organización o el análisis que querramos realizar, hay que realizar algun tipo transformación, resumen, agrupamiento o consultas. 
 
-## split-apply-combine
+Para ilustrar esta sección vamos a usar el set de datos `r xfun::embed_file("datasets/pesada_novillos.xlsx", text = "pesada_novillos.xlsx")`. Suponiendo que ya está descargado en la carpeta de trabajo o proyecto.
+
+```{r, eval = T, echo = T}
+pacman::p_load(rio)
+novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
+novillos
+```
+
+## Estrategia split-apply-combine
 
 En la manipulación de datos frecuentemente se usa la estrategia _split-apply-combine_, es decir:
 
@@ -14,21 +22,9 @@ En la manipulación de datos frecuentemente se usa la estrategia _split-apply-co
 
 **R** base tiene funciones que realizan estas tareas (`split()`, `subset()`, `apply()`, `sapply()`, `lapply()`, `tapply()` and `aggregate()`), pero orientadas a trabajar con vectores. 
 
-
 `dplyr` y `tidyr` son dos paquetes de **R** muy potentes para la exploración, transformación y resumen de datos en formato de tabla con filas (observaciones) y columnas (variables). Ambos son componentes de un meta-package `tidyverse` desarrollados por [Hadley Wickham](http://hadley.nz/)  
 
-Ambos paquetes tienen un conjunto de funciones (o _verbos_) que realizan operaciones comunes para el manejo de datos tales como: filtrar filas, seleccionar columnas, re-ordenar filas, agregar o transformar columnas, resumir datos. 
-
-Estos paquetes brindan una interface más consistente que permite trabajar de manera más fácil con `data.frame` (tabla de datos) aplicando esta estrategia de _dividir, aplicar y combinar_.
-
-Veamos con un ejemplo como realizar algunas operaciones con estos paquetes. Para esto vamos a usar el set de datos `r xfun::embed_file("datasets/pesada_novillos.xlsx", text = "pesada_novillos.xlsx")`. Suponiendo que ya está descargado en la carpeta de trabajo o proyecto.
-
-
-```{r, eval = T, echo = T}
-pacman::p_load(rio)
-novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
-novillos
-```
+Ambos paquetes tienen un conjunto de funciones (o _verbos_) que realizan operaciones comunes para el manejo de datos (filtrar filas, seleccionar columnas, re-ordenar filas, agregar o transformar columnas, resumir), mediante una interface más consistente orientada a datos rectangulares (`data.frame`) aplicando esta estrategia de _dividir, aplicar y combinar_.
 
 ## ¿Cómo instalar `dplyr` y `tidyr`?
 
@@ -151,16 +147,22 @@ select(novillos, -IDV, -starts_with("P"))
 
 3. Usando `rio::export()` exportar el set de datos a un archivo excel.
 
-4. Leer el set de datos dentro de **R** usando la función `read.table()` o alguna de sus variantes.
-
-5. Verificar la importacion de los datos.
+5. Verificar el archivo exportado.
 
 :::
 
 
 ## Seleccionando observaciones
 
-Otra tarea muy frecuente es seleccionar casos o observaciones que cumplan con alguna condición. Esto se lleva a cabo con `filter()`. Se pueden usar los operadores _booleanos_ `==`, `>`, `<`, `>=`, `<=`, `!=`, `%in%`) para crear pruebas o condiciones lógicas.
+Otra tarea muy frecuente es seleccionar casos o observaciones que cumplan con alguna condición. Esto se lleva a cabo con `filter()`. 
+
+Se pueden usar los operadores _lógicos_ (`==`, `>`, `<`, `>=`, `<=`, `!=`) o _booleanos_ (`&`, `|`) para crear pruebas o condiciones lógicas. 
+
+Un operador que no vimos antes es el _pertenece_ `%in%` el que se usa para chequear si un valor está dentro de un conjunto de valores posibles. Por ejemplo para chequar si el número 2 está dentro un conjunto de numeros del 1 al 10.
+
+```{r}
+2 %in% 1:10
+```
 
 Por ejemplo, para seleccionar los novillos de `Los Corralitos`:
 
@@ -180,7 +182,7 @@ La selección se puede hacer por más de una condición. Por ejemplo, selecciona
 filter(novillos, Procedencia == 'Los Corralitos', Peso > 300)
 ```
  
-`filter()` asume que cada condicion se debe cumplir en simultaneo para que la observación sea seleccionada. Esto equivale a utilizar el operador `&` (_Y_). En caso de querer seleccionar aquellos registros que cumple una u otra condicion se usa el operador `|` (_O_). Poniendo `!` delante de la condicion se invierte la selección.
+`filter()` asume que cada condicion se debe cumplir en simultaneo para que la observación sea seleccionada. Esto equivale a utilizar el operador `&`( _Y_ ). En caso de querer seleccionar aquellos registros que cumple una u otra condicion se usa el operador `|` ( _O_ ). Poniendo `!` delante de la condicion se invierte la selección.
 
 Por ejemplo, para obtener novillos que son de `Los Corralitos` **O** pesan más de 300 kg.
 
@@ -188,9 +190,41 @@ Por ejemplo, para obtener novillos que son de `Los Corralitos` **O** pesan más 
 filter(novillos, Procedencia == 'Los Corralitos' | Peso > 300)
 ```
 
-## Encadenando operaciones (operador `%>%`)
+::: {.callout-note icon=false}
 
-El operador `%>%` permite encadenar operaciones sucesivas para evitar tener que crear tablas intermedias o anidar funciones. El operador y se le de izquierda a derecha y se puede traducir como _luego_. 
+#### ACTIVIDAD
+
+1. Seleccionar los novillos que provienen de las siguientes procedencias: `La Alameda` y `La Rosita`.
+
+2. Seleccionar los novillos que a su vez pesan entre 250 y 350 kg.
+
+3. Seleccionar los novillos que NO provienen de `La Alameda` o `La Rosita` y a su vez pesan entrte 250 y 350 kg.
+
+4. Guardar los datos del punto anterior en un objeto nuevo.
+
+:::
+
+### Filtrando valores faltantes
+
+En algunas ocasiones los datos vienen incompletos y es necesario eliminar registros con algun dato faltante.
+
+A continuación un filtro que permite seleccionar los registros con al menos 1 valor `NA`
+
+```{r}
+novillos |> filter(if_any(everything(), is.na))
+```
+
+Popdemos ver que hay 305 datos incompletos. Si quisieramos quedarons con los datos completos podemos usar `drop_na()`
+
+```{r}
+novillos <- novillos |> drop_na()
+novillos |> filter(if_any(everything(), is.na))
+```
+
+
+## Encadenando operaciones (operador `%>%` o `|>`)
+
+El operador `%>%` (R < 4.1) o `|>` (R >= 4.1.+) permite encadenar operaciones sucesivas para evitar tener que crear tablas intermedias o anidar funciones. El operador y se le de izquierda a derecha y se puede traducir como _luego_. 
 
 Por ejemplo, reportar los `IDV` y `Peso` de los novillos con más de 250 kg. Esto implicaría seleccionar las columnas de interés creando tablas intermedias y _luego_ filtrar la tabla o vice versa.
 
@@ -209,17 +243,26 @@ Anidando las funciones:
 filter(select(novillos, IDV, Peso), Peso > 250)
 ```
 
-Una opción más clara para leer y eficiente es usando `%>%`
+Una opción más clara para leer y eficiente es usando `|>`
 
 ```{r}
-novillos %>%
-  select(IDV, Peso) %>%
+novillos |>
+  select(IDV, Peso) |>
   filter(Peso >  250)
 ```
 
-Con `%>%` se puede omitir el nombre de la tabla sobre la que se está trabajando (bonus: menos tipeo). 
+Con `|>` se puede omitir el nombre de la tabla sobre la que se está trabajando (bonus: menos tipeo). 
 
 La última opción se lee: _tomar la tabla `novillos`, **luego** seleccionar las columnas `IDV` y `Peso`, **luego** filtrar los novillos con pesos mayores a 250 kg. 
+
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+Encadenar con el operador el filtro del punto 3 de la actividad anterior, selección de las variables `Procedencia`, `IDV`, `Peso` y la función `View()` para ver los datos resultantes.
+
+:::
 
 
 ## Ordenar las filas
@@ -227,20 +270,36 @@ La última opción se lee: _tomar la tabla `novillos`, **luego** seleccionar las
 Para ordenar según algún criterio aplicado a las columnas se usa  `arrange()`. Por ejemplo, continuar con lo anterior pero mostrar ordenadospor peso.
 
 ```{r}
-novillos %>%
-  select(IDV, Peso) %>%
-  filter(Peso >  250) %>%
+novillos |>
+  select(IDV, Peso) |>
+  filter(Peso >  250) |>
   arrange(Peso)
 ```
 
-Con `decs(variable)` se ordena de mayor a menor
+Con `desc(variable)` se ordena de mayor a menor
 
 ```{r}
-novillos %>%
-  select(IDV, Peso) %>%
-  filter(Peso >  250) %>%
+novillos |>
+  select(Procedencia, IDV, Peso) |>
+  filter(Peso >  250) |>
   arrange(desc(Peso))
 ```
+
+Si queremos ordenar por mas de una variable, tenemos que pasara los nombres de las mismas a `arrange()` en orden que queremos que se apliquen los criterios. Por ejemplo, ordenando por `Procedencia`, `Peso` y `Peso_incial`
+
+```{r}
+novillos |>
+  arrange(Procedencia, desc(Peso), desc(Peso_inicial))
+```
+
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+Ordenar los novillos por `Procedencia` y `IDV`.
+
+:::
 
 ## Crear o transformar columnas
 
@@ -249,26 +308,62 @@ Para crear nuevas columnas aplicando funciones a otras, o bien para transformar 
 `dif_peso = Peso - Peso_inicial`
 
 ```{r}
-novillos %>% 
-  mutate(dif_peso = Peso - Peso_inicial) %>%
+novillos |> 
+  mutate(dif_peso = Peso - Peso_inicial) |>
   select(Peso, Peso_inicial, dif_peso)  # para que se vea mejor el resultado 
 ```
 
 Esto no cambia el set de datos `novillos` ya que no se lo asignó a ningun objeto. Para sobreescribir o actualiza el set de datos `novillos` hay que asignarlo al mismo objeto.
 
 ```{r}
-novillos <- novillos %>% 
+novillos <- novillos |> 
   mutate(dif_peso = Peso - Peso_inicial)
 ```
 
 **Aclaración**: Si se hubiese usado `select()` el set de datos novillos solamente contendría las columnas seleccionadas.
 
-### Resumir datos
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Calcular la ganancia de peso desde la última pesada `Peso_anterior` a la pesada actual `Peso`.
+
+2. Calcular la ganancia media daria tomando la duración del tiempo entre las pesadas del punto 1. (`Días`)
+
+:::
+
+
+### Modificar varias columnas a la vez
+
+Supongamos que queremos expresar las columnas que contienen información de pesos en Tn. Podríamos hacer:
+
+```{r}
+novillos |> 
+  mutate(
+    Peso_inicial_tn = Peso_inicial / 1000,
+    Peso_anterior_tn = Peso_anterior / 1000,
+    Peso_tn = Peso / 1000,
+  ) |> 
+  select(starts_with("Peso"))
+```
+
+Este código quedaría mejor si usamos `across()` para aplicar una funcion _across_ (a través) de varias columnas:
+
+```{r}
+novillos |> 
+  mutate(across(starts_with("Peso"), ~ .x / 1000, .names = "{col}_tn")) |> 
+  select(starts_with("Peso"))
+```
+
+El argumento `.names` sirve para aplicar un patrón a los nombres de las variables resultantes. En este caso `{col}` indica usar el nomnbre de la columna y `_tn` agregar el sufijo.
+
+
+## Resumir datos
 
 Mediante `summarise()` se pueden aplicar funciones para resumir en un solo valor los valores de las columnas. Las funciones a aplicar deben devolver un único valor, por ejemplo `mean()`. Si usamos `summary()` esto devolverá 6 valores y dará error.
 
 ```{r}
-novillos %>%
+novillos |>
   summarise(
     media = mean(Peso), 
     sd = sd(Peso), 
@@ -280,27 +375,93 @@ novillos %>%
 
 Nuevamente estos resultados pueden asignarse a otro objeto o bien encadenarse con otras operaciones.
 
-### Agrupar (último pero no menos importante)
+Al igual que con `mutate()` se puede aplicar `across()` y resumir varias columnas a la vez. Podemos pasarle una o varias funciones a la vez. En este último caso tiene que ser en una lista con el patrón `nombre = funcion`
 
-El verbo `group_by()` es muy útil para aplicar operaciones en subgrupos y presentar todo junto (_split-apply-combine_). Lo que hace es indicar que en el `data.frame` hay una o más variables que conforman los grupos. Luego cada operación se aplica a esos subgrupos.
+Por ejemplo: `media = mean`
+
+```{r}
+novillos |> 
+  summarise(
+    across(
+      .cols = starts_with("Peso"), 
+      .fns = list(media = mean, sd = sd, n = length), 
+      .names = "{col}_{fn}"
+    )
+  ) 
+```
+
+El argumento `.names` sirve para aplicar un patrón a los nombres de las variables resultantes. 
+
+Cuando se exploran/analizan datos categóricos, es común averiguar cuales son la cantidad de valores únicos en una columna o combinación de columnas. Esto se logra con `distinct()`
+
+```{r}
+novillos |> distinct(Procedencia, Tropa)
+```
+
+También es frecuente realizar conteos. Esto se puede hacer con la función `table()` o `xtabs()` de **R** base. No obstante, `dplyr` ofrece la función `count()` que es muy versátil.
+
+Por ejemplo, si queremos contar la cantidad total de novillos
+
+```{r}
+novillos |> count()
+```
+
+Si queremos ver cuantos novillos hay por `Procedencia`:
+
+```{r}
+novillos |> count(Procedencia)
+```
+
+Si quisieramos agregar las frecuencias en terminos relativos:
+
+```{r}
+novillos |> count(Procedencia) |> mutate(prop = prop.table(n))
+```
+
+Tambien podemos contar la cantidad de registros que cumplen alguna condicion:
+
+```{r}
+novillos |> count(Peso > 250) |> mutate(prop = prop.table(n))
+```
+
+El 93.7% de los novillos tiene peso mayor a 250 kg. 
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Crear una tabla de resumen con _minimo_ (`min()`) y _máximo_ (`max()`) de la variable `Días`
+
+2. Crear una tabla que tenga el conteo y frecuencias de novillos por `Procedencias` y `Tropa` que pesan más de 275 kg.
+
+:::
+
+## Agrupar (último pero no menos importante!!)
+
+El verbo `group_by()` es muy útil para aplicar operaciones en subgrupos y presentar todo junto ( _split-apply-combine_ ). Lo que hace es indicar que en el `data.frame` hay una o más variables que conforman los grupos. Luego cada operación se aplica a esos subgrupos.
 
 Ejemplo: calcular media, desvio, n y suma para cada procedencia, descartando los que tienen `NA` en `Procedencia`
 
 ```{r}
-novillos %>%
-  filter(!is.na(Procedencia)) %>% 
-  group_by(Procedencia) %>%
-  summarise(
-    media = mean(Peso),
-    sd = sd(Peso),
-    n = n(),
-    suma = sum(Peso)
-  )
+fns <- list(media = mean, sd = sd, n = length)
+novillos |>
+  filter(!is.na(Procedencia)) |> 
+  group_by(Procedencia) |>
+  summarise(across(Peso, fns))
 ```
+
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+Repetir actividad anterior pero agrupando por `Procedencia` y `Tropa` agregando el valor _mediano_ (`median()`)
+
+:::
 
 ## Tablas pivot
 
-Al igual que `dplyr`, las funciones de `tidyr` son compatibles con el operador `%>%`.
+Al igual que `dplyr`, las funciones de `tidyr` son compatibles con el operador `|>`.
 
 Las funciones más importantes de este paquete son `pivot_longer()` y `pivot_wider()`, las cuales permiten de manera facil convertir tablas apaisadas en tablas longitudinales los nombres de algunas variables pasan a ser los valores de una nueva variable y los valores se combinan en una nueva variable.
 
@@ -316,7 +477,7 @@ x    y
 **Formato _long_**
 
 ```
-Variable Valor
+name     value
 x        1
 x        2
 x        3
@@ -325,13 +486,378 @@ y        b
 y        c
 ```
 
-Veamos un ejemplo: las variables `Peso`, `Peso_inicial` y `Peso_anterior` pueden verse como la variable `Peso` medida en 3 momentos. Podríamos generar una tabla longitudinal combinando estas 3 variables en una sola y creando otra que indique el momento de medición.
+Veamos un ejemplo para crear una tabla apaisada. Las variables o columnas `Peso`, `Peso_inicial` y `Peso_anterior` pueden verse como la variable `Peso` medida en 3 momentos. 
+
+Podríamos generar una tabla longitudinal combinando estas 3 variables (`cols`) en una sola (`names_to = "momento"`) y creando otra que indique el momento de medición (`values_to = "peso"`).
 
 ```{r}
-pesos_long <- novillos %>% 
-  pivot_longer(cols = contains("Peso"), names_to = "momento", values_to = "peso") %>% 
+pesos_long <- novillos |> 
+  pivot_longer(
+    cols = contains("Peso"), 
+    names_to = "momento", 
+    values_to = "peso"
+  ) |> 
   select(IDV, Procedencia, momento, peso)
 pesos_long
 ```
 
 Como vemos, ahora tenemos una tabla que para cada novillo `IDV`, tiene los pesos en los distintos momentos no como columnas sino como valores de la variable `peso` y la columna `momento` identifica el asocia el momento en que se pesó el animal.
+
+El paso inverso sería usar `pivot_wider()`:
+
+```{r}
+pesos_long |> 
+  pivot_wider(
+    id_cols = IDV,
+    names_from = "momento",
+    values_from = "peso"
+  )
+```
+
+En este caso, `id_cols` esta indicando que queremos mantener como identificador de la observacion solamente la variable `IDV`. Si lo omitimos toma por defecto todas las variables que no se espefician en `names_from` o `values_from`.
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Crear una base de datos con las columnas `IDV`, `Procedencia` y `Peso`.
+
+2. Como harías para tener una tabla de doble entrada donde cada columna tenga el nombre de la procedencia y cada fila el IDV y los valores sean los pesos.
+
+:::
+
+
+## Unir y separar columnas
+
+Otras funcioners o verbos importantes son `unite()` y `separate()`. 
+
+Supongamos que queremos crear una columna que refleje la combinación de procedencia y número de tropa.
+
+```{r}
+novillos <- unite(novillos, col = "procedencia_tropa", Procedencia, Tropa)
+novillos
+```
+
+Como vemos ahora desaparecieron las columnas `Procedencia` y `Tropa` ya que se fusionaron en una sola. Los valores tambien. Por defecto el separador que se usa es `_` perto se puede cambiar facilmente con el argumento `sep`. Si quiseramos conservar las columnas originales podemos incluir `remove = F`
+
+Ahora bien, el paso inverso de este proceso se puede lograr con `separate()`
+
+```{r}
+novillos <- separate(novillos, procedencia_tropa, into = c("Procedencia", "Tropa"), sep = "_")
+novillos
+```
+
+Cuando hacemos la separación es muy importante identificar algun patron en los datos que permita hacer el corte de los valores. Por ejemplo: `La Rosita_2` se separó en `La Rosita`  y `2` gracias a que los unia el `_`. 
+
+## Unir tablas
+
+### `bind_rows()`/`bind_cols()`
+
+Si tenemos dos tablas de datos con el mismo set de columnas o el mismo número de filas podemos unirlas usando las funciones `bind_rows()` y `bind_cols()` repectivamente. Estas funciones son implementaciones más modernas de las funciones que ofrece **R** base: `rbind()` y `cbind()`.
+
+Por ejemplo: suponiendo que tenemos la base de datos particionada por procedencias. 
+
+```{r}
+la_rosita <- filter(novillos, Procedencia == "La Rosita")
+la_alameda <- filter(novillos, Procedencia == "La Alameda")
+```
+
+La cantidad de filas de cada procedencia es:
+
+```{r}
+la_rosita |> nrow()
+la_alameda |> nrow()
+```
+
+Total registros: 845 + 635 = 1840
+
+Luego, combinando ambas bases de datos por filas:
+
+```{r}
+rosita_mas_alameda <- bind_rows(la_rosita, la_alameda)
+rosita_mas_alameda |> nrow()
+```
+
+Este método funciona si las columnas no coinciden, no importa el orden.
+
+```{r}
+bind_rows(
+  la_rosita |> select(IDV, Procedencia, Peso_inicial),
+  la_alameda |> select(IDV, Procedencia, Peso),
+)
+```
+
+Donde las columnas no se encuentran devuelve `NA`.
+
+Ahora supongamos que tenemos la base con todos los casos pero por un lado la pesada al inicio, y por otro la pesada al dia de la fecha.
+
+```{r}
+pesada_inicial <- novillos |> 
+  select(IDV, Procedencia, Peso_inicial)
+pesada_inicial
+```
+
+
+```{r}
+pesada_final <- novillos |> 
+  select(IDV, Procedencia, Peso)
+pesada_final
+```
+
+Ambas basers de datos tienen la misma cantidad de filas: 1537. Como podríamos unirlas?
+
+Una forma podría ser _pegando_ ambas tablas fila a fila con `bind_cols()`
+
+```{r}
+pesadas <- bind_cols(pesada_inicial, pesada_final)
+pesadas
+```
+
+Qué paso? Como ambas tablas tenían columnas que se repetian (`IDV`, `Procedencia`), no quedó mas remedio que reparar los nombres y evitar duplicados.
+
+Por otro lado, salvo excepciones, este método es poco confiable porque corremos el riesgo de que se cambie el oprden de los registros. Ejemplo:
+
+```{r}
+bind_cols(
+  pesada_inicial |> arrange(desc(IDV)),
+  pesada_final |> arrange(IDV)
+)
+```
+
+Por otro lado, si ambas tablas no tienen la misma cantidad de filas, esta función no funciona.
+
+```{r}
+bind_cols(
+  pesada_inicial |> filter(Procedencia == "La Rosita"),
+  pesada_final
+)
+```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Crear una base de datos para cada tropa. 
+
+2. En la tropa 1 seleccionar `IDV`, `Procedencia` y `Peso`.
+
+3. En tropa 2 seleccionar `IDV`, `Procedencia` y `Días`
+
+4. Recrear una tabla que tenga `IDV`, `Procedencia`, `Peso` y `Dias`.
+
+:::
+
+A continuación veremos alguinas estrategias mas confiables para unir tablas con igual o distinto numero de filas.
+
+### Funciones `*_join()`
+
+Como su nombre lo dice, son un conjunto de funciones para realizar _uniones_ entre tablas de datos. Lo clave es tener algunas coluimnas que sirvan de _identificardor_ o _claves_ ( _keys_ ) de los registros.
+
+La siguiente figura resumen las opciones posibles usando la lógica de diagramas de Venn:
+
+![joins](assets/dplyr_joins.svg)ç
+
+En todos los casos necesitamos contar con dos tablas `X` e `Y` y una o más variables que sirvan de claves. Tomando el ejemplo ultimo, usaremos `IDV` y `Procedencia` como claves.
+
+```{r}
+pesos_iniciales <- novillos |> 
+  select(IDV, Procedencia, Peso_inicial) |>
+  filter(Procedencia %in% c("La Rosita", "La Alameda"))
+
+pesos_finales <- novillos |> 
+  select(IDV, Procedencia, Peso) |>
+  filter(Procedencia %in% c("La Rosita", "Los Corralitos"))
+```
+
+
+Así tenemos:
+
+- `inner_join` que representa la intersección de dos conjuntos. El resultado serán los registros que estámn presentes en ambos conjuntos de datos a la vez.
+
+```{r}
+inner_join(
+  pesos_iniciales, pesos_finales,
+  by = c("IDV", "Procedencia")
+)
+```
+
+En este caso devuelve solo `La Rosita`
+
+- `full_join` representa la unión cuyo resultado son todos los registros.
+
+```{r}
+full_join(
+  pesos_iniciales, pesos_finales,
+  by = c("IDV", "Procedencia")
+)
+```
+
+Acá vemos que tenemos un conjunto completo con todas las procedencias y datos completos solo para `La Rosita` porque estaba presente en ambas tablas. 
+
+- `left_join()`/`right_join()` son las mas comunes y permiten agregar aun set de datos existente los registros que coinciden en el otro set de datos. Dependiendo de la dirección será _left_ si llevamos los datos de `Y` a la tabla `X` or _right_  caso contrario.
+
+```{r}
+left_join(
+  pesos_iniciales, pesos_finales,
+  by = c("IDV", "Procedencia")
+)
+```
+
+```{r}
+right_join(
+  pesos_iniciales, pesos_finales,
+  by = c("IDV", "Procedencia")
+)
+```
+
+- `anti_join()` seria obtener la diferencia entre ambos conjuntos. Dependiendo de quien es `X` o `Y` determinamos la diferencia.
+
+```{r}
+anti_join(
+  pesos_iniciales, pesos_finales,
+  by = c("IDV", "Procedencia")
+)
+```
+
+```{r}
+anti_join(
+  pesos_finales, pesos_iniciales,
+  by = c("IDV", "Procedencia")
+)
+```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Crear una base de datos que contenga el `IDV`, `Peso` y `Días` de los novillos de tropa 1.
+
+2. Crear otra base de datos que contenga el `IDV`, `Procedencia` y `Días` de ambas tropas de la procedencia `La Rosita`.
+
+3. Crear una tabla que contenga los registros de la tabla creada en 1 más los datos de procedencia.
+
+4. Filtrar aquellos cuya procedencia haya resultado en `NA`. (se puede usar `drop_na()`)
+
+:::
+
+## Manejando cadenas de texto y factores
+
+Finalmente una actividad muy común en la exploración y limpieza de datos es el manejo de cadenas de texto y factores.
+
+Para eso hay dos paquetes clave que son `forcats` para manejar fatores y `stringr` para manipular/limpiar cadenas de texto.
+
+Es frecuente encontrar que las columnas de texto tiene valores mal escritos lo que genera incovenintes.
+
+Supongamos que algunos registros tienen mal escrita la procedencia. Para simular esto vamos a usar una versión muy potente del clasico `ifelse()` que se llama `case_when()`
+
+```{r}
+novillos <- novillos |> 
+  mutate(
+    Procedencia = case_when(
+      IDV == 'IA671B298' ~ "La  Rosita",
+      IDV == 'PO150A818' ~ "La Alamedas",
+      IDV == 'SZ208H766' ~ "La Alameda ",
+      IDV == 'IA671B133' ~ "Rosita",
+      IDV == 'PO150A563' ~ "Los C0rralitos",
+      TRUE ~ Procedencia # esto es para capturar los que no cumplen lo de arriba
+      )
+  )
+```
+
+Ahora podemos ver que pasa cuando hacemos un conteo:
+
+```{r}
+novillos |> count(Procedencia)
+```
+
+Tenemos más procedencias porque **R** interpreta que si no tienen el mismo texto, son distintas. ¿Cómo solucionarlo?
+
+### Usando `stringr`
+
+Este paquete tiene una serie de funciones que empiezan con `str_`.  Vamos a ver como solucionar este problema aplicando algunas funciones. El _cheatsheet_ (machete) completo está [acá](https://github.com/rstudio/cheatsheets/blob/a045e18875cde4c9cf9c7f5f8bee71b4c8c2a2b7/strings.pdf)
+
+La función `str_squish()` es útil para remover espacios duplicados o finales o iniciales. Si solo queremos eliminar los iniciales finales tenemos `str_trim()`
+
+```{r}
+str_squish("La  Rosita ")
+```
+
+Ahora bien, errores de tipeo, salvo que sean patrones generales,  hay que modificarlos caso por caso. La sintaxis es:
+
+`str_replace(texto_a_limpiar, patrón, reemplazo)`
+
+```{r}
+str_replace("Alamedas", "Alamedas", "Alameda")
+```
+
+Otro ejemplo
+
+```{r}
+str_replace("C0rralitos", "0", "o")
+```
+
+Finalmente, poniendo todo junto
+
+```{r}
+tmp <- novillos |> 
+  mutate(
+    Procedencia = Procedencia |> 
+      str_squish() |> 
+      str_replace("Alamedas", "Alameda") |> 
+      str_replace("^Rosita", "La Rosita") |> 
+      str_replace("0", "o")
+  )
+tmp |> count(Procedencia)
+```
+
+### Usando `forcats`
+
+Dependiendo del caso, las columnas character podemos usarlas como `factor`. En este escenario, el paquete `forcats` ofrece funciones para manejar los factores y sus niveles mediante funciones que empiezan por `fct_`. Vamos a mostrar algunos ejemplos, la guia completa o _cheatsheet_ está [acá](https://github.com/rstudio/cheatsheets/blob/a045e18875cde4c9cf9c7f5f8bee71b4c8c2a2b7/factors.pdf)
+
+
+Suponiendo que tenemos este factor con estos niveles:
+
+```{r}
+procedencia <- factor(procedencia, levels = c("Alam", "Alameda", "La Alameda", "Las Alamedas", "Alamedas"))
+procedencia
+```
+
+Si queremos modificar niveles manualmente podemos usar `fct_recode()`. El patron es `nuevo_nivel` = `viejo_nivel` 
+
+```{r}
+fct_recode(procedencia, "Alameda" = "La Alameda")
+```
+
+Si tenemos varios que corregir y pertenecen a un mismo grupo podemos usar `fct_collapse()`
+
+```{r}
+fct_collapse(procedencia, "La Alameda" = c("Alameda", "La Alameda", "Alamedas"))
+```
+
+Si quiéramos eliminar uno o varios niveles no usados podemos usar `fct_drop()`
+
+```{r}
+fct_drop(procedencia)
+```
+
+Tambien podemos cambiar el orden, por ejemplo pasando `Alamedas` al primer lugar.
+
+```{r}
+fct_relevel(procedencia, "Alamedas", after = 0L)
+```
+
+Para solucionar nuestro problema con `fct_collapse` podemos solucionar todo:
+
+```{r}
+tmp <- novillos |> 
+  mutate(
+    Procedencia = Procedencia |> 
+      fct_collapse(
+        "La Rosita" = c("La  Rosita", "La Rosita", "Rosita"),
+        "La Alameda" = c("La Alameda", "La Alameda ", "La Alamedas"),
+        "Los Corralitos" = c("Los Corralitos", "Los C0rralitos")
+      )
+  )
+tmp |> count(Procedencia)
+```
+
