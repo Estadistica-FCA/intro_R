@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introducción al Análisis de Datos con R - 4&nbsp; Paquetes de R</title>
+<title>Introducción al Análisis de Datos con R - 7&nbsp; RStudio Cloud</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04_import.html" rel="next">
-<link href="./02_basics.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./05_wrangling.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -107,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_paquetes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Paquetes de **R**</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08_cloud.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">RStudio Cloud</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -158,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_paquetes.html" class="sidebar-item-text sidebar-link active">
+  <a href="./03_paquetes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Paquetes de <strong>R</strong></span></span></a>
   </div>
 </li>
@@ -176,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_cloud.html" class="sidebar-item-text sidebar-link">
+  <a href="./08_cloud.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">RStudio Cloud</span></span></a>
   </div>
 </li>
@@ -196,7 +162,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#qué-son-los-paquetes" id="toc-qué-son-los-paquetes" class="nav-link active" data-scroll-target="#qué-son-los-paquetes"><span class="header-section-number">4.1</span> ¿Qué son los paquetes?</a></li>
+  <li><a href="#qué-es-rstudio-cloud" id="toc-qué-es-rstudio-cloud" class="nav-link active" data-scroll-target="#qué-es-rstudio-cloud"><span class="header-section-number">7.1</span> ¿Qué es <strong>RStudio Cloud</strong>?</a></li>
+  <li><a href="#comenzando-con-rstudio-cloud" id="toc-comenzando-con-rstudio-cloud" class="nav-link" data-scroll-target="#comenzando-con-rstudio-cloud"><span class="header-section-number">7.2</span> Comenzando con RStudio Cloud</a>
+  <ul class="collapse">
+  <li><a href="#si-ya-dispone-de-una-cuenta-en-rstudio-cloud-log-in" id="toc-si-ya-dispone-de-una-cuenta-en-rstudio-cloud-log-in" class="nav-link" data-scroll-target="#si-ya-dispone-de-una-cuenta-en-rstudio-cloud-log-in"><span class="header-section-number">7.2.1</span> Si ya dispone de una cuenta en RStudio Cloud: <em>Log In</em></a></li>
+  <li><a href="#si-no-dispone-una-cuenta-en-rstudio-cloud-debe-crearla-sign-up" id="toc-si-no-dispone-una-cuenta-en-rstudio-cloud-debe-crearla-sign-up" class="nav-link" data-scroll-target="#si-no-dispone-una-cuenta-en-rstudio-cloud-debe-crearla-sign-up"><span class="header-section-number">7.2.2</span> Si no dispone una cuenta en RStudio Cloud, debe crearla: <em>Sign Up</em></a></li>
+  </ul></li>
+  <li><a href="#cómo-crear-un-nuevo-proyecto-en-rstudio-cloud" id="toc-cómo-crear-un-nuevo-proyecto-en-rstudio-cloud" class="nav-link" data-scroll-target="#cómo-crear-un-nuevo-proyecto-en-rstudio-cloud"><span class="header-section-number">7.3</span> Cómo crear un nuevo proyecto en RStudio Cloud</a></li>
+  <li><a href="#cómo-cargar-y-trabajar-con-datos-en-rstudio-cloud" id="toc-cómo-cargar-y-trabajar-con-datos-en-rstudio-cloud" class="nav-link" data-scroll-target="#cómo-cargar-y-trabajar-con-datos-en-rstudio-cloud"><span class="header-section-number">7.4</span> Cómo cargar y trabajar con datos en RStudio Cloud</a></li>
   </ul>
 </nav>
     </div>
@@ -205,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Paquetes de <strong>R</strong></span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">RStudio Cloud</span></h1>
 </div>
 
 
@@ -220,54 +193,162 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>En esta sección vamos a aprender como extender las funcionalidades de <strong>R</strong> mediante la instalación y utilización de paquetes o <em>packages</em></p>
-<section id="qué-son-los-paquetes" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="qué-son-los-paquetes"><span class="header-section-number">4.1</span> ¿Qué son los paquetes?</h2>
-<p><strong>R</strong> viene con un conjunto de librerías mínimo denominado <code>core</code> que permite realizar una amplia varidedad de análisis y operaciones con los datos. La comunidad que desarrolla <strong>R</strong> provee un repositorio de librerías o paquetes complementarios (<code>packages</code>) que expanden notablemente las funcionalidades de <strong>R</strong>.</p>
-<p>Los paquetes se deben <em>instalar</em> primero usando la función <code>install.packages()</code> por única vez y en cada sesión se deben <em>cargar</em> con <code>library()</code>. La siguiente figura resume el proceso:</p>
+<p>En esta seccuión veremos la utilización de una versión en la nube en línea de RStudio. Se explica cómo crear una cuenta y configurar un proyecto en RStudio Cloud, una versión basada en la nube de RStudio.</p>
+<section id="qué-es-rstudio-cloud" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="qué-es-rstudio-cloud"><span class="header-section-number">7.1</span> ¿Qué es <strong>RStudio Cloud</strong>?</h2>
+<p><strong>RStudio Cloud</strong> La plataforma RStudio Cloud se define como un Cloud computing. En esta el hardware, software, datos y recursos que utilizabas para tus cursos de estadística pasan de estar en nuestras computadoras a estar “en la nube” <a href="https://login.rstudio.cloud/">https://login.rstudio.cloud/</a>.</p>
+<p>Permite a los usuarios escribir código R, crear visualizaciones y realizar análisis de datos directamente desde su navegador web, sin necesidad de instalar R o RStudio en su computadora local.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="assets/library_install_meme.jpeg" class="img-fluid" style="width:100.0%"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/rstudio_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Página oficial de RStudio Cloud</figcaption>
+</figure>
 </div>
 </div>
-<p>Suponiendo que queremos instalar el paquete <code>foo</code>, se debe ejecutar por única vez:</p>
+</div>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li><p>Acceso desde cualquier lugar: RStudio Cloud permite a los usuarios acceder a su trabajo desde cualquier computadora con conexión a Internet, lo que facilita la colaboración y el trabajo remoto.</p></li>
+<li><p>Sin instalación: No es necesario instalar R ni RStudio en el dispositivo local. Esto simplifica el proceso para los principiantes y permite a los usuarios comenzar a trabajar rápidamente sin preocuparse por la configuración del entorno.</p></li>
+<li><p>Colaboración sencilla: Los proyectos en RStudio Cloud se pueden compartir fácilmente con otros usuarios, lo que facilita la colaboración en tiempo real en proyectos de análisis de datos y ciencia de datos.</p></li>
+<li><p>Control de versiones integrado: RStudio Cloud permite a los usuarios vincular sus proyectos con repositorios de control de versiones como GitHub, lo que facilita el seguimiento de los cambios y la colaboración en equipos.</p></li>
+<li><p>Entorno preconfigurado: RStudio Cloud viene con paquetes y bibliotecas comunes preinstalados, lo que ahorra tiempo a los usuarios al evitar la necesidad de configurar su entorno de trabajo desde cero.</p></li>
+</ul>
+<p><strong>Desventajas:</strong></p>
+<ul>
+<li><p>Limitaciones de recursos: La versión gratuita de RStudio Cloud puede tener limitaciones en cuanto a la cantidad de recursos computacionales disponibles, lo que puede afectar el rendimiento al realizar análisis de datos intensivos.</p></li>
+<li><p>Dependencia de la conexión a Internet: RStudio Cloud requiere una conexión a Internet estable para funcionar. Si la conexión es lenta o se pierde, puede dificultar el trabajo continuo.</p></li>
+<li><p>Limitaciones de almacenamiento: La cantidad de almacenamiento gratuito en RStudio Cloud puede ser limitada. Los usuarios que trabajan con conjuntos de datos grandes pueden necesitar actualizar a una suscripción de pago para obtener más espacio de almacenamiento.</p></li>
+</ul>
+</section>
+<section id="comenzando-con-rstudio-cloud" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="comenzando-con-rstudio-cloud"><span class="header-section-number">7.2</span> Comenzando con RStudio Cloud</h2>
+<p>Tendrá que registrarse para obtener una cuenta gratuita para comenzar con RStudio Cloud.</p>
+<section id="si-ya-dispone-de-una-cuenta-en-rstudio-cloud-log-in" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="si-ya-dispone-de-una-cuenta-en-rstudio-cloud-log-in"><span class="header-section-number">7.2.1</span> Si ya dispone de una cuenta en RStudio Cloud: <em>Log In</em></h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"foo"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/login_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Log In en RStudio Cloud</figcaption>
+</figure>
 </div>
-<p>Luego, para acceder a todas las funciones que aporta <code>foo</code>, en cada sesión de trabajo ejecutar hay que ejecutar:</p>
+</div>
+</div>
+</section>
+<section id="si-no-dispone-una-cuenta-en-rstudio-cloud-debe-crearla-sign-up" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="si-no-dispone-una-cuenta-en-rstudio-cloud-debe-crearla-sign-up"><span class="header-section-number">7.2.2</span> Si no dispone una cuenta en RStudio Cloud, debe crearla: <em>Sign Up</em></h3>
+<p>Haga clic en el botón Registrarse ( <em>Sign Up</em> )en la esquina superior derecha y aparecerá el siguiente formulario:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"foo"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/Signup_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Sign Up en RStudio Cloud</figcaption>
+</figure>
 </div>
-<p>Alternativamente, si una vez instalado el paquete <code>foo</code> queremos usar la función <code>bar()</code> pero sin cargar el resto del paquete, entonces:</p>
+</div>
+</div>
+<p>A continuación podrá optar por tres opciones:</p>
+<ul>
+<li>Posit Cloud</li>
+<li>shinyapps.io: es una plataforma de servicio (PaaS) para alojar aplicaciones web (apps) Shiny</li>
+<li>Posit User Settings: para editar opciones personales</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>foo<span class="sc">::</span><span class="fu">bar</span>(...)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/options_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Sign Up en RStudio Cloud</figcaption>
+</figure>
 </div>
-<p>El manejo de paquetes se puede simplificar enormemente con el paquete <code>pacman</code>. Entre otras funciones ofrece la función <code>p_load()</code> que carga los paquetes y si no están instalados los instala previamente.</p>
-<p>Para instalar <code>pacman</code> por primera vez correr el siguiente comando:</p>
+</div>
+</div>
+<p>Seleccionando <strong>Posit Cloud</strong>, deberá indicar nuevamente el <strong>Log In</strong> y luego se le presentará el panel de RStudio Cloud:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar por unica vez</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/dashboard_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Dashboard o Panel de RStudio Cloud</figcaption>
+</figure>
 </div>
-<p>Luego, cuando necesitemos podemos ejecutar <code>pacman::p_load()</code>. Por ejemplo, si queremos cargar el paquete <code>moments</code></p>
+</div>
+</div>
+</section>
+</section>
+<section id="cómo-crear-un-nuevo-proyecto-en-rstudio-cloud" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="cómo-crear-un-nuevo-proyecto-en-rstudio-cloud"><span class="header-section-number">7.3</span> Cómo crear un nuevo proyecto en RStudio Cloud</h2>
+<p>Una vez en el panel, puede hacer clic en <strong>New Project</strong> – <strong>New RStudio Project</strong> para comenzar:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(moments)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ACTIVIDAD
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/newproject_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Nuevo Proyecto en RStudio Cloud</figcaption>
+</figure>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Instalar el paquete <code>pacman</code> usando <code>install.packages()</code></p></li>
-<li><p>Cargar/Instalar el paquete <code>tidyverse</code> usando <code>pacman::p_load()</code></p></li>
-</ol>
+</div>
+<p>Tendrá que esperar entre 30 y 60 segundos hasta que se aprovisione el nuevo proyecto. Una vez hecho esto, verá una interfaz RStudio muy familiar:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/newproject2_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Panel Nuevo Proyecto en RStudio Cloud</figcaption>
+</figure>
 </div>
 </div>
+</div>
+<p><br></p>
+<p>Puede renombrar el Proyecto en la esquina superior izquierda, reemplazando <em>Untitled Project</em>.</p>
+<p><br></p>
+<p>Todo el IDE en la nube funciona tal como es de esperar. Puede crear un nuevo script R yendo a Archivo – Nuevo archivo – R Script como se muestra a continuación:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/script_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Nuevo Proyecto en RStudio Cloud</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cómo-cargar-y-trabajar-con-datos-en-rstudio-cloud" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="cómo-cargar-y-trabajar-con-datos-en-rstudio-cloud"><span class="header-section-number">7.4</span> Cómo cargar y trabajar con datos en RStudio Cloud</h2>
+<p>Para cargar un conjunto de datos a RStudio Cloud hacer clic en el botón <strong>Upload</strong> en la pestaña Archivos (cuadrante inferior derecho).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/upload_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Cargar archivos en RStudio Cloud</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Una vez allí, haga clic en <strong>Seleccionar archivo</strong> y especifique la ruta a su conjunto de datos:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/upload2_cloud.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Cargar archivos en RStudio Cloud</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Una vez que el conjunto de datos se carga en la nube, puede cargarlo en el entorno R. Hay dos enfoques:</p>
+<ul>
+<li>Botón <strong>Import Dataset</strong>: en el cuadrante superior derecho.</li>
+<li>Lector de archivos de R: utilice un paquete R dedicado para cargar archivos (ver sección <strong>Importar/exportar datos en R</strong> datos de este E-book).</li>
+</ul>
 
 
 </section>
@@ -508,13 +589,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02_basics.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aspectos básicos de <strong>R</strong></span></span>
+      <a href="./05_wrangling.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipulando datos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_import.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar/exportar datos en <strong>R</strong></span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
