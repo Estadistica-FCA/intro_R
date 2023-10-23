@@ -1,5 +1,6 @@
 ---
 title: "Introducción"
+license: "CC BY-NC-ND"
 ---
 
 ```{r, echo = F, include = F}
