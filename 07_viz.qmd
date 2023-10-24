@@ -28,6 +28,22 @@ pacman::p_load(tidyverse)
 
 **R** va a avisarnos en la consola que esta enmascarando (reemplazando) algunas funciones que ya estaban en el entorno, o bien el paquete nos devuelve algun mensaje. A menos que diga `Error ...`, eso está bien.
 
+## ¿Por qué usar `ggplot2`?
+
+**Ventajas**
+
+- Hay una estructura gramatica consistente de gráficos
+- Alto nivel de abstracción
+- Gran flexibilidad
+- Sistema de themes para la mejora de la apariencia de los gráficos
+- Sistema de gráficos completo y maduro
+- Lo usan muchos usuarios y hay una comunidad muy activa
+
+**Desventajas** o Cosas que no puedes (o no deberías) hacer con ggplot2:
+
+- Gráficos tridimensionales (ver paquete rgl)
+- Gráficos de nodos (ver paquete igraph)
+- Gráficos interactivos (ver paquete ggvis)
 
 ## Componentes del gráfico en `ggplot2`
 
