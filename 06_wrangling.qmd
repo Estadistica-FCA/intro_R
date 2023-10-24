@@ -357,6 +357,64 @@ novillos |>
 
 El argumento `.names` sirve para aplicar un patrón a los nombres de las variables resultantes. En este caso `{col}` indica usar el nomnbre de la columna y `_tn` agregar el sufijo.
 
+### Modifica con condicionales
+
+A veces las modificaciones hay que realizarlas a algunas celdas en particular, no a toda la columna. En esos casos es conveniente la función condicional `ifelse()`. 
+
+`ifelse(condicion, resultado_si, resultado_no)`
+
+La función evalua la condición y, si el resultado es `TRUE` devuelve `resultado_si`, caso contrario, `resultado_no`. Por ejemplo, si tenemos un vector de 10 calificaciones entre 0-100 podemos clasificarlas en `aprobado/no aprobado`.
+
+```{r}
+notas <- data.frame(
+  alumno = 1:10, nota = c(45, 12, 95, 80, 60, 55, 57, 78, 80, 100)
+)
+notas
+```
+
+
+```{r}
+notas <- notas |> 
+  mutate(condicion = ifelse(x >= 60, "aprobado", "no aprobado"))
+notas
+```
+
+Para evaluaciones más complejas es necesario _anidar_ los condicionales. En estos casos `case_when()` es mas versátil. Supongamos que queremos aplicar la escala de calificaciones.
+
+```{r}
+notas <- notas |> 
+  mutate(
+    calificacion = case_when(
+      nota == 100 ~ "Sobresaliente",
+      nota >= 90 & nota < 100 ~ "Distinguido",
+      nota >= 80 & nota < 90 ~ "Muy Bueno",
+      nota >= 70 & nota < 80 ~ "Bueno",
+      nota >= 60 & nota < 70 ~ "Aprobado",
+      TRUE ~ "Insuficiente"
+    )
+  )
+notas
+```
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Clasificar los novillos segun el `Peso` en `pesados/livianos` si superan los 300 kg en una nueva variable `grupo`.
+
+2. Actualizar la columna anterior pero dividiendo los novillos según `Peso` en tres grupos: `pesados` (> 300 kg), `intermedios` (250-300 kg), y `livianos` (< 250 kg). 
+
+3. Clasificar los novillos según peso inicial en `alto/bajo` aplicando un corte según la `Procedencia`. Los cortes son:
+
+```{r, echo = F}
+novillos |> 
+  group_by(Procedencia) |>
+  summarise(across(Peso_inicial, median)) |> 
+  flextable::flextable() |>
+  flextable::autofit()
+```
+
+:::
 
 ## Resumir datos
 
@@ -626,7 +684,7 @@ bind_cols(
 
 Por otro lado, si ambas tablas no tienen la misma cantidad de filas, esta función no funciona.
 
-```{r}
+```{r, error = T}
 bind_cols(
   pesada_inicial |> filter(Procedencia == "La Rosita"),
   pesada_final
@@ -770,7 +828,17 @@ Ahora podemos ver que pasa cuando hacemos un conteo:
 novillos |> count(Procedencia)
 ```
 
-Tenemos más procedencias porque **R** interpreta que si no tienen el mismo texto, son distintas. ¿Cómo solucionarlo?
+Tenemos más procedencias porque **R** interpreta que si no tienen el mismo texto, son _distintas_. 
+
+Tambien para econtrar valores disintos es `distinct()` que devulve los elementos distintos de un vector. Combinado con arrange puede servir.
+
+```{r}
+novillos |>
+  distinct(Procedencia) |>
+  arrange(Procedencia)
+```
+
+Ahora bien: ¿cómo solucionarlo?
 
 ### Usando `stringr`
 
@@ -813,7 +881,6 @@ tmp |> count(Procedencia)
 ### Usando `forcats`
 
 Dependiendo del caso, las columnas character podemos usarlas como `factor`. En este escenario, el paquete `forcats` ofrece funciones para manejar los factores y sus niveles mediante funciones que empiezan por `fct_`. Vamos a mostrar algunos ejemplos, la guia completa o _cheatsheet_ está [acá](https://github.com/rstudio/cheatsheets/blob/a045e18875cde4c9cf9c7f5f8bee71b4c8c2a2b7/factors.pdf)
-
 
 Suponiendo que tenemos este factor con estos niveles:
 
