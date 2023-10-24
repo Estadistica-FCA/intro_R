@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introducción al Análisis de Datos con R - 5&nbsp; Importar/exportar datos en R</title>
+<title>Introducción al Análisis de Datos con R - 5&nbsp; Importar datos en R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05_wrangling.html" rel="next">
+<link href="./references.html" rel="next">
 <link href="./03_paquetes.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -91,7 +91,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
@@ -107,10 +108,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_import.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar/exportar datos en **R**</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_import.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar datos en **R**</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -165,19 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_import.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar/exportar datos en <strong>R</strong></span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05_wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipulando datos</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08_cloud.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">RStudio Cloud</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar datos en <strong>R</strong></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -196,16 +185,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#importar-datos" id="toc-importar-datos" class="nav-link active" data-scroll-target="#importar-datos"><span class="header-section-number">5.1</span> Importar datos</a>
+  <li><a href="#función-nativa-para-importar-datos" id="toc-función-nativa-para-importar-datos" class="nav-link active" data-scroll-target="#función-nativa-para-importar-datos"><span class="header-section-number">5.1</span> Función nativa para importar datos</a></li>
+  <li><a href="#paquetes-para-importar-datos" id="toc-paquetes-para-importar-datos" class="nav-link" data-scroll-target="#paquetes-para-importar-datos"><span class="header-section-number">5.2</span> Paquetes para importar datos</a>
   <ul class="collapse">
-  <li><a href="#funciones-nativas" id="toc-funciones-nativas" class="nav-link" data-scroll-target="#funciones-nativas"><span class="header-section-number">5.1.1</span> Funciones nativas</a></li>
-  <li><a href="#paquetes-para-importarexportar-datos" id="toc-paquetes-para-importarexportar-datos" class="nav-link" data-scroll-target="#paquetes-para-importarexportar-datos"><span class="header-section-number">5.1.2</span> Paquetes para importar/exportar datos</a></li>
-  <li><a href="#formas-de-importar-datos" id="toc-formas-de-importar-datos" class="nav-link" data-scroll-target="#formas-de-importar-datos"><span class="header-section-number">5.1.3</span> Formas de importar datos</a></li>
+  <li><a href="#readr" id="toc-readr" class="nav-link" data-scroll-target="#readr"><span class="header-section-number">5.2.1</span> <code>readr</code></a></li>
+  <li><a href="#rio" id="toc-rio" class="nav-link" data-scroll-target="#rio"><span class="header-section-number">5.2.2</span> <code>rio</code></a></li>
   </ul></li>
-  <li><a href="#exportar-datos" id="toc-exportar-datos" class="nav-link" data-scroll-target="#exportar-datos"><span class="header-section-number">5.2</span> Exportar datos</a>
+  <li><a href="#formas-de-importar-datos" id="toc-formas-de-importar-datos" class="nav-link" data-scroll-target="#formas-de-importar-datos"><span class="header-section-number">5.3</span> Formas de importar datos</a>
   <ul class="collapse">
-  <li><a href="#readr-1" id="toc-readr-1" class="nav-link" data-scroll-target="#readr-1"><span class="header-section-number">5.2.1</span> <code>readr</code></a></li>
-  <li><a href="#rio-1" id="toc-rio-1" class="nav-link" data-scroll-target="#rio-1"><span class="header-section-number">5.2.2</span> <code>rio</code></a></li>
+  <li><a href="#desde-la-consola-recomendado" id="toc-desde-la-consola-recomendado" class="nav-link" data-scroll-target="#desde-la-consola-recomendado"><span class="header-section-number">5.3.1</span> Desde la consola (recomendado)</a></li>
+  <li><a href="#desde-el-importador-de-datos-de-rstudio" id="toc-desde-el-importador-de-datos-de-rstudio" class="nav-link" data-scroll-target="#desde-el-importador-de-datos-de-rstudio"><span class="header-section-number">5.3.2</span> Desde el importador de datos de <strong>RStudio</strong></a></li>
+  <li><a href="#desde-el-portapapeles" id="toc-desde-el-portapapeles" class="nav-link" data-scroll-target="#desde-el-portapapeles"><span class="header-section-number">5.3.3</span> Desde el portapapeles</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -215,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar/exportar datos en <strong>R</strong></span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Importar datos en <strong>R</strong></span></h1>
 </div>
 
 
@@ -233,10 +223,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Un aspecto importante para cualquier análisis de datos es acceder a los <strong>datos</strong>!</p>
 <p>Los datos pueden estar almacenados en diversos formatos: archivos de texto (<code>*.txt</code>, <code>*.dat</code>, etc), texto separado por comas (<code>*.csv</code>), planillas de cálculos (<code>*.xls</code> o <code>*.xlsx</code>), etc.</p>
 <p>En este curso vamos a trabajar con archivos que ya se encuentran en planillas de cálculo tipo Excel o archivos de texto plano.</p>
-<section id="importar-datos" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="importar-datos"><span class="header-section-number">5.1</span> Importar datos</h2>
-<section id="funciones-nativas" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="funciones-nativas"><span class="header-section-number">5.1.1</span> Funciones nativas</h3>
+<section id="función-nativa-para-importar-datos" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="función-nativa-para-importar-datos"><span class="header-section-number">5.1</span> Función nativa para importar datos</h2>
 <p><strong>R</strong> viene la función <code>read.table()</code> y derivados, que permiten leer datos desde formatos tipo <code>texto plano</code> (<code>plain text format</code>). El más popular entre estos es <code>*.csv</code>. Este formato asume que los datos están en formato de tabla o <em>rectangular</em> (e.g.&nbsp;variables en columnas y observaciones en filas) y devuelve un <code>data.frame</code>. En ?read.table se detallan todos los argumentos, los más importantes son:</p>
 <ul>
 <li><p><code>file</code> para indicar el nombre o ruta al archivo</p></li>
@@ -306,11 +294,11 @@ ACTIVIDAD
 </div>
 </div>
 </section>
-<section id="paquetes-para-importarexportar-datos" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="paquetes-para-importarexportar-datos"><span class="header-section-number">5.1.2</span> Paquetes para importar/exportar datos</h3>
+<section id="paquetes-para-importar-datos" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="paquetes-para-importar-datos"><span class="header-section-number">5.2</span> Paquetes para importar datos</h2>
 <p>Existen paquetes específicos que permiten leer virtualmente cualquier formato de archivos.</p>
-<section id="readr" class="level4" data-number="5.1.2.1">
-<h4 data-number="5.1.2.1" class="anchored" data-anchor-id="readr"><span class="header-section-number">5.1.2.1</span> <code>readr</code></h4>
+<section id="readr" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="readr"><span class="header-section-number">5.2.1</span> <code>readr</code></h3>
 <p>Si bien la función <code>read.table()</code> y derivadas permiten leer datos <em>rectangulares</em> en formato texto, el paquete <code>readr</code> <a href="https://readr.tidyverse.org/">link</a> provee una implementación más moderna (y rápidas) de estas funciones. Las funciones se llaman igual que las nativas pero se reemplaza <code>.</code> por <code>_</code> en el nombre. Ejemplo: <code>read_table()</code></p>
 <p>Este paquete ya está integrado a <code>tidyverse</code>. Para leer el set de datos que creamos en la actividad anterior:</p>
 <div class="cell">
@@ -340,8 +328,8 @@ dbl (2): Lote, Rendimiento
 </div>
 <p>A diferencia de la función nativa, las funciones de <code>readr</code> devuelven un objeto llamado <code>tibble</code> que es una especie de <code>data.frame</code> pero con algunas propiedades extra.</p>
 </section>
-<section id="rio" class="level4" data-number="5.1.2.2">
-<h4 data-number="5.1.2.2" class="anchored" data-anchor-id="rio"><span class="header-section-number">5.1.2.2</span> <code>rio</code></h4>
+<section id="rio" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="rio"><span class="header-section-number">5.2.2</span> <code>rio</code></h3>
 <p>A diferencia de <code>readr</code> que es una reimplementación de funciones de <strong>R</strong>, hay un paquete llamado <code>rio</code> <a href="https://www.rdocumentation.org/packages/rio/versions/1.0.1">link</a> que es una especie de <em>metapaquete</em> y permite simplificar la <em>importación</em>, <em>exportación</em>, y <em>conversión</em> de formatos en una sintaxis unificada.</p>
 <p>Este paquete trabaja con una mayor variedad de formatos y, basado en la extensión del archivo, busca la función y/o paquete apropiado para leer o guardar los datos. En el caso de ser necesario, se pueden pasar argumentos a las funciones.</p>
 <p>Retomando el ejemplo de trigo, podemos leer los datos con la función <code>import()</code></p>
@@ -375,11 +363,11 @@ dbl (2): Lote, Rendimiento
 </div>
 </section>
 </section>
-<section id="formas-de-importar-datos" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="formas-de-importar-datos"><span class="header-section-number">5.1.3</span> Formas de importar datos</h3>
+<section id="formas-de-importar-datos" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="formas-de-importar-datos"><span class="header-section-number">5.3</span> Formas de importar datos</h2>
 <p>A continuación vamos a detallar dos formas de abrir el archivo <a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,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" download="urbana_weather.xlsx">urbana_weather.xlsx</a> que contiene datos meteorológicos de la ciudad de Urbana (Illinois).</p>
-<section id="desde-la-consola-recomendado" class="level4" data-number="5.1.3.1">
-<h4 data-number="5.1.3.1" class="anchored" data-anchor-id="desde-la-consola-recomendado"><span class="header-section-number">5.1.3.1</span> Desde la consola (recomendado)</h4>
+<section id="desde-la-consola-recomendado" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="desde-la-consola-recomendado"><span class="header-section-number">5.3.1</span> Desde la consola (recomendado)</h3>
 <p>Una vez que descargamos el archivo datos en la carpeta <code>datasets</code> dentro de nuestro directorio de trabajo o proyecto podemos leerlo en <strong>R</strong> usando la función <code>import()</code> del paquete <code>rio</code>. Esta función se encargará de llamar la función necesaria para leer el archivo que le suministremos.</p>
 <div class="cell" data-out.lines="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>urbana <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"datasets/urbana_weather.xlsx"</span>, <span class="at">setclass =</span> <span class="st">"tibble"</span>)</span>
@@ -414,8 +402,8 @@ dbl (2): Lote, Rendimiento
 </div>
 </div>
 </section>
-<section id="desde-el-importador-de-datos-de-rstudio" class="level4" data-number="5.1.3.2">
-<h4 data-number="5.1.3.2" class="anchored" data-anchor-id="desde-el-importador-de-datos-de-rstudio"><span class="header-section-number">5.1.3.2</span> Desde el importador de datos de <strong>RStudio</strong></h4>
+<section id="desde-el-importador-de-datos-de-rstudio" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="desde-el-importador-de-datos-de-rstudio"><span class="header-section-number">5.3.2</span> Desde el importador de datos de <strong>RStudio</strong></h3>
 <p><strong>RStudio</strong> cuenta con un asistente de importación de datos (<code>File &gt; Import Dataset</code>) que brinda interfase a varias funciones especializadas en la importación de datos de paquetes específicos como <code>readr</code>, <code>readxl</code>, etc.</p>
 <p>En el menú <code>File &gt; Import Dataset</code> o bien el ícono del panel <code>Environment</code> despliega una lista con disitintas opciones de importación: nos interesa <code>From Excel (readxl)...</code></p>
 <div class="cell" data-layout-align="center">
@@ -459,8 +447,8 @@ Aclaración
 </div>
 </div>
 </section>
-<section id="desde-el-portapapeles" class="level4" data-number="5.1.3.3">
-<h4 data-number="5.1.3.3" class="anchored" data-anchor-id="desde-el-portapapeles"><span class="header-section-number">5.1.3.3</span> Desde el portapapeles</h4>
+<section id="desde-el-portapapeles" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="desde-el-portapapeles"><span class="header-section-number">5.3.3</span> Desde el portapapeles</h3>
 <p>Una alternativa conveniente para acceder rápidamente a los datos es usando el portapapeles. Suponiendo que los datos estan en una hoja de cálculos:</p>
 <ol type="1">
 <li><p>Seleccionar el rango de celdas <code>A1:C5</code> que nos interesa incluyendo los encabezados</p></li>
@@ -481,81 +469,6 @@ Aclaración
 </div>
 <div class="callout-body-container callout-body">
 <p>Si bien esta alternativa es rápida, al no ser reproducible (no hay forma de plasmarla en el script para futuras sesiones), <strong>no es recomendable</strong> salvo para una exploración rápida.</p>
-</div>
-</div>
-</section>
-</section>
-</section>
-<section id="exportar-datos" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="exportar-datos"><span class="header-section-number">5.2</span> Exportar datos</h2>
-<p>Así como <strong>R</strong> viene con la función <code>read.table()</code> y derivados, que permiten leer datos desde formatos tipo <code>texto plano</code> (<code>plain text format</code>). Existen funciones que hacen lo contrario: exportar <code>data.frames</code> a archivos de texto plano. Estas funciones se comienzan con el nombre <code>write*</code> (<code>write.table()</code>, <code>write.csv()</code>, …).</p>
-<p>Al igual que <code>read.table()</code> tiene argumentos claves para espeficiar:</p>
-<ul>
-<li><p><code>file</code> para indicar el nombre o ruta al archivo</p></li>
-<li><p><code>header</code> para indicar si las columnas tienene encabezados que deben ser usados como nombre de las variables.</p></li>
-<li><p><code>sep</code> para indicar el separador de columnas</p></li>
-<li><p><code>dec</code> para indicar el simbolo decimal</p></li>
-</ul>
-<p>Además se le agrega el argumento <code>x</code> para especificar que objeto (<code>data.frame</code>) queremos exportar.</p>
-<p>Supongamos que tenemos el set de datos <code>prueba</code> en <strong>R</strong> y queremos exportarlo a CSV con titulos separados por <code>;</code> y punto decimal.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(prueba, <span class="at">file =</span> <span class="st">"prueba.csv"</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">";"</span>, <span class="at">dec =</span> <span class="st">","</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>En el archivo <code>prueba.csv</code> se escribira en el directorio de trabajo (<code>getwd()</code>)</p>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ACTIVIDAD
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Exportar el objeto creado en la actividad anterior con datos de rendimiento de trigo a un archivo CSV llamado <code>prueba_trigo2.csv</code>.</p></li>
-<li><p>Verificar como se exportó.</p></li>
-</ol>
-</div>
-</div>
-<section id="readr-1" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="readr-1"><span class="header-section-number">5.2.1</span> <code>readr</code></h3>
-<p>De la misma manera que las funciones nativas, el paquete <code>readr</code> provee funciones contrarias a <code>read_table()</code> y derivadas.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(<span class="at">x =</span> prueba, <span class="at">file =</span> <span class="st">"prueba.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): objeto 'prueba' no encontrado</code></pre>
-</div>
-</div>
-<p>A diferencia de la función nativa, tienen algunas opciones extra.</p>
-</section>
-<section id="rio-1" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="rio-1"><span class="header-section-number">5.2.2</span> <code>rio</code></h3>
-<p>Este <em>metapaquete</em> y permite simplificar la <em>exportación</em> de formatos en una sintaxis unificada con la función <code>export()</code>.</p>
-<p>Retomando el ejemplo de trigo, podemos exportar los datos con la función <code>export()</code>. Suponiendo que el <code>data.frame</code> se llama <code>trigo</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(rio)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(<span class="at">x =</span> trigo, <span class="at">file =</span> <span class="st">"prueba_trigo.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): objeto 'trigo' no encontrado</code></pre>
-</div>
-</div>
-<p>El formato de salida podemos indicarlo con la extensión apropiada.</p>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ACTIVIDAD
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Exportar el objeto de la actividad anterior a un formato Excel.</p></li>
-<li><p>Verificar como se exportó.</p></li>
-</ol>
 </div>
 </div>
 
@@ -804,8 +717,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05_wrangling.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Manipulando datos</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
