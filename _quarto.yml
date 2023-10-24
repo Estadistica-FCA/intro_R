@@ -11,13 +11,13 @@ book:
     - index.qmd
     - 00_introduction.qmd
     - 01_install.qmd
-    - 02_basics.qmd
-    - 03_paquetes.qmd
-    - 04_import.qmd
-    - 05_wrangling.qmd
-    - 08_cloud.qmd
-    # - 06_viz.qmd
-    # - 07_reports.qmd
+    - 02_cloud.qmd
+    - 03_basics.qmd
+    - 04_paquetes.qmd
+    - 05_import.qmd
+    - 06_wrangling.qmd
+    # - 07_viz.qmd
+    # - 08_reports.qmd
     - references.qmd
 
 bibliography: references.bib
