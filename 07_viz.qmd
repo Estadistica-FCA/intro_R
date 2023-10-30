@@ -230,10 +230,146 @@ Por ejemplo, el tema `them_bw()` remueve el fondo gris pero si queremos quitar l
 # Modificar el tema
 mi_tema <- theme_bw() + theme(panel.grid = element_blank())
 
-# Aplicar nuestro nuevo tema.
+# Aplicar nuestro nuevo tema
 ggplot(data = novillos) +
   aes(x = Peso_anterior, y = Peso, color = Procedencia) +
   geom_point() +
-  geom_line(stat = 'smooth', method = 'lm') +
+  geom_line(stat = 'smooth', method = 'lm') + 
   mi_tema
+```
+
+## Tipos de gráficos: `geoms`
+
+`Geoms`: Los objetos geométricos, o geoms para abreviar, realizan la representación real de la capa, controlando el tipo de trazado que crea. Por ejemplo, usar un `geom_point()` creará un diagrama de dispersión, mientras que usar una `geom_line()` creará un diagrama de líneas.
+
+
+**Primitivas gráficas:**
+
+- geom_blank(): no muestra nada. Más útil para ajustar los límites de los ejes utilizando datos.
+- geom_point(): puntos.
+- geom_path(): caminos.
+- geom_ribbon(): cintas, un camino con grosor vertical.
+- geom_segment(): un segmento de línea, especificado por posición de inicio y fin.
+- geom_rect(): rectángulos.
+- geom_polygon(): polígonos rellenos.
+- geom_text(): texto.
+
+**Una variable:**
+
+**Discreta:**
+
+- geom_bar(): muestra la distribución de una variable discreta.
+
+**Continua:**
+
+- geom_histogram(): agrupa y cuenta variables continuas, muestra con barras.
+- geom_density(): estimación de densidad suavizada.
+- geom_dotplot(): agrupa puntos individuales en un gráfico de puntos.
+- geom_freqpoly(): agrupa y cuenta variables continuas, muestra con líneas.
+
+**Dos variables:**
+
+**Ambas continuas:**
+
+- geom_point(): gráfico de dispersión.
+- geom_quantile(): regresión cuantil suavizada.
+- geom_rug(): gráficos marginales de rugosidad.
+- geom_smooth(): línea de mejor ajuste suavizada.
+- geom_text(): etiquetas de texto.
+
+**Mostrar distribución:**
+
+- geom_bin2d(): agrupa en rectángulos y cuenta.
+- geom_density2d(): estimación de densidad 2D suavizada.
+- geom_hex(): agrupa en hexágonos y cuenta.
+
+**Al menos una discreta:**
+
+- geom_count(): cuenta el número de puntos en ubicaciones distintas.
+- geom_jitter(): mueve aleatoriamente puntos superpuestos.
+
+**Una continua, una discreta:**
+
+- geom_bar(stat = "identity"): un gráfico de barras de resúmenes precalculados.
+- geom_boxplot(): diagrama de caja y bigotes.
+- geom_violin(): muestra la densidad de valores en cada grupo.
+
+**Una continua:**
+
+- geom_area(): gráfico de área
+- geom_line(): gráfico de línea
+- geom_step(): gráfico de pasos
+
+**Mostrar incertidumbre:**
+
+- geom_crossbar(): barra vertical con centro
+- geom_errorbar(): barras de error
+- geom_linerange(): línea vertical
+- geom_pointrange(): línea vertical con centro
+
+**Spatial:**
+
+- geom_map(): versión rápida de geom_polygon() para datos de mapas
+
+**Three variables:**
+
+- geom_contour(): contorno
+- geom_tile(): mosaico del plano con rectángulos
+- geom_raster(): versión rápida de geom_tile() para mosaicos del mismo tamaño
+
+Cada `geom` tiene un conjunto de aesthetics `aes()` (estéticas) que comprende, algunas de las cuales deben proporcionarse. Por ejemplo, `geom_point()` requiere la posición `x` e `y`, y comprenden la estética del color `colour`, el tamaño `size` y la forma `shape`. Una `geom_bar()` requiere altura (ymax) y comprende el ancho `width`, el color del borde `border colour` y el color de relleno `fill colour`. Cada geom enumera su estética (`aesthetics`) en la documentación.
+
+
+## Gráficos compuestos con `patchwork`
+
+`patchwork` es una librería de R para crear un gráfico complejo compuesto por varios gráficos simples en distintas posiciones y de distintos tamaños.
+
+```{r, eval=FALSE}
+# instalando el paquete
+install.packages("patchwork")
+library(patchwork)
+```
+
+```{r}
+# o lo agregamos al listado en pacman
+pacman::p_load(patchwork)
+```
+
+Primero deben guardarse los gráficos, por ejemplo:
+
+```{r}
+g1 <- ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, color = Procedencia) +
+  geom_point() +
+  geom_line(stat = 'smooth', method = 'lm') +  
+  mi_tema
+
+g2 <- ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso, color = Procedencia) +
+  geom_boxplot() 
+
+g3 <- ggplot(data = novillos) +
+  aes(y = Peso, fill = Procedencia) +
+  geom_histogram() 
+```
+
+**Para organizar los gráficos en columnas:**
+
+```{r}
+g1 + g2
+```
+
+**Para organizar los gráficos en filas:**
+
+```{r}
+g1 / g2
+```
+
+
+**Para combinar varios gráficos:**
+
+```{r}
+(g1 + g2) / g3
+
+g1 + g2 + g3 + g1
 ```
