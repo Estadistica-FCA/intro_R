@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#cómo-conseguir-ggplot2" id="toc-cómo-conseguir-ggplot2" class="nav-link active" data-scroll-target="#cómo-conseguir-ggplot2"><span class="header-section-number">8.1</span> ¿Cómo conseguir <code>ggplot2</code>?</a></li>
+  <li><a href="#cómo-instalar-ggplot2" id="toc-cómo-instalar-ggplot2" class="nav-link active" data-scroll-target="#cómo-instalar-ggplot2"><span class="header-section-number">8.1</span> ¿Cómo instalar <code>ggplot2</code>?</a></li>
   <li><a href="#por-qué-usar-ggplot2" id="toc-por-qué-usar-ggplot2" class="nav-link" data-scroll-target="#por-qué-usar-ggplot2"><span class="header-section-number">8.2</span> ¿Por qué usar <code>ggplot2</code>?</a></li>
   <li><a href="#componentes-del-gráfico-en-ggplot2" id="toc-componentes-del-gráfico-en-ggplot2" class="nav-link" data-scroll-target="#componentes-del-gráfico-en-ggplot2"><span class="header-section-number">8.3</span> Componentes del gráfico en <code>ggplot2</code></a>
   <ul class="collapse">
@@ -212,11 +212,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#coordenadas" id="toc-coordenadas" class="nav-link" data-scroll-target="#coordenadas"><span class="header-section-number">8.3.3</span> Coordenadas</a></li>
   <li><a href="#paneles-facets" id="toc-paneles-facets" class="nav-link" data-scroll-target="#paneles-facets"><span class="header-section-number">8.3.4</span> Paneles (<code>facets</code>)</a></li>
   <li><a href="#temas" id="toc-temas" class="nav-link" data-scroll-target="#temas"><span class="header-section-number">8.3.5</span> Temas</a></li>
-  <li><a href="#tipos-de-gráficos-geoms" id="toc-tipos-de-gráficos-geoms" class="nav-link" data-scroll-target="#tipos-de-gráficos-geoms"><span class="header-section-number">8.3.6</span> Tipos de gráficos: <code>geoms</code></a></li>
   </ul></li>
-  <li><a href="#primer-gráfico-paso-a-paso" id="toc-primer-gráfico-paso-a-paso" class="nav-link" data-scroll-target="#primer-gráfico-paso-a-paso"><span class="header-section-number">8.4</span> Primer gráfico paso a paso</a></li>
-  <li><a href="#gráficos-condicionales-o-por-paneles-facets" id="toc-gráficos-condicionales-o-por-paneles-facets" class="nav-link" data-scroll-target="#gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.5</span> Gráficos condicionales o por paneles: <code>facets</code></a></li>
-  <li><a href="#gráficos-compuestos-con-patchwork" id="toc-gráficos-compuestos-con-patchwork" class="nav-link" data-scroll-target="#gráficos-compuestos-con-patchwork"><span class="header-section-number">8.6</span> Gráficos compuestos con <code>patchwork</code></a></li>
+  <li><a href="#tipos-de-gráficos" id="toc-tipos-de-gráficos" class="nav-link" data-scroll-target="#tipos-de-gráficos"><span class="header-section-number">8.4</span> Tipos de gráficos</a>
+  <ul class="collapse">
+  <li><a href="#geometrías-básicas" id="toc-geometrías-básicas" class="nav-link" data-scroll-target="#geometrías-básicas"><span class="header-section-number">8.4.1</span> Geometrías básicas</a></li>
+  <li><a href="#geometrías-según-tipo-y-numero-de-variables" id="toc-geometrías-según-tipo-y-numero-de-variables" class="nav-link" data-scroll-target="#geometrías-según-tipo-y-numero-de-variables"><span class="header-section-number">8.4.2</span> Geometrías según tipo y numero de variables</a></li>
+  </ul></li>
+  <li><a href="#primer-gráfico-paso-a-paso" id="toc-primer-gráfico-paso-a-paso" class="nav-link" data-scroll-target="#primer-gráfico-paso-a-paso"><span class="header-section-number">8.5</span> Primer gráfico paso a paso</a></li>
+  <li><a href="#gráficos-condicionales-o-por-paneles-facets" id="toc-gráficos-condicionales-o-por-paneles-facets" class="nav-link" data-scroll-target="#gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.6</span> Gráficos condicionales o por paneles: <code>facets</code></a></li>
+  <li><a href="#gráficos-compuestos-con-patchwork" id="toc-gráficos-compuestos-con-patchwork" class="nav-link" data-scroll-target="#gráficos-compuestos-con-patchwork"><span class="header-section-number">8.7</span> Gráficos compuestos con <code>patchwork</code></a></li>
   </ul>
 </nav>
     </div>
@@ -249,34 +253,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Uno provee los datos, indica que variables asignar a las estéticas (ejes, escalas, colores, símbolos) y las geometrías o formas que se quieren graficar y <code>ggplot2</code> se encarga del resto. Se puede ir agregando capas. Es muy potente para la exploración y visualización de datos en formato de tabla con filas (observaciones) y columnas (variables).</p>
-<section id="cómo-conseguir-ggplot2" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="cómo-conseguir-ggplot2"><span class="header-section-number">8.1</span> ¿Cómo conseguir <code>ggplot2</code>?</h2>
-<p>Para acceder a estos paquetes instalarlos/cargarlos individualmente:</p>
+<section id="cómo-instalar-ggplot2" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="cómo-instalar-ggplot2"><span class="header-section-number">8.1</span> ¿Cómo instalar <code>ggplot2</code>?</h2>
+<p>Para acceder a estos paquetes podemos hacerlo a través del meta-paquete <code>tidyverse</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggplot2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>O bien con otros paquete de la familia <code>tidyverse</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>R</strong> va a avisarnos en la consola que esta enmascarando (reemplazando) algunas funciones que ya estaban en el entorno, o bien el paquete nos devuelve algun mensaje. A menos que diga <code>Error ...</code>, eso está bien.</p>
+<p>Alternativamente podemos instalarlo/cargarlo individualmente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggplot2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="por-qué-usar-ggplot2" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="por-qué-usar-ggplot2"><span class="header-section-number">8.2</span> ¿Por qué usar <code>ggplot2</code>?</h2>
 <p><strong>Ventajas</strong></p>
 <ul>
-<li>Hay una estructura gramatica consistente de gráficos</li>
+<li>Hay una estructura gramática consistente de gráficos</li>
+<li>Sistema de gráficos completo y maduro</li>
 <li>Alto nivel de abstracción</li>
 <li>Gran flexibilidad</li>
-<li>Sistema de themes para la mejora de la apariencia de los gráficos</li>
-<li>Sistema de gráficos completo y maduro</li>
+<li>Sistema de themes para mejorar la apariencia de los gráficos</li>
 <li>Lo usan muchos usuarios y hay una comunidad muy activa</li>
+<li>Muchos complementos/extensiones</li>
 </ul>
-<p><strong>Desventajas</strong> o Cosas que no puedes (o no deberías) hacer con ggplot2:</p>
+<p><strong>Desventajas</strong> o cosas que no podés (o no deberías) hacer con <code>ggplot2</code>:</p>
 <ul>
-<li>Gráficos tridimensionales (ver paquete rgl)</li>
-<li>Gráficos de nodos (ver paquete igraph)</li>
-<li>Gráficos interactivos (ver paquete ggvis)</li>
+<li>Gráficos tridimensionales (ver paquete `rgl```)</li>
+<li>Gráficos de nodos (ver paquete `igraph```)</li>
+<li>Gráficos interactivos (ver paquete <code>ggvis</code>, <code>plotly</code>)</li>
 </ul>
 </section>
 <section id="componentes-del-gráfico-en-ggplot2" class="level2" data-number="8.3">
@@ -313,86 +318,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>El listado de componentes que se pueden modificar en un tema se incluyen en <code>?theme()</code>. Como vemos la lista es larga ya que cada aspecto del gráfico puede controlarse permitiendo crear nuestros propios temas.</p>
 <p><code>ggplot2</code> algunos temas predefinidos. Por defecto los gráficos utilizan un tema llamado <code>theme_gray()</code> que tiene una seleccion de parámetros elegante y que sirve para la mayoría de los casos. Existen otros temas específicos que puden ser un punto de partida para hacer modificaciones extra. Por ejemplo, el tema <code>theme_bw()</code> remueve el fondo gris.</p>
 </section>
-<section id="tipos-de-gráficos-geoms" class="level3" data-number="8.3.6">
-<h3 data-number="8.3.6" class="anchored" data-anchor-id="tipos-de-gráficos-geoms"><span class="header-section-number">8.3.6</span> Tipos de gráficos: <code>geoms</code></h3>
-<p><code>Geoms</code>: Los objetos geométricos, o geoms para abreviar, realizan la representación real de la capa, controlando el tipo de trazado que crea. Por ejemplo, usar un <code>geom_point()</code> creará un diagrama de dispersión, mientras que usar una <code>geom_line()</code> creará un diagrama de líneas.</p>
-<p><strong>Primitivas gráficas:</strong></p>
+</section>
+<section id="tipos-de-gráficos" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="tipos-de-gráficos"><span class="header-section-number">8.4</span> Tipos de gráficos</h2>
+<p>El espíritu de la <em>gramática de gráficos</em>, y por lo tanto de <code>ggplot2</code>, es dar flexibilidad para la creación de gráficos personalizados, más allá de los estándar, o combinando distintos elementos o geometrías y transformaciones a través de <code>geoms_</code> y <code>stats_</code>. En algunos casos algunas combinaciones se asocian directamente con algun tipo de gráfico como por ejemplo el histograma.</p>
+<p>Como vimos antes, los objetos geométricos, o <code>geoms</code> para abreviar, realizan la representación gráfica de los datos, controlando el tipo de trazado que crea. Por ejemplo, usar un <code>geom_point()</code> creará un diagrama de dispersión, mientras que usar una <code>geom_line()</code> creará un diagrama de líneas.</p>
+<p>Por su parte las funciones <code>stat_</code> indicancomo esos datos se van a resumir o procesar para su representación gráfica. Ejemplo: promedio, agrupamiento y conteo de observaciones, o ajuste de un modelo lineal o suavizado, etc.</p>
+<p>Cada <code>geom</code> tiene un conjunto de aesthetics <code>aes()</code> (estéticas), algunas de ellas no deben faltar. Por ejemplo, <code>geom_point()</code> requiere la posición <code>x</code> e <code>y</code>, y comprenden la estética del color <code>colour</code>, el tamaño <code>size</code> y la forma <code>shape</code>, estas tres últimas pueden estar o no. Cada geom enumera su estética (<code>aesthetics</code>) en la documentación, ejemplo <code>?geom_point</code>.</p>
+<section id="geometrías-básicas" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="geometrías-básicas"><span class="header-section-number">8.4.1</span> Geometrías básicas</h3>
+<p>A continuación un listado de funciones básicas que pueden verse como “bloques” para construir visualizaciones</p>
 <ul>
-<li>geom_blank(): no muestra nada. Más útil para ajustar los límites de los ejes utilizando datos.</li>
-<li>geom_point(): puntos.</li>
-<li>geom_path(): caminos.</li>
-<li>geom_ribbon(): cintas, un camino con grosor vertical.</li>
-<li>geom_segment(): un segmento de línea, especificado por posición de inicio y fin.</li>
-<li>geom_rect(): rectángulos.</li>
-<li>geom_polygon(): polígonos rellenos.</li>
-<li>geom_text(): texto.</li>
+<li><code>geom_blank()</code>: no muestra nada. Más útil para ajustar los límites de los ejes utilizando datos.</li>
+<li><code>geom_point()</code>: puntos.</li>
+<li><code>geom_path()</code>: caminos.</li>
+<li><code>geom_ribbon()</code>: cintas, un camino con grosor vertical.</li>
+<li><code>geom_segment()</code>: grafica un segmento de línea, especificado por posición de inicio y fin.</li>
+<li><code>geom_rect()</code>: grafica rectángulos.</li>
+<li><code>geom_polygon()</code>: grafica figuras o polígonos rellenos.</li>
+<li><code>geom_text()</code>: agrega textotexto.</li>
 </ul>
-<p><strong>Una variable:</strong></p>
+</section>
+<section id="geometrías-según-tipo-y-numero-de-variables" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="geometrías-según-tipo-y-numero-de-variables"><span class="header-section-number">8.4.2</span> Geometrías según tipo y numero de variables</h3>
+<p>Al igual que las estadísticas de resumen, algunas geometrías que sirven para un tipo de variable no pueden, o no tiene sentido, usarlas para otras.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Una variable</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Dos variables</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Tres variables</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Datos espaciales (mapas)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p><strong>Discreta:</strong></p>
 <ul>
-<li>geom_bar(): muestra la distribución de una variable discreta.</li>
+<li><code>geom_bar()</code>: muestra la distribución de una variable discreta.</li>
 </ul>
 <p><strong>Continua:</strong></p>
 <ul>
-<li>geom_histogram(): agrupa y cuenta variables continuas, muestra con barras.</li>
-<li>geom_density(): estimación de densidad suavizada.</li>
-<li>geom_dotplot(): agrupa puntos individuales en un gráfico de puntos.</li>
-<li>geom_freqpoly(): agrupa y cuenta variables continuas, muestra con líneas.</li>
+<li><code>geom_histogram()</code>: agrupa y cuenta variables continuas, muestra con barras.</li>
+<li><code>geom_density()</code>: estimación de densidad suavizada.</li>
+<li><code>geom_dotplot()</code>: agrupa puntos individuales en un gráfico de puntos.</li>
+<li><code>geom_freqpoly()</code>: agrupa y cuenta variables continuas, muestra con líneas.</li>
 </ul>
-<p><strong>Dos variables:</strong></p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><strong>Ambas continuas:</strong></p>
 <ul>
-<li>geom_point(): gráfico de dispersión.</li>
-<li>geom_quantile(): regresión cuantil suavizada.</li>
-<li>geom_rug(): gráficos marginales de rugosidad.</li>
-<li>geom_smooth(): línea de mejor ajuste suavizada.</li>
-<li>geom_text(): etiquetas de texto.</li>
+<li><code>geom_point()</code>: gráfico de dispersión.</li>
+<li><code>geom_quantile()</code>: regresión cuantil suavizada.</li>
+<li><code>geom_rug()</code>: gráficos marginales de rugosidad.</li>
+<li><code>geom_smooth()</code>: línea de mejor ajuste suavizada.</li>
+<li><code>geom_text()</code>: etiquetas de texto.</li>
 </ul>
 <p><strong>Mostrar distribución:</strong></p>
 <ul>
-<li>geom_bin2d(): agrupa en rectángulos y cuenta.</li>
-<li>geom_density2d(): estimación de densidad 2D suavizada.</li>
-<li>geom_hex(): agrupa en hexágonos y cuenta.</li>
+<li><code>geom_bin2d()</code>: agrupa en rectángulos y cuenta.</li>
+<li><code>geom_density2d()</code>: estimación de densidad 2D suavizada.</li>
+<li><code>geom_hex()</code>: agrupa en hexágonos y cuenta.</li>
 </ul>
 <p><strong>Al menos una discreta:</strong></p>
 <ul>
-<li>geom_count(): cuenta el número de puntos en ubicaciones distintas.</li>
-<li>geom_jitter(): mueve aleatoriamente puntos superpuestos.</li>
+<li><code>geom_count()</code>: cuenta el número de puntos en ubicaciones distintas.</li>
+<li><code>geom_jitter()</code>: mueve aleatoriamente puntos superpuestos.</li>
 </ul>
 <p><strong>Una continua, una discreta:</strong></p>
 <ul>
-<li>geom_bar(stat = “identity”): un gráfico de barras de resúmenes precalculados.</li>
-<li>geom_boxplot(): diagrama de caja y bigotes.</li>
-<li>geom_violin(): muestra la densidad de valores en cada grupo.</li>
+<li><code>geom_bar(stat = "identity")</code>: un gráfico de barras de resúmenes precalculados.</li>
+<li><code>geom_boxplot()</code>: diagrama de caja y bigotes.</li>
+<li><code>geom_violin()</code>: muestra la densidad de valores en cada grupo.</li>
 </ul>
 <p><strong>Una continua:</strong></p>
 <ul>
-<li>geom_area(): gráfico de área</li>
-<li>geom_line(): gráfico de línea</li>
-<li>geom_step(): gráfico de pasos</li>
+<li><code>geom_area()</code>: gráfico de área</li>
+<li><code>geom_line()</code>: gráfico de línea</li>
+<li><code>geom_step()</code>: gráfico de pasos</li>
 </ul>
 <p><strong>Mostrar incertidumbre:</strong></p>
 <ul>
-<li>geom_crossbar(): barra vertical con centro</li>
-<li>geom_errorbar(): barras de error</li>
-<li>geom_linerange(): línea vertical</li>
-<li>geom_pointrange(): línea vertical con centro</li>
+<li><code>geom_crossbar()</code>: barra vertical con centro</li>
+<li><code>geom_errorbar()</code>: barras de error</li>
+<li><code>geom_linerange()</code>: línea vertical</li>
+<li><code>geom_pointrange()</code>: línea vertical con centro</li>
 </ul>
-<p><strong>Spatial:</strong></p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <ul>
-<li>geom_map(): versión rápida de geom_polygon() para datos de mapas</li>
+<li><code>geom_contour()</code>: contorno</li>
+<li><code>geom_tile()</code>: mosaico del plano con rectángulos</li>
+<li><code>geom_raster()</code>: versión rápida de <code>geom_tile()</code> para mosaicos del mismo tamaño</li>
 </ul>
-<p><strong>Three variables:</strong></p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <ul>
-<li>geom_contour(): contorno</li>
-<li>geom_tile(): mosaico del plano con rectángulos</li>
-<li>geom_raster(): versión rápida de geom_tile() para mosaicos del mismo tamaño</li>
+<li><code>geom_map(): versión rápida de</code>geom_polygon()` para datos de mapas</li>
 </ul>
-<p>Cada <code>geom</code> tiene un conjunto de aesthetics <code>aes()</code> (estéticas) que comprende, algunas de las cuales deben proporcionarse. Por ejemplo, <code>geom_point()</code> requiere la posición <code>x</code> e <code>y</code>, y comprenden la estética del color <code>colour</code>, el tamaño <code>size</code> y la forma <code>shape</code>. Una <code>geom_bar()</code> requiere altura (ymax) y comprende el ancho <code>width</code>, el color del borde <code>border colour</code> y el color de relleno <code>fill colour</code>. Cada geom enumera su estética (<code>aesthetics</code>) en la documentación.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="primer-gráfico-paso-a-paso" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="primer-gráfico-paso-a-paso"><span class="header-section-number">8.4</span> Primer gráfico paso a paso</h2>
+<section id="primer-gráfico-paso-a-paso" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="primer-gráfico-paso-a-paso"><span class="header-section-number">8.5</span> Primer gráfico paso a paso</h2>
 <div class="cell" data-out.lines="10">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(rio, ggplot2)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>novillos <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"datasets/pesada_novillos.xlsx"</span>, <span class="at">setclass =</span> <span class="st">"tibble"</span>)</span>
@@ -613,8 +636,8 @@ ACTIVIDAD
 </div>
 </div>
 </section>
-<section id="gráficos-condicionales-o-por-paneles-facets" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.5</span> Gráficos condicionales o por paneles: <code>facets</code></h2>
+<section id="gráficos-condicionales-o-por-paneles-facets" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.6</span> Gráficos condicionales o por paneles: <code>facets</code></h2>
 <p>A veces es util mostrar los subgrupos en gráficos individuales o paneles. Esto se hace facilmente usando una o más variables condicionales con <code>facets</code>. Este tipo de gráficos también se denomian graficos condicionales ya que muestran la relacion de al menos dos variables de interés a través de los niveles de una tercera variable: <code>y ~ x | z</code>.</p>
 <p>Por ejemplo, en el primer gráfico vimos como mostrar la relación entre los pesos y las procedencias como color. Eventualmente, ese gráfico podria dividirse en 4 paneles (uno por procedencia) y mostrar en cada uno el subconjunto de puntos.</p>
 <div class="cell">
@@ -714,8 +737,8 @@ ACTIVIDAD
 </div>
 </div>
 </section>
-<section id="gráficos-compuestos-con-patchwork" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="gráficos-compuestos-con-patchwork"><span class="header-section-number">8.6</span> Gráficos compuestos con <code>patchwork</code></h2>
+<section id="gráficos-compuestos-con-patchwork" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="gráficos-compuestos-con-patchwork"><span class="header-section-number">8.7</span> Gráficos compuestos con <code>patchwork</code></h2>
 <p><code>patchwork</code> es una librería de R para crear un gráfico complejo compuesto por varios gráficos simples en distintas posiciones y de distintos tamaños.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instalando el paquete</span></span>
