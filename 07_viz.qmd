@@ -8,7 +8,6 @@ library(knitr)
 ```
 
 
-
 **R** tiene por defecto el paquete `graphics`, también conocido como _base plot system_, que provee la función genérica `plot()` para hacer gráficos simples, y otras funciones para gráficos específicos (`hist()`, `barplot()`, `boxplot()`, etc). 
 
 Usa un enfoque de _papel y lapiz_ por capas donde el gráfico final es una sumatoria de capas que se agregan una a la vez sin posibilidad de modificarse luego. Generalmente es OK para gráficos simples o exploratorios. Para gráficos más complejos (con subgrupos o multipanel) requiere programar más. Una desventaja es la sintaxis poco consistente. 
@@ -96,7 +95,9 @@ Adicionalmente a estos componentes se pueden aplicar temas (`themes`) que permit
 
 El listado de componentes que se pueden modificar en un tema se incluyen en `?theme()`. Como vemos la lista es larga ya que cada aspecto del gráfico puede controlarse permitiendo crear nuestros propios temas. 
 
-`ggplot2` algunos temas predefinidos. Por defecto los gráficos utilizan un tema llamado `theme_gray()` que tiene una seleccion de parámetros elegante y que sirve para la mayoría de los casos. Existen otros temas específicos que puden ser un punto de partida para hacer modificaciones extra. Por ejemplo, el tema `them_bw()` remueve el fondo gris
+`ggplot2` algunos temas predefinidos. Por defecto los gráficos utilizan un tema llamado `theme_gray()` que tiene una seleccion de parámetros elegante y que sirve para la mayoría de los casos. Existen otros temas específicos que puden ser un punto de partida para hacer modificaciones extra. Por ejemplo, el tema `theme_bw()` remueve el fondo gris.
+
+
 
 ### Tipos de gráficos: `geoms`
 
@@ -183,7 +184,7 @@ Cada `geom` tiene un conjunto de aesthetics `aes()` (estéticas) que comprende, 
 ## Primer gráfico paso a paso
 
 ```{r, eval = T, echo = T, out.lines = 10}
-pacman::p_load(rio)
+pacman::p_load(rio, ggplot2)
 novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
 novillos
 ```
@@ -284,19 +285,33 @@ ggplot(data = novillos) +
   mi_tema
 ```
 
+Gráfico barras según la Procedencia (variable categórica):
+
+```{r}
+ggplot(novillos) +
+  aes(x = Procedencia) +
+  geom_bar(fill = 'orange') +
+  labs(x = "Procedencia", y = "Cantidad", 
+       title = "Cantidad de Novillos por Procedencia") +
+  mi_tema
+```
 
 
 ::: {.callout-note icon=false}
 
 #### ACTIVIDAD
 
-1. Seleccionar las colunas  que son `character` y aquellas cuyo nombre contiene la palabra "Peso" o termina con "anterior". Guardar el resultado en un objeto.
+1. Realice un gráfico de caja de la variable `GPV_anterior`
 
-2. Actualizar el objeto del punto anterior descartar las columnas "Fecha_Ingreso", "Fecha", "Hora".
+2. Separe los gráficos de caja según la `Tropa`
 
-3. Usando `rio::export()` exportar el set de datos a un archivo excel.
+3. Remueva el fondo gris, modifique los nombres a los ejes `x` e `y` 
 
-5. Verificar el archivo exportado.
+4. Realice un segundo gráfico de histograma de la variable `Peso`
+
+5. Agrupe (`group`) los histogramas y rellene (`fill`) según `Tropa`
+
+6. Modifique los nombres a los ejes `x` e `y`, ubique la leyenda debajo del gráfico. 
 
 :::
 
@@ -350,13 +365,9 @@ ggplot(data = novillos) +
 
 #### ACTIVIDAD
 
-1. Seleccionar las colunas  que son `character` y aquellas cuyo nombre contiene la palabra "Peso" o termina con "anterior". Guardar el resultado en un objeto.
+1. A partir de los gráficos de caja generados en la actividad anterior separe además según las procedencias 
 
-2. Actualizar el objeto del punto anterior descartar las columnas "Fecha_Ingreso", "Fecha", "Hora".
-
-3. Usando `rio::export()` exportar el set de datos a un archivo excel.
-
-5. Verificar el archivo exportado.
+2. Filtre los `NA` si es necesario.
 
 :::
 
@@ -419,12 +430,9 @@ g1 + g2 + g3 + g1
 
 #### ACTIVIDAD
 
-1. Seleccionar las colunas  que son `character` y aquellas cuyo nombre contiene la palabra "Peso" o termina con "anterior". Guardar el resultado en un objeto.
+1. Guarde los gráficos generados en las actividades anteriores en objetos `g1` y `g2`
 
-2. Actualizar el objeto del punto anterior descartar las columnas "Fecha_Ingreso", "Fecha", "Hora".
+2. Realice un gráfico compuesto con los gráficos guardados.
 
-3. Usando `rio::export()` exportar el set de datos a un archivo excel.
-
-5. Verificar el archivo exportado.
 
 :::
