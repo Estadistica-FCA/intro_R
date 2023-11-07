@@ -16,7 +16,7 @@ book:
     - 04_paquetes.qmd
     - 05_import.qmd
     - 06_wrangling.qmd
-    # - 07_viz.qmd
+    - 07_viz.qmd
     # - 08_reports.qmd
     - references.qmd
 
