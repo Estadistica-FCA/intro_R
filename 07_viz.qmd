@@ -1,6 +1,12 @@
 ---
 title: "Visualización de datos con `ggplot2`"
+license: "CC BY-NC-ND"
 ---
+
+```{r, echo = F, include = F}
+library(knitr)
+```
+
 
 
 **R** tiene por defecto el paquete `graphics`, también conocido como _base plot system_, que provee la función genérica `plot()` para hacer gráficos simples, y otras funciones para gráficos específicos (`hist()`, `barplot()`, `boxplot()`, etc). 
@@ -8,6 +14,11 @@ title: "Visualización de datos con `ggplot2`"
 Usa un enfoque de _papel y lapiz_ por capas donde el gráfico final es una sumatoria de capas que se agregan una a la vez sin posibilidad de modificarse luego. Generalmente es OK para gráficos simples o exploratorios. Para gráficos más complejos (con subgrupos o multipanel) requiere programar más. Una desventaja es la sintaxis poco consistente. 
 
 El paquete `ggplot2`, desarrollado por [Hadley Wickham](http://hadley.nz/), está basado en la filosofía _Gramática de gráficos_ ( _grammar of graphics_ , por eso `gg`). Combina los dos enfoques: _por capas_ y _función_. 
+
+
+```{r, echo = F, fig.cap = '', out.width = '15%', fig.retina = 2} 
+include_graphics('assets/ggplot2.png', auto_pdf = T)
+```
 
 Uno provee los datos, indica que variables asignar a las estéticas (ejes, escalas, colores, símbolos) y las geometrías o formas que se quieren graficar y `ggplot2` se encarga del resto. Se puede ir agregando capas. Es muy potente para la exploración y visualización de datos en formato de tabla con filas (observaciones) y columnas (variables).
 
