@@ -19,6 +19,8 @@ El paquete `ggplot2`, desarrollado por [Hadley Wickham](http://hadley.nz/), est�
 include_graphics('assets/ggplot2.png', auto_pdf = T)
 ```
 
+[https://ggplot2.tidyverse.org/](https://ggplot2.tidyverse.org/)
+
 Uno provee los datos, indica que variables asignar a las estéticas (ejes, escalas, colores, símbolos) y las geometrías o formas que se quieren graficar y `ggplot2` se encarga del resto. Se puede ir agregando capas. Es muy potente para la exploración y visualización de datos en formato de tabla con filas (observaciones) y columnas (variables).
 
 
@@ -52,8 +54,8 @@ pacman::p_load(ggplot2)
 
 **Desventajas** o cosas que no podés (o no deberías) hacer con `ggplot2`:
 
-- Gráficos tridimensionales (ver paquete `rgl```)
-- Gráficos de nodos (ver paquete `igraph```)
+- Gráficos tridimensionales (ver paquete `rgl`)
+- Gráficos de nodos (ver paquete `igraph`)
 - Gráficos interactivos (ver paquete `ggvis`, `plotly`)
 
 ## Componentes del gráfico en `ggplot2`
@@ -88,11 +90,11 @@ Sistema de coordendas (`coord`) que define que variables definiran el espacio de
 
 ### Paneles (`facets`)
 
-Es un elemento que permite especificar una o más variables para dividir el gráfico en paneles y así mostrar subgrupos de datos. Esto permite ver visualizar relaciones condicionales entre variables, e.g. `y ~ x | z`, es decir, que pasa con la variable `x` e `y` cuando cambia `z`.
+Es un elemento que permite especificar una o más variables para dividir el gráfico en paneles y así mostrar subgrupos de datos. Esto permite visualizar relaciones condicionales entre variables, e.g. `y ~ x | z`, es decir, que pasa con la variable `x` e `y` cuando cambia `z`.
 
 ### Temas
 
-Adicionalmente a estos componentes se pueden aplicar temas (`themes`) que permiten controlar los detalles del desieño de la visualización, tipografía, posición de algunos objetos, paleta de colores, etc. Los valores predeterminados de `ggplot2` son un buen punto de partida pero exiten opciones predefinidas que pueden modificarse para generar un tema particular. Otra fuente para consultar es el trabajo de [Tufte](https://www.edwardtufte.com/tufte/)
+Adicionalmente a estos componentes se pueden aplicar temas (`themes`) que permiten controlar los detalles del diseño de la visualización, tipografía, posición de algunos objetos, paleta de colores, etc. Los valores predeterminados de `ggplot2` son un buen punto de partida pero exiten opciones predefinidas que pueden modificarse para generar un tema particular. Otra fuente para consultar es el trabajo de [Tufte](https://www.edwardtufte.com/tufte/)
 
 El listado de componentes que se pueden modificar en un tema se incluyen en `?theme()`. Como vemos la lista es larga ya que cada aspecto del gráfico puede controlarse permitiendo crear nuestros propios temas. 
 
@@ -106,7 +108,7 @@ El espíritu de la _gramática de gráficos_, y por lo tanto de `ggplot2`, es da
 
 Como vimos antes, los objetos geométricos, o `geoms` para abreviar, realizan la representación gráfica de los datos, controlando el tipo de trazado que crea. Por ejemplo, usar un `geom_point()` creará un diagrama de dispersión, mientras que usar una `geom_line()` creará un diagrama de líneas.
 
-Por su parte las funciones `stat_` indicancomo esos datos se van a resumir o procesar para su representación gráfica. Ejemplo: promedio, agrupamiento y conteo de observaciones, o ajuste de un modelo lineal o suavizado, etc.
+Por su parte las funciones `stat_` indican como esos datos se van a resumir o procesar para su representación gráfica. Ejemplo: promedio, agrupamiento y conteo de observaciones, o ajuste de un modelo lineal o suavizado, etc.
 
 Cada `geom` tiene un conjunto de aesthetics `aes()` (estéticas), algunas de ellas no deben faltar. Por ejemplo, `geom_point()` requiere la posición `x` e `y`, y comprenden la estética del color `colour`, el tamaño `size` y la forma `shape`, estas tres últimas pueden estar o no. Cada geom enumera su estética (`aesthetics`) en la documentación, ejemplo `?geom_point`. 
 
@@ -191,7 +193,7 @@ Al igual que las estadísticas de resumen, algunas geometrías que sirven para u
 
 #### Datos espaciales (mapas)
 
-- `geom_map(): versión rápida de `geom_polygon()` para datos de mapas
+- `geom_map()`: versión rápida de `geom_polygon()` para datos de mapas
 
 :::
 
@@ -199,7 +201,7 @@ Al igual que las estadísticas de resumen, algunas geometrías que sirven para u
 
 ```{r, eval = T, echo = T, out.lines = 10}
 pacman::p_load(rio, ggplot2)
-novillos <- import("datasets/pesada_novillos.xlsx", setclass = "tibble")
+novillos <- import("datasets/pesada_novillos.xlsx")
 novillos
 ```
 
@@ -213,7 +215,7 @@ Primero definimos el set de datos que usaremos:
 ggplot(data = novillos)
 ```
 
-Como vemos esto no produjo nada ya que no indicamos cuales son las variables que queremos graficar y cómo graficarlas. Nuestro `layer` solo tiene la información de `data`. Agreguemos ahora la información de `mappping` usando `aes()`. Usando el operador `+` podemos concatenarlo al comando anterior.
+Como vemos esto no produjo nada ya que no indicamos cuales son las variables que queremos graficar y cómo graficarlas. Nuestro `layer` solo tiene la información de `data`. Agreguemos ahora la información de `mapping` usando `aes()`. Usando el operador `+` podemos concatenarlo al comando anterior.
 
 ```{r}
 ggplot(data = novillos) +
@@ -238,6 +240,14 @@ ggplot(data = novillos) +
   geom_point() +
   geom_line(stat = 'smooth', method = 'lm')
 ```
+Otra manera de indicar la linea:
+
+```{r}
+ggplot(data = novillos) +
+  aes(x = Peso_anterior, y = Peso) +
+  geom_point() +
+  stat_smooth(method = "lm")
+```
 
 Hay una relación positiva para todo el set de datos pero puede enmascarar algun patrón por `Procedencia`. Esta información la podemos agregar con otros atributos estéticos como por ejemplo `color`:
 
@@ -250,7 +260,9 @@ ggplot(data = novillos) +
 
 De este gráfico surge que la relación en todos los casos es positiva pero varia un poco según procedencia.
 
-Dependiendo el tipo de `geom` tenemos distintos atributos estéticos para explorar: `color` y `alpha` (transparencia) para todos, `shape` y `size` para puntos, `linewidth` y `linetype` para lineas, y `fill` para barras, etc. Que tipo de atributo estético depende también de la naturaleza de la variable: continua o discreta. Veamos como queda mapear los valores de `Procedencia` al atributo `shape` (forma):
+Dependiendo el tipo de `geom` tenemos distintos atributos estéticos para explorar: `color` y `alpha` (transparencia) para todos, `shape` y `size` para puntos, `linewidth` y `linetype` para lineas, y `fill` para barras, etc. 
+
+El tipo de atributo estético depende también de la naturaleza de la variable: continua o discreta. Veamos como queda mapear los valores de `Procedencia` al atributo `shape` (forma):
 
 ```{r}
 ggplot(data = novillos) +
@@ -269,11 +281,12 @@ ggplot(data = novillos) +
   geom_line(aes(group = Procedencia), stat = "smooth", method = "lm")
 ```
 
-Claramente esto es una exageración pero muestra la potencialiadad de `ggplot2`. Siempre tener en cuenta balance entre simplicidad del gráfico y la cantidad de información que queremos comunicar.
+Claramente esto es una exageración pero muestra la potencialiadad de `ggplot2`. Siempre tener en cuenta el balance entre simplicidad del gráfico y la cantidad de información que queremos comunicar.
 
-Finalmente vamos a ver como mejorar los nombres de los ejes, leyendas y agregar un título. Esto lo hacemos con `labs()`. Tambien agregamos algun tema predefinido ocomo `theme_bw()`.
+Finalmente, vamos a ver como mejorar los nombres de los ejes, leyendas y agregar un título. Esto lo hacemos con `labs()`. Tambien agregamos algun tema predefinido como `theme_bw()`.
 
 ```{r}
+# Usando labs()
 ggplot(data = novillos) +
   aes(x = Peso_anterior, y = Peso, color = Procedencia) +
   geom_point() +
@@ -299,7 +312,7 @@ ggplot(data = novillos) +
   mi_tema
 ```
 
-Gráfico barras según la Procedencia (variable categórica):
+A continuación mostramos un gráfico barras para la frecuencia de los novillos según la Procedencia (variable categórica):
 
 ```{r}
 ggplot(novillos) +
@@ -345,7 +358,7 @@ ggplot(data = novillos) +
 
 Hay dos tipos de facetado:  `facet_wrap()` y `facet_grid()`. El primero permite agregar una o mas variables condicionales pero cada subpanel se muestra secuencialmente. Funciona bien cuando tenemos una sola variable para dividir los subplots o pocos niveles en la combinación. La forma de indicar la variable es  `~ variable`. 
 
-En cambio, `facet_grid()` permite organizar los subplots en filas y columnas. Las varialbes se indican en este orden `fila ~ columna`. Para este ejemplo vamos a usar la variable `Tropa`:
+En cambio, `facet_grid()` permite organizar los subplots en filas y columnas. Las varialbes se indican en este orden `fila ~ columna`. Para este ejemplo vamos a agregar la variable `Tropa`:
 
 ```{r}
 ggplot(data = novillos) +
@@ -365,7 +378,7 @@ ggplot(data = novillos) +
   facet_grid(Tropa ~ Procedencia, scales = "free")
 ```
 
-Otra aspecto importante en la visualización usando facets es el texto que identifica cada panales. Esto depende de como estan configurados los datos y se controla con el argument `labeller`. Por defecto se toma el valor del factor que se usa para definir los grupos. En algunos casos conviene incluir el nombres de la variable. 
+Otra aspecto importante en la visualización usando `facets` es el texto que identifica cada panel. Esto depende de como estan configurados los datos y se controla con el argumento `labeller`. Por defecto, se toma el valor del factor que se usa para definir los grupos. En algunos casos conviene incluir el nombre de la variable. 
 
 ```{r}
 ggplot(data = novillos) +
@@ -387,7 +400,14 @@ ggplot(data = novillos) +
 
 ## Gráficos compuestos con `patchwork`
 
-`patchwork` es una librería de R para crear un gráfico complejo compuesto por varios gráficos simples en distintas posiciones y de distintos tamaños.
+`patchwork` es una librería de R para crear gráficos complejos compuestos por varios gráficos simples en distintas posiciones y de distintos tamaños.
+
+
+```{r, echo = F, fig.cap = '', out.width = '15%', fig.retina = 2} 
+include_graphics('assets/patchwork.png', auto_pdf = T)
+```
+
+[https://patchwork.data-imaginist.com/](https://patchwork.data-imaginist.com/)
 
 ```{r, eval=FALSE}
 # instalando el paquete
@@ -444,7 +464,7 @@ g1 + g2 + g3 + g1
 
 #### ACTIVIDAD
 
-1. Guarde los gráficos generados en las actividades anteriores en objetos `g1` y `g2`
+1. Guarde los gráficos generados en las actividades anteriores en objetos _(`g1`, `g2`)_
 
 2. Realice un gráfico compuesto con los gráficos guardados.
 
