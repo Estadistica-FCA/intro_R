@@ -13,7 +13,14 @@ library(knitr)
 
 Además, `Quarto` ofrece una gama de nuevas características y funcionalidades que permiten a los usuarios crear documentos más complejos y personalizables. Puedes aprovechar estas nuevas capacidades para crear informes y documentos altamente personalizados que se adapten a tus necesidades específicas.
 
-# Instalación
+# Instalación#
+
+Abre RStudio y ejecuta el siguiente comando para instalar el paquete rmarkdown:
+
+```{r}
+install.packages("rmarkdown")
+devtools::install_github("rstudio/quarto")
+```
 
 # Nuevo documento
 
@@ -25,13 +32,14 @@ include_graphics('assets/new_quarto_doc.png', auto_pdf = T)
 
 # Bloques de Código
 
-Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, ```{r}) son ejecutables y serán ejecutados por Quarto durante la renderización. Aquí tienes un ejemplo simple:
-
+Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, ```{r}) son ejecutables y serán ejecutados por Quarto durante la renderización. 
 
 ```{r, eval = F}
+---
 título: "Demostración de reportes con quarto"
 autor: "Estadística FCA UNL"
 fecha: "20/11/2023"
+---
 ```
 
 # Generar reporte `Rendering`

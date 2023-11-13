@@ -1,0 +1,76 @@
+---
+title: "Reportes dinámicos"
+---
+
+
+
+
+
+## Instalar el paquete rmarkdown:
+
+Abre RStudio y ejecuta el siguiente comando para instalar el paquete rmarkdown:
+
+```{r}
+install.packages("rmarkdown")
+devtools::install_github("rstudio/quarto")
+```
+
+## Crear un nuevo R Documento de Quarto:
+
+En RStudio, ve a "File" -> "New File" -> "R Docuement...". Esto abrirá una ventana para crear un nuevo documento R en Quarto
+
+new_quarto.png
+
+## 4. Elegir formato de salida:
+Elige el formato de salida deseado para tu informe, por ejemplo, HTML, PDF o Word. Esto se puede especificar en el encabezado del documento R Markdown, `YAML`:
+
+
+```{r, eval=F}
+---
+title: "My document"
+format:
+  html:
+    toc: true
+    html-math-method: katex
+    css: styles.css
+---
+```
+
+
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. 
+
+:::
+
+## 5. Insertar código R:
+Puedes incluir bloques de código R directamente en el documento. Usa tres comillas graves (```) para crear bloques de código. Por ejemplo:
+
+```{r}
+# Tu código R aquí
+# Esto puede incluir gráficos, análisis, etc.
+shell
+Copy code
+
+### 6. Insertar texto y formato:
+
+Utiliza la sintaxis de marcado Markdown para insertar texto y realizar formato. Puedes incluir encabezados, listas, enlaces, etc.
+
+### 7. Generar informe:
+
+Para generar el informe, haz clic en el botón "Knit" en la esquina superior izquierda de la ventana del script R Markdown. Esto creará el documento final en el formato especificado.
+
+### 8. Agregar interactividad (opcional):
+
+Si deseas hacer tu informe más interactivo, puedes considerar la inclusión de gráficos interactivos utilizando paquetes como `plotly` e incrustar widgets interactivos.
+
+### 9. Personalizar la apariencia:
+
+Puedes personalizar la apariencia de tu informe ajustando las opciones en el encabezado YAML o utilizando temas específicos.
+
+Este es solo un tutorial básico. Para informes más avanzados y dinámicos, puedes explorar opciones adicionales como parámetros, funciones `knitr::kable` para tablas y la inclusión de bloques condicionales.
+
+¡Espero que esto te ayude a empezar a crear informes dinámicos en R!
