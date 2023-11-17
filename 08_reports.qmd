@@ -1,11 +1,11 @@
 ---
-title: "Reportes dinámicoas"
+title: "Reportes dinámicos"
 ---
 
 ```{r, echo = F, include = F}
-library(knitr)
+pacman::p_load(knitr)
+opts_chunk$set(echo = T, message = F, warning = F)
 ```
-
 
 `Quarto` es una versión avanzada de generación de `R Markdown` desarrollada por RStudio, que admite múltiples lenguajes y ofrece numerosas características y capacidades nuevas. Al igual que R Markdown, `Quarto` utiliza `Knitr` para ejecutar código R y, por lo tanto, puede renderizar la mayoría de los archivos Rmd existentes sin necesidad de modificaciones.
 
@@ -13,26 +13,27 @@ library(knitr)
 
 Además, `Quarto` ofrece una gama de nuevas características y funcionalidades que permiten a los usuarios crear documentos más complejos y personalizables. Puedes aprovechar estas nuevas capacidades para crear informes y documentos altamente personalizados que se adapten a tus necesidades específicas.
 
-# Instalación#
+
+# Instalación
 
 Abre RStudio y ejecuta el siguiente comando para instalar el paquete rmarkdown:
 
-```{r}
+```{r, warning=FALSE, eval=FALSE}
 install.packages("rmarkdown")
 devtools::install_github("rstudio/quarto")
 ```
 
 # Nuevo documento
 
-Para crear un nuevo documento, simplemente se accede desde el menú **File**, **New file**, **Quarto document**. En la ventana que aparece, se pude modificar el titulo del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo _html_.
+Para crear un nuevo documento, simplemente se accede desde el menú **File**, **New file**, **Quarto document**. En la ventana que aparece, se pude modificar el titulo del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo *html*.
 
-```{r, echo = F, fig.cap = 'Nuevo documento de Quarto', out.width = '75%' , out.extra=''} 
+```{r, echo = F, fig.cap = 'Nuevo documento de Quarto', out.width = '75%' , out.extra=''}
 include_graphics('assets/new_quarto_doc.png', auto_pdf = T)
 ```
 
 # Bloques de Código
 
-Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, ```{r}) son ejecutables y serán ejecutados por Quarto durante la renderización. 
+Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, \`\`\`{r}) son ejecutables y serán ejecutados por Quarto durante la renderización.
 
 ```{r, eval = F}
 ---
@@ -46,11 +47,70 @@ fecha: "20/11/2023"
 
 Cuando se procesa un documento Quarto, los bloques de código R se ejecutan automáticamente. Puede `renderizar` documentos en Quarto de varias maneras, la más sencilla es usando el botón Renderizar en RStudio.
 
+```{r, echo = F, fig.cap = 'Nuevo documento de Quarto', out.width = '75%' , out.extra=''}
+include_graphics('assets/new_quarto_doc.png', auto_pdf = T)
+```
+
 La sección superior de un archivo `.qmd` como se muestra en RStudio. Hay una barra de herramientas justo encima del documento que contiene varias opciones, incluido **Render**. Hay una flecha azul segmentada y estilizada que apunta a la palabra.
 
-```{r, echo = F, fig.cap = 'Renderizar documento', out.width = '75%' , out.extra=''} 
-include_graphics('assets/untitled.png', auto_pdf = T)
+```{r, echo = F, fig.cap = 'Renderizar documento', out.width = '75%' , out.extra=''}
+include_graphics('assets/render.png', auto_pdf = T)
 ```
 
 El botón Renderizará el primer formato listado en el documento YAML. Si no se especifica ningún formato, se representará en HTML.
 
+# Modos de visualización
+
+Los documentos Markdown se pueden editar en modo fuente: `Source` o `Visual`. Para cambiar al modo `visual` para un documento determinado, use el botón `Source` o `Visual` en la parte superior izquierda de la barra de herramientas del documento (o alternativamente el método abreviado de teclado ⌃⇧ F4):
+
+```{r, echo = F, fig.cap = 'Modos de visualización', out.width = '75%' , out.extra=''}
+include_graphics('assets/switching.png', auto_pdf = T)
+```
+
+Puede cambiar entre el modo `Source` o `Visual` en cualquier momento.
+
+# Usando el editor
+
+## Atajos de teclado
+
+Hay atajos de teclado para todas las tareas básicas de edición. El modo visual admite tanto atajos de teclado tradicionales como atajos de rebajas. Por ejemplo, incluya texto en \*\*\*\*negrita\*\*\*\* entre asteriscos o escriba \## y presione espacio para crear un encabezado de segundo nivel. Ejemplos de atajos:
+
+|              |                   |                |
+|--------------|-------------------|----------------|
+| **Comando**  | **Atajo teclado** | Atajo Markdown |
+| Negrita      | Ctrl + B          | \*\*bold\*\*   |
+| Italica      | Ctrl + I          | \*italic\*     |
+| Código       | Ctrl + D          | \~\~strike\~\~ |
+| Tachado      |                   | \~sub\~        |
+| Superíndice  |                   | \^super\^      |
+| Encabezado 1 | Ctrl + Alt + 1    | \#             |
+| Encabezado 2 | Ctrl + Alt + 2    | \##            |
+| Encabezado 3 | Ctrl + Alt + 3    | \###           |
+| Link         | Ctrl + K          | \<href\>       |
+
+: Atajos de teclado
+
+# Opciones de fragmentos de código
+
+La salida del fragmento se puede personalizar con opciones de knitr, argumentos establecidos en el {} del encabezado de un fragmento. Arriba, utilizamos cinco argumentos:
+
+```{r, echo = F, fig.cap = 'Opciones de fragmentos de código', out.width = '75%' , out.extra=''}
+include_graphics('assets/echo.png', auto_pdf = T)
+```
+
+-   `include = FALSE` evita que el código y los resultados aparezcan en el archivo terminado. R Markdown todavía ejecuta el código en el fragmento y los resultados pueden ser utilizados por otros fragmentos.
+-   `echo = FALSE` evita que el código, pero no los resultados, aparezcan en el archivo terminado. Esta es una forma útil de incrustar figuras.
+-   
+-   `message = FALSE` evita que los mensajes generados por código aparezcan en el archivo terminado.
+-   `warning = FALSE` evita que las advertencias generadas por el código aparezcan en el archivo terminado.
+-   `fig.cap = "..."` agrega un título a los resultados gráficos.
+
+Los anteriores se pueden incluir indicando `TRUE` en el que corresponda.
+
+# Opciones globales
+
+Para configurar opciones globales que se apliquen a cada fragmento de su archivo, llame a `knitr::opts_chunk$set` en un fragmento de código. `Knitr` tratará cada opción que pase a `knitr::opts_chunk$set` como un valor predeterminado global que se puede sobrescribir en encabezados de fragmentos individuales.
+
+```{r, echo = F, fig.cap = 'Opciones globales', out.width = '75%' , out.extra=''}
+include_graphics('assets/opts_chunk.png', auto_pdf = T)
+```

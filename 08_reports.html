@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Reportes dinámicos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="08_reports_files/libs/clipboard/clipboard.min.js"></script>
+<script src="08_reports_files/libs/quarto-html/quarto.js"></script>
+<script src="08_reports_files/libs/quarto-html/popper.min.js"></script>
+<script src="08_reports_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="08_reports_files/libs/quarto-html/anchor.min.js"></script>
+<link href="08_reports_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="08_reports_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="08_reports_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="08_reports_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="08_reports_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Reportes dinámicos</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><code>Quarto</code> es una versión avanzada de generación de <code>R Markdown</code> desarrollada por RStudio, que admite múltiples lenguajes y ofrece numerosas características y capacidades nuevas. Al igual que R Markdown, <code>Quarto</code> utiliza <code>Knitr</code> para ejecutar código R y, por lo tanto, puede renderizar la mayoría de los archivos Rmd existentes sin necesidad de modificaciones.</p>
+<p><code>Quarto</code> permite crear documentos interactivos y dinámicos que combinan texto formateado con bloques de código ejecutable en varios lenguajes, incluido R. Esto proporciona a los usuarios una forma poderosa y flexible de generar informes, presentaciones y documentos que incluyen análisis de datos en tiempo real y visualizaciones interactivas.</p>
+<p>Además, <code>Quarto</code> ofrece una gama de nuevas características y funcionalidades que permiten a los usuarios crear documentos más complejos y personalizables. Puedes aprovechar estas nuevas capacidades para crear informes y documentos altamente personalizados que se adapten a tus necesidades específicas.</p>
+<section id="instalación" class="level1">
+<h1>Instalación</h1>
+<p>Abre RStudio y ejecuta el siguiente comando para instalar el paquete rmarkdown:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rstudio/quarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nuevo-documento" class="level1">
+<h1>Nuevo documento</h1>
+<p>Para crear un nuevo documento, simplemente se accede desde el menú <strong>File</strong>, <strong>New file</strong>, <strong>Quarto document</strong>. En la ventana que aparece, se pude modificar el titulo del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo <em>html</em>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/new_quarto_doc.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Nuevo documento de Quarto</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bloques-de-código" class="level1">
+<h1>Bloques de Código</h1>
+<p>Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, ```{r}) son ejecutables y serán ejecutados por Quarto durante la renderización.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>título<span class="sc">:</span> <span class="st">"Demostración de reportes con quarto"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>autor<span class="sc">:</span> <span class="st">"Estadística FCA UNL"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fecha<span class="sc">:</span> <span class="st">"20/11/2023"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="generar-reporte-rendering" class="level1">
+<h1>Generar reporte <code>Rendering</code></h1>
+<p>Cuando se procesa un documento Quarto, los bloques de código R se ejecutan automáticamente. Puede <code>renderizar</code> documentos en Quarto de varias maneras, la más sencilla es usando el botón Renderizar en RStudio.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/new_quarto_doc.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Nuevo documento de Quarto</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La sección superior de un archivo <code>.qmd</code> como se muestra en RStudio. Hay una barra de herramientas justo encima del documento que contiene varias opciones, incluido <strong>Render</strong>. Hay una flecha azul segmentada y estilizada que apunta a la palabra.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/render.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Renderizar documento</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>El botón Renderizará el primer formato listado en el documento YAML. Si no se especifica ningún formato, se representará en HTML.</p>
+</section>
+<section id="modos-de-visualización" class="level1">
+<h1>Modos de visualización</h1>
+<p>Los documentos Markdown se pueden editar en modo fuente: <code>Source</code> o <code>Visual</code>. Para cambiar al modo <code>visual</code> para un documento determinado, use el botón <code>Source</code> o <code>Visual</code> en la parte superior izquierda de la barra de herramientas del documento (o alternativamente el método abreviado de teclado ⌃⇧ F4):</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/switching.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Modos de visualización</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Puede cambiar entre el modo <code>Source</code> o <code>Visual</code> en cualquier momento.</p>
+</section>
+<section id="usando-el-editor" class="level1">
+<h1>Usando el editor</h1>
+<section id="atajos-de-teclado" class="level2">
+<h2 class="anchored" data-anchor-id="atajos-de-teclado">Atajos de teclado</h2>
+<p>Hay atajos de teclado para todas las tareas básicas de edición. El modo visual admite tanto atajos de teclado tradicionales como atajos de rebajas. Por ejemplo, incluya texto en ****negrita**** entre asteriscos o escriba ## y presione espacio para crear un encabezado de segundo nivel. Ejemplos de atajos:</p>
+<table class="table">
+<caption>Atajos de teclado</caption>
+<tbody>
+<tr class="odd">
+<td><strong>Comando</strong></td>
+<td><strong>Atajo teclado</strong></td>
+<td>Atajo Markdown</td>
+</tr>
+<tr class="even">
+<td>Negrita</td>
+<td>Ctrl + B</td>
+<td>**bold**</td>
+</tr>
+<tr class="odd">
+<td>Italica</td>
+<td>Ctrl + I</td>
+<td>*italic*</td>
+</tr>
+<tr class="even">
+<td>Código</td>
+<td>Ctrl + D</td>
+<td>~~strike~~</td>
+</tr>
+<tr class="odd">
+<td>Tachado</td>
+<td></td>
+<td>~sub~</td>
+</tr>
+<tr class="even">
+<td>Superíndice</td>
+<td></td>
+<td>^super^</td>
+</tr>
+<tr class="odd">
+<td>Encabezado 1</td>
+<td>Ctrl + Alt + 1</td>
+<td>#</td>
+</tr>
+<tr class="even">
+<td>Encabezado 2</td>
+<td>Ctrl + Alt + 2</td>
+<td>##</td>
+</tr>
+<tr class="odd">
+<td>Encabezado 3</td>
+<td>Ctrl + Alt + 3</td>
+<td>###</td>
+</tr>
+<tr class="even">
+<td>Link</td>
+<td>Ctrl + K</td>
+<td>&lt;href&gt;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="opciones-de-fragmentos-de-código" class="level1">
+<h1>Opciones de fragmentos de código</h1>
+<p>La salida del fragmento se puede personalizar con opciones de knitr, argumentos establecidos en el {} del encabezado de un fragmento. Arriba, utilizamos cinco argumentos:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/echo.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Opciones de fragmentos de código</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>include = FALSE</code> evita que el código y los resultados aparezcan en el archivo terminado. R Markdown todavía ejecuta el código en el fragmento y los resultados pueden ser utilizados por otros fragmentos.</li>
+<li><code>echo = FALSE</code> evita que el código, pero no los resultados, aparezcan en el archivo terminado. Esta es una forma útil de incrustar figuras.</li>
+<li></li>
+<li><code>message = FALSE</code> evita que los mensajes generados por código aparezcan en el archivo terminado.</li>
+<li><code>warning = FALSE</code> evita que las advertencias generadas por el código aparezcan en el archivo terminado.</li>
+<li><code>fig.cap = "..."</code> agrega un título a los resultados gráficos.</li>
+</ul>
+<p>Los anteriores se pueden incluir indicando <code>TRUE</code> en el que corresponda.</p>
+</section>
+<section id="opciones-globales" class="level1">
+<h1>Opciones globales</h1>
+<p>Para configurar opciones globales que se apliquen a cada fragmento de su archivo, llame a <code>knitr::opts_chunk$set</code> en un fragmento de código. <code>Knitr</code> tratará cada opción que pase a <code>knitr::opts_chunk$set</code> como un valor predeterminado global que se puede sobrescribir en encabezados de fragmentos individuales.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/opts_chunk.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Opciones globales</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
