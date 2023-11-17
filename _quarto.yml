@@ -17,7 +17,7 @@ book:
     - 05_import.qmd
     - 06_wrangling.qmd
     - 07_viz.qmd
-     - 08_reports.qmd
+    - 08_reports.qmd
     - references.qmd
 
 bibliography: references.bib
