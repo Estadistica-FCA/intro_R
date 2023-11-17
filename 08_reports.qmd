@@ -47,10 +47,6 @@ fecha: "20/11/2023"
 
 Cuando se procesa un documento Quarto, los bloques de código R se ejecutan automáticamente. Puede `renderizar` documentos en Quarto de varias maneras, la más sencilla es usando el botón Renderizar en RStudio.
 
-```{r, echo = F, fig.cap = 'Nuevo documento de Quarto', out.width = '75%' , out.extra=''}
-include_graphics('assets/new_quarto_doc.png', auto_pdf = T)
-```
-
 La sección superior de un archivo `.qmd` como se muestra en RStudio. Hay una barra de herramientas justo encima del documento que contiene varias opciones, incluido **Render**. Hay una flecha azul segmentada y estilizada que apunta a la palabra.
 
 ```{r, echo = F, fig.cap = 'Renderizar documento', out.width = '75%' , out.extra=''}
