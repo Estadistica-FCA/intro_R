@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,7 +91,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
@@ -110,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08_reports.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reportes dinámicos</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -208,17 +209,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#instalación" id="toc-instalación" class="nav-link active" data-scroll-target="#instalación"><span class="header-section-number">10</span> Instalación</a></li>
-  <li><a href="#nuevo-documento" id="toc-nuevo-documento" class="nav-link" data-scroll-target="#nuevo-documento"><span class="header-section-number">11</span> Nuevo documento</a></li>
-  <li><a href="#bloques-de-código" id="toc-bloques-de-código" class="nav-link" data-scroll-target="#bloques-de-código"><span class="header-section-number">12</span> Bloques de Código</a></li>
-  <li><a href="#generar-reporte-rendering" id="toc-generar-reporte-rendering" class="nav-link" data-scroll-target="#generar-reporte-rendering"><span class="header-section-number">13</span> Generar reporte <code>Rendering</code></a></li>
-  <li><a href="#modos-de-visualización" id="toc-modos-de-visualización" class="nav-link" data-scroll-target="#modos-de-visualización"><span class="header-section-number">14</span> Modos de visualización</a></li>
-  <li><a href="#usando-el-editor" id="toc-usando-el-editor" class="nav-link" data-scroll-target="#usando-el-editor"><span class="header-section-number">15</span> Usando el editor</a>
+  <li><a href="#programación-literaria" id="toc-programación-literaria" class="nav-link active" data-scroll-target="#programación-literaria"><span class="header-section-number">9.1</span> Programación literaria</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="header-section-number">9.2</span> Quarto</a>
   <ul class="collapse">
-  <li><a href="#atajos-de-teclado" id="toc-atajos-de-teclado" class="nav-link" data-scroll-target="#atajos-de-teclado"><span class="header-section-number">15.1</span> Atajos de teclado</a></li>
+  <li><a href="#instalación" id="toc-instalación" class="nav-link" data-scroll-target="#instalación"><span class="header-section-number">9.2.1</span> Instalación</a></li>
+  <li><a href="#estructura-del-documento" id="toc-estructura-del-documento" class="nav-link" data-scroll-target="#estructura-del-documento"><span class="header-section-number">9.2.2</span> Estructura del documento</a></li>
+  <li><a href="#modos-de-visualización" id="toc-modos-de-visualización" class="nav-link" data-scroll-target="#modos-de-visualización"><span class="header-section-number">9.2.3</span> Modos de visualización</a></li>
+  <li><a href="#atajos-de-teclado" id="toc-atajos-de-teclado" class="nav-link" data-scroll-target="#atajos-de-teclado"><span class="header-section-number">9.2.4</span> Atajos de teclado</a></li>
+  <li><a href="#generar-reporte-render" id="toc-generar-reporte-render" class="nav-link" data-scroll-target="#generar-reporte-render"><span class="header-section-number">9.2.5</span> Generar reporte (<code>render</code>)</a></li>
   </ul></li>
-  <li><a href="#opciones-de-fragmentos-de-código" id="toc-opciones-de-fragmentos-de-código" class="nav-link" data-scroll-target="#opciones-de-fragmentos-de-código"><span class="header-section-number">16</span> Opciones de fragmentos de código</a></li>
-  <li><a href="#opciones-globales" id="toc-opciones-globales" class="nav-link" data-scroll-target="#opciones-globales"><span class="header-section-number">17</span> Opciones globales</a></li>
   </ul>
 </nav>
     </div>
@@ -242,20 +241,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p><code>Quarto</code> es una versión avanzada de generación de <code>R Markdown</code> desarrollada por RStudio, que admite múltiples lenguajes y ofrece numerosas características y capacidades nuevas. Al igual que R Markdown, <code>Quarto</code> utiliza <code>Knitr</code> para ejecutar código R y, por lo tanto, puede renderizar la mayoría de los archivos Rmd existentes sin necesidad de modificaciones.</p>
+<section id="programación-literaria" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="programación-literaria"><span class="header-section-number">9.1</span> Programación literaria</h2>
+<p>Es un paradigma de programación introducido por <em>Donald Kunth</em> en 1984 mediante el cual la explicación del código de programación se da en lenguaje natural (i.e.&nbsp;español) intercalado con fragmentos de código que puede ejecutarse.</p>
+<p>Así, a diferencia de código funete donde todo lo que no sea código debe ir con etiquetas de <em>comentario</em> para que no sea ejecutado, en <strong>R</strong> usando el símbolo <code>#</code>, en <em>programación literaria</em> el texto se escribe sin etiquetas y las celdas o bloques de código o <em>chunks</em> se delimitan con caracteres especiales.</p>
+<p>Este paradigma es muy utilizado actualmente, especialmente en investigación reproducible y ciencia de datos poder documentar los procedimientos analíticos y generar informes dinámicos.</p>
+<p>Existen varios softwares que permiten implementar este paradigma: <code>swave</code> para LaTeX, <code>R Markdown</code> para <strong>R</strong>, y recientemente <code>Quarto</code> para varios lenguajes, entre ellos <strong>R</strong>.</p>
+</section>
+<section id="quarto" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="quarto"><span class="header-section-number">9.2</span> Quarto</h2>
+<p><code>Quarto</code> es una versión avanzada de generación de <code>R Markdown</code> desarrollada por Posit, que admite múltiples lenguajes y ofrece numerosas características y capacidades nuevas. Al igual que <code>R Markdown</code>, <code>Quarto</code> utiliza <code>knitr</code> para ejecutar código R y, por lo tanto, puede renderizar la mayoría de los archivos Rmd existentes sin necesidad de modificaciones.</p>
 <p><code>Quarto</code> permite crear documentos interactivos y dinámicos que combinan texto formateado con bloques de código ejecutable en varios lenguajes, incluido R. Esto proporciona a los usuarios una forma poderosa y flexible de generar informes, presentaciones y documentos que incluyen análisis de datos en tiempo real y visualizaciones interactivas.</p>
 <p>Además, <code>Quarto</code> ofrece una gama de nuevas características y funcionalidades que permiten a los usuarios crear documentos más complejos y personalizables. Puedes aprovechar estas nuevas capacidades para crear informes y documentos altamente personalizados que se adapten a tus necesidades específicas.</p>
-<section id="instalación" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Instalación</h1>
-<p>Abre RStudio y ejecuta el siguiente comando para instalar el paquete rmarkdown:</p>
+<section id="instalación" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="instalación"><span class="header-section-number">9.2.1</span> Instalación</h3>
+<p>Abrir RStudio y ejecutar el siguiente comando para instalar el paquete <code>rmarkdown</code> y <code>quarto</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rstudio/quarto"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quarto"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="nuevo-documento" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> Nuevo documento</h1>
-<p>Para crear un nuevo documento, simplemente se accede desde el menú <strong>File</strong>, <strong>New file</strong>, <strong>Quarto document</strong>. En la ventana que aparece, se pude modificar el titulo del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo <em>html</em>.</p>
+<section id="estructura-del-documento" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="estructura-del-documento"><span class="header-section-number">9.2.2</span> Estructura del documento</h3>
+<p>Para crear un nuevo documento, simplemente se accede desde el menú <strong>File</strong>, <strong>New file</strong>, <strong>Quarto document</strong>. En la ventana que aparece, se pude modificar el título del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo <em>html</em>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -266,37 +273,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section>
-<section id="bloques-de-código" class="level1" data-number="12">
-<h1 data-number="12"><span class="header-section-number">12</span> Bloques de Código</h1>
-<p>Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, ```{r}) son ejecutables y serán ejecutados por Quarto durante la renderización.</p>
+<p>Esto abre un documento de muestra o plantilla con extensión <code>.qmd</code>. Este documento tiene la estructurua mínima para generar un reporte.</p>
+<section id="encabezado-yaml" class="level4" data-number="9.2.2.1">
+<h4 data-number="9.2.2.1" class="anchored" data-anchor-id="encabezado-yaml"><span class="header-section-number">9.2.2.1</span> Encabezado YAML</h4>
+<p>Las primeras líneas del documento corresponden al encabezado que está en formato YAML (otro lenguaje de etiquetas). Allí se especifican los metadatos necesarios para controlar la creación y ejecución del documento. Como minimo se debe especificar el título del documento:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>título<span class="sc">:</span> <span class="st">"Demostración de reportes con quarto"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>autor<span class="sc">:</span> <span class="st">"Estadística FCA UNL"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fecha<span class="sc">:</span> <span class="st">"20/11/2023"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi primer documento quarto"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="generar-reporte-rendering" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> Generar reporte <code>Rendering</code></h1>
-<p>Cuando se procesa un documento Quarto, los bloques de código R se ejecutan automáticamente. Puede <code>renderizar</code> documentos en Quarto de varias maneras, la más sencilla es usando el botón Renderizar en RStudio.</p>
-<p>La sección superior de un archivo <code>.qmd</code> como se muestra en RStudio. Hay una barra de herramientas justo encima del documento que contiene varias opciones, incluido <strong>Render</strong>. Hay una flecha azul segmentada y estilizada que apunta a la palabra.</p>
+<p>Hay varios campos y opciones dentro del YAML. Por ejemplo: si se quiere agregar información del autor del documento y el formato del documento:</p>
 <div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="assets/render.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption class="figure-caption">Renderizar documento</figcaption>
-</figure>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi primer documento quarto"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Estadistica"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>El botón Renderizará el primer formato listado en el documento YAML. Si no se especifica ningún formato, se representará en HTML.</p>
 </section>
-<section id="modos-de-visualización" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> Modos de visualización</h1>
-<p>Los documentos Markdown se pueden editar en modo fuente: <code>Source</code> o <code>Visual</code>. Para cambiar al modo <code>visual</code> para un documento determinado, use el botón <code>Source</code> o <code>Visual</code> en la parte superior izquierda de la barra de herramientas del documento (o alternativamente el método abreviado de teclado ⌃⇧ F4):</p>
+<section id="bloques-de-código" class="level4" data-number="9.2.2.2">
+<h4 data-number="9.2.2.2" class="anchored" data-anchor-id="bloques-de-código"><span class="header-section-number">9.2.2.2</span> Bloques de Código</h4>
+<p>Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo para <strong>R</strong> sería</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Codigo de R</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Lo que está dentro del bloque de código debe ser comandos de R válidos ya que se ejecutarán al momento de crear el informe.</p>
+<p>Cada bloque de código tiene opciones que permiten controlar el comportamiento particular del código que contienen.</p>
+</section>
+<section id="texto" class="level4" data-number="9.2.2.3">
+<h4 data-number="9.2.2.3" class="anchored" data-anchor-id="texto"><span class="header-section-number">9.2.2.3</span> Texto</h4>
+<p>Lo que no es encabezado (YAML) o bloques de código (chunks) es texto plano. El texto se puede organizar por secciones creando títulos con el simbolo <code>#</code>. A mayor cantidad <code>#</code> menor jerarquia de la sección</p>
+<pre><code># Titulo 1</code></pre>
+<pre><code>## Titulo 2</code></pre>
+<pre><code>### Titulo 3</code></pre>
+<pre><code>#### Titulo 4</code></pre>
+</section>
+</section>
+<section id="modos-de-visualización" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="modos-de-visualización"><span class="header-section-number">9.2.3</span> Modos de visualización</h3>
+<p>Los documentos se pueden editar en modo fuente (<code>Source</code>) o gráfico (<code>Visual</code>). Para cambiar al modo <code>visual</code> para un documento determinado, use el botón <code>Source</code> o <code>Visual</code> en la parte superior izquierda de la barra de herramientas del documento (o alternativamente el método abreviado de teclado ⌃⇧ F4):</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -309,106 +324,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Puede cambiar entre el modo <code>Source</code> o <code>Visual</code> en cualquier momento.</p>
 </section>
-<section id="usando-el-editor" class="level1" data-number="15">
-<h1 data-number="15"><span class="header-section-number">15</span> Usando el editor</h1>
-<section id="atajos-de-teclado" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="atajos-de-teclado"><span class="header-section-number">15.1</span> Atajos de teclado</h2>
-<p>Hay atajos de teclado para todas las tareas básicas de edición. El modo visual admite tanto atajos de teclado tradicionales como atajos de rebajas. Por ejemplo, incluya texto en ****negrita**** entre asteriscos o escriba ## y presione espacio para crear un encabezado de segundo nivel. Ejemplos de atajos:</p>
+<section id="atajos-de-teclado" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="atajos-de-teclado"><span class="header-section-number">9.2.4</span> Atajos de teclado</h3>
+<p>Hay atajos de teclado para todas las tareas básicas de edición. El modo visual admite atajos de teclado. Ejemplos de atajos:</p>
 <table class="table">
 <caption>Atajos de teclado</caption>
+<thead>
+<tr class="header">
+<th><strong>Comando</strong></th>
+<th><strong>Atajo teclado</strong></th>
+<th>Atajo Markdown</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><strong>Comando</strong></td>
-<td><strong>Atajo teclado</strong></td>
-<td>Atajo Markdown</td>
-</tr>
-<tr class="even">
 <td>Negrita</td>
 <td>Ctrl + B</td>
 <td>**bold**</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Italica</td>
 <td>Ctrl + I</td>
 <td>*italic*</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Código</td>
 <td>Ctrl + D</td>
 <td>~~strike~~</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Tachado</td>
 <td></td>
 <td>~sub~</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Superíndice</td>
 <td></td>
 <td>^super^</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Encabezado 1</td>
 <td>Ctrl + Alt + 1</td>
 <td>#</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Encabezado 2</td>
 <td>Ctrl + Alt + 2</td>
 <td>##</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Encabezado 3</td>
 <td>Ctrl + Alt + 3</td>
 <td>###</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Link</td>
 <td>Ctrl + K</td>
 <td>&lt;href&gt;</td>
 </tr>
 </tbody>
 </table>
+<!-- # Opciones de fragmentos de código -->
+
+<!-- La salida del fragmento se puede personalizar con opciones de knitr, argumentos establecidos en el {} del encabezado de un fragmento. Arriba, utilizamos cinco argumentos: -->
+<!-- ```{r, echo = F, fig.cap = 'Opciones de fragmentos de código', out.width = '75%' , out.extra=''} -->
+<!-- include_graphics('assets/echo.png', auto_pdf = T) -->
+<!-- ``` -->
+<!-- -   `include = FALSE` evita que el código y los resultados aparezcan en el archivo terminado. R Markdown todavía ejecuta el código en el fragmento y los resultados pueden ser utilizados por otros fragmentos. -->
+<!-- -   `echo = FALSE` evita que el código, pero no los resultados, aparezcan en el archivo terminado. Esta es una forma útil de incrustar figuras. -->
+<!-- -    -->
+<!-- -   `message = FALSE` evita que los mensajes generados por código aparezcan en el archivo terminado. -->
+<!-- -   `warning = FALSE` evita que las advertencias generadas por el código aparezcan en el archivo terminado. -->
+<!-- -   `fig.cap = "..."` agrega un título a los resultados gráficos. -->
+<!-- Los anteriores se pueden incluir indicando `TRUE` en el que corresponda. -->
+<!-- # Opciones globales -->
+<!-- Para configurar opciones globales que se apliquen a cada fragmento de su archivo, llame a `knitr::opts_chunk$set` en un fragmento de código. `Knitr` tratará cada opción que pase a `knitr::opts_chunk$set` como un valor predeterminado global que se puede sobrescribir en encabezados de fragmentos individuales. -->
+<!-- ```{r, echo = F, fig.cap = 'Opciones globales', out.width = '75%' , out.extra=''} -->
+<!-- include_graphics('assets/opts_chunk.png', auto_pdf = T) -->
+<!-- ``` -->
 </section>
-</section>
-<section id="opciones-de-fragmentos-de-código" class="level1" data-number="16">
-<h1 data-number="16"><span class="header-section-number">16</span> Opciones de fragmentos de código</h1>
-<p>La salida del fragmento se puede personalizar con opciones de knitr, argumentos establecidos en el {} del encabezado de un fragmento. Arriba, utilizamos cinco argumentos:</p>
+<section id="generar-reporte-render" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="generar-reporte-render"><span class="header-section-number">9.2.5</span> Generar reporte (<code>render</code>)</h3>
+<p>Para transformar el archivo <code>.qmd</code> en el formato de salida <code>pdf</code>, <code>docx</code>, <code>html</code>, etc., se usa la función <code>render</code> o bien el botón <code>Render</code> en RStudio que se encuentra en la barra de herramientas justo encima del documento (una flecha azul segmentada)</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/echo.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption class="figure-caption">Opciones de fragmentos de código</figcaption>
+<p><img src="assets/render.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Renderizar documento</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<ul>
-<li><code>include = FALSE</code> evita que el código y los resultados aparezcan en el archivo terminado. R Markdown todavía ejecuta el código en el fragmento y los resultados pueden ser utilizados por otros fragmentos.</li>
-<li><code>echo = FALSE</code> evita que el código, pero no los resultados, aparezcan en el archivo terminado. Esta es una forma útil de incrustar figuras.</li>
-<li></li>
-<li><code>message = FALSE</code> evita que los mensajes generados por código aparezcan en el archivo terminado.</li>
-<li><code>warning = FALSE</code> evita que las advertencias generadas por el código aparezcan en el archivo terminado.</li>
-<li><code>fig.cap = "..."</code> agrega un título a los resultados gráficos.</li>
-</ul>
-<p>Los anteriores se pueden incluir indicando <code>TRUE</code> en el que corresponda.</p>
+<p>El botón renderizará el documento al primer formato de salida listado en el encabezado. Si no se especifica ningún formato, se representará en HTML.</p>
+
+
 </section>
-<section id="opciones-globales" class="level1" data-number="17">
-<h1 data-number="17"><span class="header-section-number">17</span> Opciones globales</h1>
-<p>Para configurar opciones globales que se apliquen a cada fragmento de su archivo, llame a <code>knitr::opts_chunk$set</code> en un fragmento de código. <code>Knitr</code> tratará cada opción que pase a <code>knitr::opts_chunk$set</code> como un valor predeterminado global que se puede sobrescribir en encabezados de fragmentos individuales.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="assets/opts_chunk.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption class="figure-caption">Opciones globales</figcaption>
-</figure>
-</div>
-</div>
-</div>
-
-
 </section>
 
 </main> <!-- /main -->
