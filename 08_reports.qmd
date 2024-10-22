@@ -1,56 +1,162 @@
 ---
-title: "Reportes dinámicoas"
+title: "Reportes dinámicos"
 ---
 
 ```{r, echo = F, include = F}
-library(knitr)
+pacman::p_load(knitr)
+opts_chunk$set(echo = T, message = F, warning = F)
 ```
 
+## Programación literaria
 
-`Quarto` es una versión avanzada de generación de `R Markdown` desarrollada por RStudio, que admite múltiples lenguajes y ofrece numerosas características y capacidades nuevas. Al igual que R Markdown, `Quarto` utiliza `Knitr` para ejecutar código R y, por lo tanto, puede renderizar la mayoría de los archivos Rmd existentes sin necesidad de modificaciones.
+Es un paradigma de programación introducido por _Donald Kunth_ en 1984 mediante el cual la explicación del código de programación se da en lenguaje natural (i.e. español) intercalado con fragmentos de código que puede ejecutarse. 
+
+Así, a diferencia de código funete donde todo lo que no sea código debe ir con etiquetas de _comentario_  para que no sea ejecutado, en **R** usando el símbolo `#`, en _programación literaria_ el texto se escribe sin etiquetas y las celdas o bloques de código o _chunks_ se delimitan con caracteres especiales.
+
+Este paradigma es muy utilizado actualmente, especialmente en investigación reproducible y ciencia de datos poder documentar los procedimientos analíticos y generar informes dinámicos.
+
+Existen varios softwares que permiten implementar este paradigma: `swave` para LaTeX, `R Markdown` para **R**, y recientemente `Quarto` para varios lenguajes, entre ellos **R**. 
+
+## Quarto
+
+`Quarto` es una versión avanzada de generación de `R Markdown` desarrollada por Posit, que admite múltiples lenguajes y ofrece numerosas características y capacidades nuevas. Al igual que `R Markdown`, `Quarto` utiliza `knitr` para ejecutar código R y, por lo tanto, puede renderizar la mayoría de los archivos Rmd existentes sin necesidad de modificaciones.
 
 `Quarto` permite crear documentos interactivos y dinámicos que combinan texto formateado con bloques de código ejecutable en varios lenguajes, incluido R. Esto proporciona a los usuarios una forma poderosa y flexible de generar informes, presentaciones y documentos que incluyen análisis de datos en tiempo real y visualizaciones interactivas.
 
 Además, `Quarto` ofrece una gama de nuevas características y funcionalidades que permiten a los usuarios crear documentos más complejos y personalizables. Puedes aprovechar estas nuevas capacidades para crear informes y documentos altamente personalizados que se adapten a tus necesidades específicas.
 
-# Instalación#
 
-Abre RStudio y ejecuta el siguiente comando para instalar el paquete rmarkdown:
+### Instalación
 
-```{r}
-install.packages("rmarkdown")
-devtools::install_github("rstudio/quarto")
+Abrir RStudio y ejecutar el siguiente comando para instalar el paquete `rmarkdown` y `quarto`:
+
+```{r, warning=FALSE, eval=FALSE}
+install.packages("quarto")
 ```
 
-# Nuevo documento
+### Estructura del documento
 
-Para crear un nuevo documento, simplemente se accede desde el menú **File**, **New file**, **Quarto document**. En la ventana que aparece, se pude modificar el titulo del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo _html_.
+Para crear un nuevo documento, simplemente se accede desde el menú **File**, **New file**, **Quarto document**. En la ventana que aparece, se pude modificar el título del documento y seleccionar el tipo de documento que vamos a generar luego, por ejemplo *html*.
 
-```{r, echo = F, fig.cap = 'Nuevo documento de Quarto', out.width = '75%' , out.extra=''} 
+```{r, echo = F, fig.cap = 'Nuevo documento de Quarto', out.width = '75%' , out.extra=''}
 include_graphics('assets/new_quarto_doc.png', auto_pdf = T)
 ```
 
-# Bloques de Código
+Esto abre un documento de muestra o plantilla con extensión `.qmd`. Este documento tiene la estructurua mínima para generar un reporte.
 
-Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo, ```{r}) son ejecutables y serán ejecutados por Quarto durante la renderización. 
+#### Encabezado YAML
 
-```{r, eval = F}
+Las primeras líneas del documento corresponden al encabezado que está en formato YAML (otro lenguaje de etiquetas). Allí se especifican los metadatos necesarios para controlar la creación y ejecución del documento. Como minimo se debe especificar el título del documento:
+
+````{markdown}
 ---
-título: "Demostración de reportes con quarto"
-autor: "Estadística FCA UNL"
-fecha: "20/11/2023"
+title: "Mi primer documento quarto"
 ---
+````
+
+Hay varios campos y opciones dentro del YAML. Por ejemplo: si se quiere agregar información del autor del documento y el formato del documento:
+
+````{markdown}
+---
+title: "Mi primer documento quarto"
+author: "Estadistica"
+format: html
+---
+````
+
+#### Bloques de Código
+
+Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo para **R** sería 
+
+```{{r}}
+# Codigo de R
 ```
 
-# Generar reporte `Rendering`
 
-Cuando se procesa un documento Quarto, los bloques de código R se ejecutan automáticamente. Puede `renderizar` documentos en Quarto de varias maneras, la más sencilla es usando el botón Renderizar en RStudio.
+Lo que está dentro del bloque de código debe ser comandos de R válidos ya que se ejecutarán al momento de crear el informe.
 
-La sección superior de un archivo `.qmd` como se muestra en RStudio. Hay una barra de herramientas justo encima del documento que contiene varias opciones, incluido **Render**. Hay una flecha azul segmentada y estilizada que apunta a la palabra.
+Cada bloque de código tiene opciones que permiten controlar el comportamiento particular del código que contienen.
 
-```{r, echo = F, fig.cap = 'Renderizar documento', out.width = '75%' , out.extra=''} 
-include_graphics('assets/untitled.png', auto_pdf = T)
+#### Texto
+
+Lo que no es encabezado (YAML) o bloques de código (chunks) es texto plano. El texto se puede organizar por secciones creando títulos con el simbolo `#`. A mayor cantidad `#` menor jerarquia de la sección  
+
+```
+# Titulo 1
 ```
 
-El botón Renderizará el primer formato listado en el documento YAML. Si no se especifica ningún formato, se representará en HTML.
+```
+## Titulo 2
+```
 
+```
+### Titulo 3
+```
+
+```
+#### Titulo 4
+```
+
+### Modos de visualización
+
+Los documentos se pueden editar en modo fuente (`Source`) o gráfico (`Visual`). Para cambiar al modo `visual` para un documento determinado, use el botón `Source` o `Visual` en la parte superior izquierda de la barra de herramientas del documento (o alternativamente el método abreviado de teclado ⌃⇧ F4):
+
+```{r, echo = F, fig.cap = 'Modos de visualización', out.width = '75%' , out.extra=''}
+include_graphics('assets/switching.png', auto_pdf = T)
+```
+
+Puede cambiar entre el modo `Source` o `Visual` en cualquier momento.
+
+### Atajos de teclado
+
+Hay atajos de teclado para todas las tareas básicas de edición. El modo visual admite atajos de teclado. Ejemplos de atajos:
+
+| **Comando**  | **Atajo teclado** | Atajo Markdown |
+|--------------|-------------------|----------------|
+| Negrita      | Ctrl + B          | \*\*bold\*\*   |
+| Italica      | Ctrl + I          | \*italic\*     |
+| Código       | Ctrl + D          | \~\~strike\~\~ |
+| Tachado      |                   | \~sub\~        |
+| Superíndice  |                   | \^super\^      |
+| Encabezado 1 | Ctrl + Alt + 1    | \#             |
+| Encabezado 2 | Ctrl + Alt + 2    | \##            |
+| Encabezado 3 | Ctrl + Alt + 3    | \###           |
+| Link         | Ctrl + K          | \<href\>       |
+
+: Atajos de teclado
+
+<!-- # Opciones de fragmentos de código -->
+
+<!-- La salida del fragmento se puede personalizar con opciones de knitr, argumentos establecidos en el {} del encabezado de un fragmento. Arriba, utilizamos cinco argumentos: -->
+
+<!-- ```{r, echo = F, fig.cap = 'Opciones de fragmentos de código', out.width = '75%' , out.extra=''} -->
+<!-- include_graphics('assets/echo.png', auto_pdf = T) -->
+<!-- ``` -->
+
+<!-- -   `include = FALSE` evita que el código y los resultados aparezcan en el archivo terminado. R Markdown todavía ejecuta el código en el fragmento y los resultados pueden ser utilizados por otros fragmentos. -->
+<!-- -   `echo = FALSE` evita que el código, pero no los resultados, aparezcan en el archivo terminado. Esta es una forma útil de incrustar figuras. -->
+<!-- -    -->
+<!-- -   `message = FALSE` evita que los mensajes generados por código aparezcan en el archivo terminado. -->
+<!-- -   `warning = FALSE` evita que las advertencias generadas por el código aparezcan en el archivo terminado. -->
+<!-- -   `fig.cap = "..."` agrega un título a los resultados gráficos. -->
+
+<!-- Los anteriores se pueden incluir indicando `TRUE` en el que corresponda. -->
+
+<!-- # Opciones globales -->
+
+<!-- Para configurar opciones globales que se apliquen a cada fragmento de su archivo, llame a `knitr::opts_chunk$set` en un fragmento de código. `Knitr` tratará cada opción que pase a `knitr::opts_chunk$set` como un valor predeterminado global que se puede sobrescribir en encabezados de fragmentos individuales. -->
+
+<!-- ```{r, echo = F, fig.cap = 'Opciones globales', out.width = '75%' , out.extra=''} -->
+<!-- include_graphics('assets/opts_chunk.png', auto_pdf = T) -->
+<!-- ``` -->
+
+
+### Generar reporte (`render`)
+
+Para transformar el archivo `.qmd` en el formato de salida `pdf`, `docx`, `html`, etc., se usa la función `render` o bien el botón `Render` en RStudio que se encuentra en la barra de herramientas justo encima del documento (una flecha azul segmentada)
+
+```{r, echo = F, fig.cap = 'Renderizar documento', out.width = '75%' , out.extra=''}
+include_graphics('assets/render.png', auto_pdf = T)
+```
+
+El botón renderizará el documento al primer formato de salida listado en el encabezado. Si no se especifica ningún formato, se representará en HTML.
