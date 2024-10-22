@@ -202,7 +202,7 @@ Al igual que las estadísticas de resumen, algunas geometrías que sirven para u
 ```{r, eval = T, echo = T, out.lines = 10}
 pacman::p_load(rio, ggplot2)
 novillos <- import("datasets/pesada_novillos.xlsx")
-novillos
+head(novillos)
 ```
 
 Veamos con un ejemplo como se combinan los componentes anteriormente vistos para realizar un gráfico simple. Para esto vamos a usar el set de datos  `r xfun::embed_file("datasets/pesada_novillos.xlsx", text = "pesada_novillos.xlsx")`
