@@ -232,8 +232,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#geometrías-según-tipo-y-numero-de-variables" id="toc-geometrías-según-tipo-y-numero-de-variables" class="nav-link" data-scroll-target="#geometrías-según-tipo-y-numero-de-variables"><span class="header-section-number">8.4.2</span> Geometrías según tipo y numero de variables</a></li>
   </ul></li>
   <li><a href="#primer-gráfico-paso-a-paso" id="toc-primer-gráfico-paso-a-paso" class="nav-link" data-scroll-target="#primer-gráfico-paso-a-paso"><span class="header-section-number">8.5</span> Primer gráfico paso a paso</a></li>
-  <li><a href="#gráficos-condicionales-o-por-paneles-facets" id="toc-gráficos-condicionales-o-por-paneles-facets" class="nav-link" data-scroll-target="#gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.6</span> Gráficos condicionales o por paneles: <code>facets</code></a></li>
-  <li><a href="#gráficos-compuestos-con-patchwork" id="toc-gráficos-compuestos-con-patchwork" class="nav-link" data-scroll-target="#gráficos-compuestos-con-patchwork"><span class="header-section-number">8.7</span> Gráficos compuestos con <code>patchwork</code></a></li>
+  <li><a href="#otras-geometrías" id="toc-otras-geometrías" class="nav-link" data-scroll-target="#otras-geometrías"><span class="header-section-number">8.6</span> Otras geometrías</a>
+  <ul class="collapse">
+  <li><a href="#puntos-y-líneas" id="toc-puntos-y-líneas" class="nav-link" data-scroll-target="#puntos-y-líneas"><span class="header-section-number">8.6.1</span> Puntos y líneas</a></li>
+  <li><a href="#barras-y-columnas" id="toc-barras-y-columnas" class="nav-link" data-scroll-target="#barras-y-columnas"><span class="header-section-number">8.6.2</span> Barras y columnas</a></li>
+  </ul></li>
+  <li><a href="#gráficos-condicionales-o-por-paneles-facets" id="toc-gráficos-condicionales-o-por-paneles-facets" class="nav-link" data-scroll-target="#gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.7</span> Gráficos condicionales o por paneles: <code>facets</code></a></li>
+  <li><a href="#gráficos-compuestos-con-patchwork" id="toc-gráficos-compuestos-con-patchwork" class="nav-link" data-scroll-target="#gráficos-compuestos-con-patchwork"><span class="header-section-number">8.8</span> Gráficos compuestos con <code>patchwork</code></a></li>
   </ul>
 </nav>
     </div>
@@ -576,6 +581,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>De este gráfico surge que la relación en todos los casos es positiva pero varia un poco según procedencia.</p>
+</section>
+<section id="otras-geometrías" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="otras-geometrías"><span class="header-section-number">8.6</span> Otras geometrías</h2>
+<section id="puntos-y-líneas" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="puntos-y-líneas"><span class="header-section-number">8.6.1</span> Puntos y líneas</h3>
 <p>Dependiendo el tipo de <code>geom</code> tenemos distintos atributos estéticos para explorar: <code>color</code> y <code>alpha</code> (transparencia) para todos, <code>shape</code> y <code>size</code> para puntos, <code>linewidth</code> y <code>linetype</code> para lineas, y <code>fill</code> para barras, etc.</p>
 <p>El tipo de atributo estético depende también de la naturaleza de la variable: continua o discreta. Veamos como queda mapear los valores de <code>Procedencia</code> al atributo <code>shape</code> (forma):</p>
 <div class="cell">
@@ -698,6 +708,9 @@ colour.
 </div>
 </div>
 </div>
+</section>
+<section id="barras-y-columnas" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="barras-y-columnas"><span class="header-section-number">8.6.2</span> Barras y columnas</h3>
 <p>A continuación mostramos un gráfico barras para la frecuencia de los novillos según la Procedencia (variable categórica):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(novillos) <span class="sc">+</span></span>
@@ -749,8 +762,8 @@ colour.
 </div>
 </div>
 </div>
-<p>Otros gráficos utilizando <code>geom_col()</code>, dependiendo de lo que quieras visualizar.</p>
-<p><em>Peso inicial por procedencia</em></p>
+<p><strong>Peso inicial por procedencia</strong></p>
+<p>Utilizando otra geometría <code>geom_col()</code>, podemos graficar el peso inicial según la procedencia de cada novillo.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>novillos <span class="sc">%&gt;%</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Procedencia) <span class="sc">%&gt;%</span></span>
@@ -869,8 +882,9 @@ ACTIVIDAD
 </div>
 </div>
 </section>
-<section id="gráficos-condicionales-o-por-paneles-facets" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.6</span> Gráficos condicionales o por paneles: <code>facets</code></h2>
+</section>
+<section id="gráficos-condicionales-o-por-paneles-facets" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="gráficos-condicionales-o-por-paneles-facets"><span class="header-section-number">8.7</span> Gráficos condicionales o por paneles: <code>facets</code></h2>
 <p>A veces es util mostrar los subgrupos en gráficos individuales o paneles. Esto se hace facilmente usando una o más variables condicionales con <code>facets</code>. Este tipo de gráficos también se denomian graficos condicionales ya que muestran la relacion de al menos dos variables de interés a través de los niveles de una tercera variable: <code>y ~ x | z</code>.</p>
 <p>Por ejemplo, en el primer gráfico vimos como mostrar la relación entre los pesos y las procedencias como color. Eventualmente, ese gráfico podria dividirse en 4 paneles (uno por procedencia) y mostrar en cada uno el subconjunto de puntos.</p>
 <div class="cell">
@@ -994,8 +1008,8 @@ ACTIVIDAD
 </div>
 </div>
 </section>
-<section id="gráficos-compuestos-con-patchwork" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="gráficos-compuestos-con-patchwork"><span class="header-section-number">8.7</span> Gráficos compuestos con <code>patchwork</code></h2>
+<section id="gráficos-compuestos-con-patchwork" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="gráficos-compuestos-con-patchwork"><span class="header-section-number">8.8</span> Gráficos compuestos con <code>patchwork</code></h2>
 <p><code>patchwork</code> es una librería de R para crear gráficos complejos compuestos por varios gráficos simples en distintas posiciones y de distintos tamaños.</p>
 <div class="cell">
 <div class="cell-output-display">
