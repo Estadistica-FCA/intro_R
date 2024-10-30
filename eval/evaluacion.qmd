@@ -1,0 +1,226 @@
+---
+title: "Evaluación curso R"
+format: html
+---
+
+## Consignas
+
+A continuación se recopilan las actividades del material propuesto para lectura. 
+1. Dependiendo de la acltividad, agregar bloques o _chunks_ de código R o sólamente texto con su respuesta debajo de cada consigna. 
+
+_Ayuda: algunas consignas requieren cargar datos, asegurarse de que el archivo de datos esté en la misma ubicación que este archivo QMD._
+
+2. Renderizar el documento.
+
+## R básico
+
+### 4.1 Operadores matemáticos y lógicos
+
+1. Hallar el resultado de la siguiente expresión $(2+4)^2$ y $2^2 + 4^2$.
+
+2. Comparar ambos resultados en una linea de comando.
+
+### 4.2.1 Variables y objetos
+
+¿Por qué este código no funciona?
+
+```{r, eval = F}
+my_variable <- 10
+my_varıable
+```
+
+### 4.2.2 Funciones
+
+1. Crear una vector llamado `diametro` que contenga 10 valores numericos
+
+2. Calcular otro vector que se llame `radios` en funcion del anterior
+
+3. Crear una función que calcule el area de un círculo. Tip: la constante $\pi$ en **R** está en el objeto `pi`.
+
+4. Avanzado: crear una función más avanzada llamada _area_ que calcule el área de un rectángulo o círculo indicando en el argumento `figura` y suminisitrando el dato de base y altura o radio, según corresponda.
+
+5. ¿Cómo podríamos expandirla para controlar el número de decimales de la respuesta?
+
+### 4.3 Tipos de datos
+
+1. Ingrese lo siguiente en un vector con el nombre `color`: púrpura, rojo, amarillo, marrón
+
+2. Mostrar el segundo elemento en el vector (rojo) en la consola.
+
+3. Ingrese lo siguiente en un vector con el nombre `peso`: 23, 21, 18, 26
+
+### 4.4 Estructura de datos
+
+1. Unir los 2 vectores de la actividad anterior usando la función `data.frame` para crear un marco de datos llamado `info` con 2 columnas y 4 filas. Llame a la primera columna '`color` y a la segunda `peso`.
+
+2. Ver la estructura de datos en la consola.
+
+3. Mostrar solo la fila 3 en la consola
+
+4. Mostrar solo la columna 1 en la consola
+
+5. Mostrar el elemento de datos en la fila 4, columna 1
+
+## Importar/Exportar datos
+
+### 6.1.1 Funciones Nativas
+
+1. Abrir un documento de texto en **RStudio**
+
+2. Retomando el ejemplo del set de datos de trigo, crear un archivo separado por comas con los siguientes datos
+
+```
+Lote,Variedad,Rendimiento
+1,Escorpion,34
+2,Escorpion,36
+3,Yarara,40
+4,Baguette11,28
+5,Tijetera,31
+```
+
+3. Guardar el archivo como `prueba_trigo.csv`.
+
+4. Leer el set de datos dentro de **R** usando la función `read.table()` o alguna de sus variantes.
+
+5. Verificar la importacion de los datos.
+
+### 6.1.2 Paquetes
+
+1. Importar el archivo creado en la actividad anterior con alguna función del paquete `readr`
+
+1. Importar el archivo creado en la actividad anterior con alguna función del paquete `rio`
+
+### 6.2.1 Exportar con readr
+
+1. Exportar el objeto creado en la actividad anterior con datos de rendimiento de trigo a un archivo CSV llamado `prueba_trigo2.csv```.
+
+2. Verificar como se exportó.
+
+### 6.2.2 Exportar con rio
+
+1. Exportar el objeto creado en la actividad anterior con datos de rendimiento de trigo a un archivo XLSX llamado `prueba_trigo2.xlsx`.
+
+2. Verificar como se exportó.
+
+## Manipulación de datos
+
+Para estas actividades se va a usar el archivo `pesada_novillos.xlsx`
+
+### 7.4 Seleccionar variables
+
+1. Seleccionar las colunas  que son `character` y aquellas cuyo nombre contiene la palabra "Peso" o termina con "anterior". Guardar el resultado en un objeto.
+
+2. Actualizar el objeto del punto anterior descartar las columnas "Fecha_Ingreso", "Fecha", "Hora".
+
+3. Usando `rio::export()` exportar el set de datos a un archivo excel.
+
+5. Verificar el archivo exportado.
+
+### 7.5 Seleccionar variables
+
+1. Seleccionar los novillos que provienen de las siguientes procedencias: `La Alameda` y `La Rosita`.
+
+2. Seleccionar los novillos que a su vez pesan entre 250 y 350 kg.
+
+3. Seleccionar los novillos que NO provienen de `La Alameda` o `La Rosita` y a su vez pesan entrte 250 y 350 kg.
+
+4. Guardar los datos del punto anterior en un objeto nuevo.
+
+### 7.7 Ordenar datos
+
+Encadenar con el operador el filtro del punto 3 de la actividad anterior, selección de las variables `Procedencia`, `IDV`, `Peso` y la función `View()` para ver los datos resultantes.
+
+### 7.6 Encadenar operaciones
+
+Ordenar los novillos por `Procedencia` y `IDV`.
+
+### 7.8 Crear  o transformar columnas
+
+1. Calcular la ganancia de peso desde la última pesada `Peso_anterior` a la pesada actual `Peso`.
+
+2. Calcular la ganancia media daria tomando la duración del tiempo entre las pesadas del punto 1. (`Días`)
+
+3. Clasificar los novillos segun el `Peso` en `pesados/livianos` si superan los 300 kg en una nueva variable `grupo`.
+
+4. Actualizar la columna anterior pero dividiendo los novillos según `Peso` en tres grupos: `pesados` (> 300 kg), `intermedios` (250-300 kg), y `livianos` (< 250 kg). 
+
+5. Clasificar los novillos según peso inicial en `alto/bajo` aplicando un corte según la `Procedencia`. Los cortes son: 
+
+  - La Alameda: 172
+  - La Rosita: 180
+  - Los Corralitos: 194
+
+### 7.9 Resumir datos
+
+1. Crear una tabla de resumen con _minimo_ (`min()`) y _máximo_ (`max()`) de la variable `Días`
+
+2. Crear una tabla que tenga el conteo y frecuencias de novillos por `Procedencias` y `Tropa` que pesan más de 275 kg.
+
+### 7.10 Resumir datos
+
+Repetir actividad anterior pero agrupando por `Procedencia` y `Tropa` agregando el valor _mediano_ (`median()`)
+
+### 7.11 Tablas pivot
+
+1. Crear una base de datos con las columnas `IDV`, `Procedencia` y `Peso`.
+
+2. Como harías para tener una tabla de doble entrada donde cada columna tenga el nombre de la procedencia y cada fila el IDV y los valores sean los pesos.
+
+### 7.13.1 Unir tablas (`bind_*`)
+
+1. Crear una base de datos para cada tropa. 
+
+2. En la tropa 1 seleccionar `IDV`, `Procedencia` y `Peso`.
+
+3. En tropa 2 seleccionar `IDV`, `Procedencia` y `Días`
+
+4. Recrear una tabla que tenga `IDV`, `Procedencia`, `Peso` y `Dias`.
+
+### 7.13.2 Unir tablas (`*_join`)
+
+1. Crear una base de datos que contenga el `IDV`, `Peso` y `Días` de los novillos de tropa 1.
+
+2. Crear otra base de datos que contenga el `IDV`, `Procedencia` y `Días` de ambas tropas de la procedencia `La Rosita`.
+
+3. Crear una tabla que contenga los registros de la tabla creada en 1 más los datos de procedencia.
+
+4. Filtrar aquellos cuya procedencia haya resultado en `NA`. (se puede usar `drop_na()`)
+
+### 7.14 Cadenas de texto
+
+**Extra**
+
+1. Crear una variable nueva llamada `Procedencia2` que contenga el resultado de remover la "La " o "Los " del nombre de la procedencia y pasar todo a mayúsculas.
+
+2. Convertirlo a factor y poner el nivel "ROSITA" como primer nivel.
+
+## Gráficos
+
+### 8.5 Primer grafico
+
+1. Realice un gráfico de caja de la variable `GPV_anterior`
+
+2. Separe los gráficos de caja según la `Tropa`
+
+3. Remueva el fondo gris, modifique los nombres a los ejes `x` e `y` 
+
+4. Realice un segundo gráfico de histograma de la variable `Peso`
+
+5. Agrupe (`group`) los histogramas y rellene (`fill`) según `Tropa`
+
+6. Modifique los nombres a los ejes `x` e `y`, ubique la leyenda debajo del gráfico. 
+
+
+### 8.7 Gráficos condicionales
+
+1. A partir de los gráficos de caja generados en la actividad anterior separe además según las procedencias 
+
+2. Filtre los `NA` si es necesario.
+
+
+### 8.8  Gráficos compuestos
+
+1. Guarde los gráficos generados en las actividades anteriores en objetos _(`g1`, `g2`)_
+
+2. Realice un gráfico compuesto con los gráficos guardados.
+
