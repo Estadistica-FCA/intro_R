@@ -1,16 +1,27 @@
 ---
 title: "Evaluación curso R"
-format: html
+author: "completar con apellido y nombre"
+format: 
+  html:
+    toc: true
+    embed-resources: true
 ---
+
+Material extraído de *Introducción al Análisis de Datos con R*
+
+[https://estadistica-fca.github.io/intro_R/](https://estadistica-fca.github.io/intro_R/)
 
 ## Consignas
 
 A continuación se recopilan las actividades del material propuesto para lectura. 
-1. Dependiendo de la acltividad, agregar bloques o _chunks_ de código R o sólamente texto con su respuesta debajo de cada consigna. 
+
+1. Dependiendo de la actividad, agregar bloques o _chunks_ de código R o sólamente texto con su respuesta debajo de cada consigna. 
 
 _Ayuda: algunas consignas requieren cargar datos, asegurarse de que el archivo de datos esté en la misma ubicación que este archivo QMD._
 
-2. Renderizar el documento.
+2. Descargue el archivo .qmd, realice las actividades y *Renderice* el documento.
+
+3. Entregue el archivo .html en Aula Virtual
 
 ## R básico
 
@@ -92,7 +103,7 @@ Lote,Variedad,Rendimiento
 
 ### 6.2.1 Exportar con readr
 
-1. Exportar el objeto creado en la actividad anterior con datos de rendimiento de trigo a un archivo CSV llamado `prueba_trigo2.csv```.
+1. Exportar el objeto creado en la actividad anterior con datos de rendimiento de trigo a un archivo CSV llamado `prueba_trigo2.csv`.
 
 2. Verificar como se exportó.
 
@@ -187,8 +198,6 @@ Repetir actividad anterior pero agrupando por `Procedencia` y `Tropa` agregando 
 4. Filtrar aquellos cuya procedencia haya resultado en `NA`. (se puede usar `drop_na()`)
 
 ### 7.14 Cadenas de texto
-
-**Extra**
 
 1. Crear una variable nueva llamada `Procedencia2` que contenga el resultado de remover la "La " o "Los " del nombre de la procedencia y pasar todo a mayúsculas.
 

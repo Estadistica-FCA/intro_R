@@ -260,6 +260,10 @@ ggplot(data = novillos) +
 
 De este gráfico surge que la relación en todos los casos es positiva pero varia un poco según procedencia.
 
+## Otras geometrías
+
+### Puntos y líneas
+
 Dependiendo el tipo de `geom` tenemos distintos atributos estéticos para explorar: `color` y `alpha` (transparencia) para todos, `shape` y `size` para puntos, `linewidth` y `linetype` para lineas, y `fill` para barras, etc. 
 
 El tipo de atributo estético depende también de la naturaleza de la variable: continua o discreta. Veamos como queda mapear los valores de `Procedencia` al atributo `shape` (forma):
@@ -312,6 +316,8 @@ ggplot(data = novillos) +
   mi_tema
 ```
 
+### Barras y columnas
+
 A continuación mostramos un gráfico barras para la frecuencia de los novillos según la Procedencia (variable categórica):
 
 ```{r}
@@ -322,7 +328,103 @@ ggplot(novillos) +
        title = "Cantidad de Novillos por Procedencia") +
   mi_tema
 ```
+También podemos incorporar la variable `Tropa` en el gráfico para diferenciar dentro de cada categoría de `Procedencia`. Dependiendo del argumento `position()`, podemos visualizar los datos de diferentes maneras:
 
+- Con `position = "fill"`, las barras se apilan, mostrando la proporción de cada tropa dentro de cada procedencia. Esto permite ver cómo se distribuyen las tropas en términos relativos (proporciones) dentro de cada grupo de procedencia.
+- Con `position = "dodge"`, las barras se colocan una al lado de la otra, lo que facilita la comparación directa de la cantidad de novillos de cada tropa en cada procedencia.
+
+```{r}
+novillos %>% 
+  ggplot(.) +
+  aes(x = Procedencia, fill = as.factor(Tropa)) +
+  geom_bar(position = "fill") +
+  labs(x = "Procedencia", y = "Proporción", fill = "Tropa",
+       title = "Proporción de Novillos por Procedencia y Tropa") +
+  mi_tema
+
+novillos %>% 
+  ggplot(.) +
+  aes(x = Procedencia, fill = as.factor(Tropa)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Procedencia", y = "Cantidad", fill = "Tropa",
+       title = "Cantidad de Novillos por Procedencia y Tropa") +
+  mi_tema
+```
+
+
+**Peso inicial por procedencia**
+
+Utilizando otra geometría `geom_col()`, podemos graficar el peso inicial según la procedencia de cada novillo.
+
+
+```{r}
+novillos %>%
+  group_by(Procedencia) %>%
+  summarise(Peso_inicial_promedio = mean(Peso_inicial, na.rm = TRUE)) %>%
+  ggplot(.) +
+  aes(x = Procedencia, y = Peso_inicial_promedio) +
+  geom_col(fill = "blue") +
+  labs(x = "Procedencia", y = "Peso Inicial Promedio",
+       title = "Peso Inicial Promedio por Procedencia") +
+  mi_tema
+```
+**Días totales por Tropa**
+
+Utilizanto otras variables como `Días_total`, para visualizar cuántos días totales han estado los novillos de cada tropa.
+
+```{r}
+novillos %>%
+  group_by(Tropa) %>%
+  summarise(Días_totales_promedio = mean(Días_total, na.rm = TRUE)) %>%
+  ggplot(aes(x = as.factor(Tropa), y = Días_totales_promedio)) +
+  geom_col(fill = "purple") +
+  labs(x = "Tropa", y = "Días Totales Promedio",
+       title = "Días Totales Promedio por Tropa") +
+  mi_tema
+
+```
+
+**Comparación de Peso Anterior vs. Peso Actual por Procedencia**
+Para comparar el peso anterior y el peso actual de los novillos por procedencia.
+
+```{r}
+novillos %>%
+  group_by(Procedencia) %>%
+  summarise(Peso_anterior_promedio = mean(Peso_anterior, na.rm = TRUE),
+            Peso_promedio = mean(Peso, na.rm = TRUE)) %>%
+  pivot_longer(cols = c(Peso_anterior_promedio, Peso_promedio),
+               names_to = "Peso_tipo", values_to = "Peso") %>%
+  ggplot(aes(x = Procedencia, y = Peso, fill = Peso_tipo)) +
+  geom_col(position = "dodge") +
+  labs(x = "Procedencia", y = "Peso Promedio", fill = "Tipo de Peso",
+       title = "Peso Anterior vs. Peso Actual por Procedencia") +
+  mi_tema
+
+```
+**Ganancia diaria media (GDM) por Procedencia**
+
+Para analizar la ganancia diaria media (GDM), se puede hacer por `Procedencia` para ver dónde los novillos han ganado más peso diariamente.
+
+```{r}
+novillos %>%
+  group_by(Procedencia) %>%
+  summarise(GDM_promedio = mean(GDM_anterior, na.rm = TRUE)) %>%
+  ggplot(aes(x = Procedencia, y = GDM_promedio)) +
+  geom_col() +
+  labs(x = "Procedencia", y = "GDM Promedio",
+       title = "Ganancia Diaria Media por Procedencia") +
+  mi_tema
+
+novillos %>%
+  group_by(Procedencia, Tropa) %>%
+  summarise(GDM_promedio = mean(GDM_anterior, na.rm = TRUE)) %>%
+  ggplot(.) + 
+  aes(x = Procedencia, y = GDM_promedio, fill = as.factor(Tropa)) +
+  geom_col(position = "dodge") +
+  labs(x = "Procedencia", y = "GDM Promedio", fill = "Tropa",
+       title = "Ganancia Diaria Media por Procedencia y Tropa") +
+  mi_tema
+```
 
 ::: {.callout-note icon=false}
 

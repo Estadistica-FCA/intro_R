@@ -931,3 +931,13 @@ tmp <- novillos |>
 tmp |> count(Procedencia)
 ```
 
+
+::: {.callout-note icon=false}
+
+#### ACTIVIDAD
+
+1. Crear una variable nueva llamada `Procedencia2` que contenga el resultado de remover la "La " o "Los " del nombre de la procedencia y pasar todo a mayúsculas.
+
+2. Convertirlo a factor y poner el nivel "ROSITA" como primer nivel.
+
+:::
