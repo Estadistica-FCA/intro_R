@@ -185,3 +185,54 @@ include_graphics('assets/render.png', auto_pdf = T)
 ```
 
 El botón renderizará el documento al primer formato de salida listado en el encabezado. Si no se especifica ningún formato, se representará en HTML.
+
+### Personalización avanzada
+
+Podrías incluir opciones avanzadas en el YAML, como configuración para varios formatos de salida, o propiedades específicas para tipos de documentos. Aquí tienes ejemplos de configuración para exportar en múltiples formatos o configurar temas en HTML:
+
+````{markdown}
+---
+title: "Mi documento avanzado"
+author: "Patricia Acetta"
+date: "2024-11-05"
+format:
+  html:
+    theme: cosmo  # Tema de HTML
+    toc: true     # Mostrar tabla de contenido
+    toc-location: left
+---
+````
+
+
+Configuración de Opciones de Fragmento de Código
+Profundiza en las opciones de fragmento de código (chunks) de knitr, como fig.align, fig.width, fig.height, results, y cache. Por ejemplo, puedes configurar el tamaño de las figuras o habilitar el almacenamiento en caché para acelerar la renderización:
+
+
+````{r, eval = F, fig.width = 3.5}
+plot(mtcars$mpg, mtcars$hp)
+````
+
+
+Esto ajusta el tamaño y la alineación de la gráfica y permite almacenarla en caché para evitar re-ejecutar el código en futuras renderizaciones.
+
+
+
+*Uso de Plantillas Personalizadas*
+
+En Quarto, puedes crear tus propias plantillas para mantener un formato estandarizado para tus documentos. Esto es especialmente útil si trabajas en un equipo o deseas mantener una identidad visual consistente en tus informes.
+
+````{markdown}
+---
+title: "Mi documento avanzado"
+author: "Autor 1"
+format:
+  html:
+    theme: cosmo  # Tema de HTML
+    toc: true     # Mostrar tabla de contenido
+    toc-location: left
+  pdf:
+    keep-tex: true  # Guarda el archivo intermedio .tex
+  docx:
+    reference-doc: "mi_plantilla.docx"  # Plantilla personalizada de Word
+---
+````
