@@ -208,7 +208,7 @@ Configuración de Opciones de Fragmento de Código
 Profundiza en las opciones de fragmento de código (chunks) de knitr, como fig.align, fig.width, fig.height, results, y cache. Por ejemplo, puedes configurar el tamaño de las figuras o habilitar el almacenamiento en caché para acelerar la renderización:
 
 
-````{r, eval = F, fig.width = 3.5}
+````{r, echo = T, eval = F, fig.width = 3.5}
 plot(mtcars$mpg, mtcars$hp)
 ````
 
