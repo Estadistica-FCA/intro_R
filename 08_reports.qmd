@@ -11,7 +11,7 @@ opts_chunk$set(echo = T, message = F, warning = F)
 
 Es un paradigma de programación introducido por _Donald Kunth_ en 1984 mediante el cual la explicación del código de programación se da en lenguaje natural (i.e. español) intercalado con fragmentos de código que puede ejecutarse. 
 
-Así, a diferencia de código funete donde todo lo que no sea código debe ir con etiquetas de _comentario_  para que no sea ejecutado, en **R** usando el símbolo `#`, en _programación literaria_ el texto se escribe sin etiquetas y las celdas o bloques de código o _chunks_ se delimitan con caracteres especiales.
+Así, a diferencia de código fuente donde todo lo que no sea código debe ir con etiquetas de _comentario_  para que no sea ejecutado, en **R** usando el símbolo `#`, en _programación literaria_ el texto se escribe sin etiquetas y las celdas o bloques de código o _chunks_ se delimitan con caracteres especiales.
 
 Este paradigma es muy utilizado actualmente, especialmente en investigación reproducible y ciencia de datos poder documentar los procedimientos analíticos y generar informes dinámicos.
 
@@ -59,10 +59,33 @@ Hay varios campos y opciones dentro del YAML. Por ejemplo: si se quiere agregar 
 ````{markdown}
 ---
 title: "Mi primer documento quarto"
-author: "Estadistica"
+author: "Autor 1"
 format: html
 ---
 ````
+
+- title: Especifica el título del documento.
+- author: El nombre del autor del documento.
+-format: formato del documento.
+
+
+Otras opciones que tambén se pueden configurar:
+
+````{markdown}
+---
+title: "Título del Documento"
+author: "Autor 1"
+date: "2024-11-05"
+format: html
+output-options:
+  toc: true  # Muestra la tabla de contenidos
+  toc-depth: 2 # Profundidad de la tabla de contenidos
+---
+````
+
+- date: Fecha de creación o publicación.
+- output-options: Configura opciones específicas para el formato de salida, como mostrar la tabla de contenidos (toc) y su profundidad (toc-depth).
+
 
 #### Bloques de Código
 
@@ -124,6 +147,8 @@ Hay atajos de teclado para todas las tareas básicas de edición. El modo visual
 | Link         | Ctrl + K          | \<href\>       |
 
 : Atajos de teclado
+
+
 
 <!-- # Opciones de fragmentos de código -->
 
