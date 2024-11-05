@@ -224,6 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#modos-de-visualización" id="toc-modos-de-visualización" class="nav-link" data-scroll-target="#modos-de-visualización"><span class="header-section-number">9.2.3</span> Modos de visualización</a></li>
   <li><a href="#atajos-de-teclado" id="toc-atajos-de-teclado" class="nav-link" data-scroll-target="#atajos-de-teclado"><span class="header-section-number">9.2.4</span> Atajos de teclado</a></li>
   <li><a href="#generar-reporte-render" id="toc-generar-reporte-render" class="nav-link" data-scroll-target="#generar-reporte-render"><span class="header-section-number">9.2.5</span> Generar reporte (<code>render</code>)</a></li>
+  <li><a href="#personalización-avanzada" id="toc-personalización-avanzada" class="nav-link" data-scroll-target="#personalización-avanzada"><span class="header-section-number">9.2.6</span> Personalización avanzada</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -253,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="programación-literaria" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="programación-literaria"><span class="header-section-number">9.1</span> Programación literaria</h2>
 <p>Es un paradigma de programación introducido por <em>Donald Kunth</em> en 1984 mediante el cual la explicación del código de programación se da en lenguaje natural (i.e.&nbsp;español) intercalado con fragmentos de código que puede ejecutarse.</p>
-<p>Así, a diferencia de código funete donde todo lo que no sea código debe ir con etiquetas de <em>comentario</em> para que no sea ejecutado, en <strong>R</strong> usando el símbolo <code>#</code>, en <em>programación literaria</em> el texto se escribe sin etiquetas y las celdas o bloques de código o <em>chunks</em> se delimitan con caracteres especiales.</p>
+<p>Así, a diferencia de código fuente donde todo lo que no sea código debe ir con etiquetas de <em>comentario</em> para que no sea ejecutado, en <strong>R</strong> usando el símbolo <code>#</code>, en <em>programación literaria</em> el texto se escribe sin etiquetas y las celdas o bloques de código o <em>chunks</em> se delimitan con caracteres especiales.</p>
 <p>Este paradigma es muy utilizado actualmente, especialmente en investigación reproducible y ciencia de datos poder documentar los procedimientos analíticos y generar informes dinámicos.</p>
 <p>Existen varios softwares que permiten implementar este paradigma: <code>swave</code> para LaTeX, <code>R Markdown</code> para <strong>R</strong>, y recientemente <code>Quarto</code> para varios lenguajes, entre ellos <strong>R</strong>.</p>
 </section>
@@ -295,17 +296,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi primer documento quarto"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Estadistica"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Autor 1"</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>title: Especifica el título del documento.</li>
+<li>author: El nombre del autor del documento. -format: formato del documento.</li>
+</ul>
+<p>Otras opciones que tambén se pueden configurar:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Título del Documento"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Autor 1"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-11-05"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">output-options:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">  toc: true  # Muestra la tabla de contenidos</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">  toc-depth: 2 # Profundidad de la tabla de contenidos</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>date: Fecha de creación o publicación.</li>
+<li>output-options: Configura opciones específicas para el formato de salida, como mostrar la tabla de contenidos (toc) y su profundidad (toc-depth).</li>
+</ul>
 </section>
 <section id="bloques-de-código" class="level4" data-number="9.2.2.2">
 <h4 data-number="9.2.2.2" class="anchored" data-anchor-id="bloques-de-código"><span class="header-section-number">9.2.2.2</span> Bloques de Código</h4>
 <p>Los bloques de código que utilizan llaves alrededor del nombre del lenguaje (por ejemplo para <strong>R</strong> sería</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Codigo de R</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Codigo de R</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Lo que está dentro del bloque de código debe ser comandos de R válidos ya que se ejecutarán al momento de crear el informe.</p>
 <p>Cada bloque de código tiene opciones que permiten controlar el comportamiento particular del código que contienen.</p>
 </section>
@@ -425,6 +446,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>El botón renderizará el documento al primer formato de salida listado en el encabezado. Si no se especifica ningún formato, se representará en HTML.</p>
+</section>
+<section id="personalización-avanzada" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="personalización-avanzada"><span class="header-section-number">9.2.6</span> Personalización avanzada</h3>
+<p>Podrías incluir opciones avanzadas en el YAML, como configuración para varios formatos de salida, o propiedades específicas para tipos de documentos. Aquí tienes ejemplos de configuración para exportar en múltiples formatos o configurar temas en HTML:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi documento avanzado"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Patricia Acetta"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-11-05"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo  # Tema de HTML</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true     # Mostrar tabla de contenido</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Configuración de Opciones de Fragmento de Código Profundiza en las opciones de fragmento de código (chunks) de knitr, como fig.align, fig.width, fig.height, results, y cache. Por ejemplo, puedes configurar el tamaño de las figuras o habilitar el almacenamiento en caché para acelerar la renderización:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>hp)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Esto ajusta el tamaño y la alineación de la gráfica y permite almacenarla en caché para evitar re-ejecutar el código en futuras renderizaciones.</p>
+<p><em>Uso de Plantillas Personalizadas</em></p>
+<p>En Quarto, puedes crear tus propias plantillas para mantener un formato estandarizado para tus documentos. Esto es especialmente útil si trabajas en un equipo o deseas mantener una identidad visual consistente en tus informes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi documento avanzado"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Autor 1"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo  # Tema de HTML</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true     # Mostrar tabla de contenido</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf:</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    keep-tex: true  # Guarda el archivo intermedio .tex</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">  docx:</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">    reference-doc: "mi_plantilla.docx"  # Plantilla personalizada de Word</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
